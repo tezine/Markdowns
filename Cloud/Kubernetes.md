@@ -151,6 +151,10 @@ O service mesh fornece o conceito de SMI (Service Mesh Interface). É uma coleta
 * Resumidamente, o operator é um POD que gerencia os outros pods. Ele verifica o "Current state" de um POD e tenta levar o pod ao "Desirable state" definido. Assim, o Operator funciona como se um Humano estivesse gerenciando os Pods. Como ele tem um poder muito grande, é importante utilizar Operator confiáveis. Por exemplo, utilizar o Operator oficial do CouchDB para gerenciar pods couchdb, etc. O Operator neste caso, é responsável por instalar, escalar e gerenciar os pods CouchDB. 
 * Há um site onde podemos procurar por Operators [aqui](https://operatorhub.io/)
 
+# Monitoring e Alerting
+* Há um vídeo expicativo [aqui](https://youtu.be/W7aN_z-cyUw)
+* Exemplos de ferramentas de monitoramento: Azure Monitor, Prometheus
+
 
 # **Kubectl**
 
