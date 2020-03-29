@@ -118,13 +118,15 @@
 
 # ROLE BASED ACCESS CONTROL
 * Há um vídeo [aqui](https://www.youtube.com/watch?v=G3R24JSlGjY&list=PLLasX02E8BPCrIhFrc_ZiINhbRkYMKdPT&index=12)
-* Basicamente, o RBAC indica "Who can access what".
+* Basicamente, o RBAC indica "Who can access what". 
 * Através do RBAC, criamos Roles do tipo (get/list/etc ) indicando quais pods, volumes e depois associamos esses roles a usuários ou a um grupo de usuários. 
 * Podemos criar roles que são disponibilizados para todo o cluster (Cluster Role Bindings) . Neste caso, os roles são válidos para qualquer namespace dentro do cluster. 
 * Também podemos disponibilizar um role para um namespace específco. Ex: /my-team/rolebinding
 
 
 # Monitoring
+* Há um vídeo expicativo [aqui](https://youtu.be/W7aN_z-cyUw)
+* Exemplos de ferramentas de monitoramento: Azure Monitor, Prometheus
 * Há várias soluções para monitoramento de um cluster kubernetes. Muitas veze, o proprio cloud provider já fornece uma própria. Seguem algumas
 abaixo:
 1. EFK Stack: Composto por Fluentd, Elasticsearch e Kibana.
@@ -132,10 +134,13 @@ abaixo:
 1. Container advisor
 1. Kube-state-metrics
 1. Kubernetes Dashboard
-1. Prometheus
+1. Prometheus -> está se tornando o padrão para expor métricas para o "mundo". 
 1. Jaeger
 1. Kubewatch
 1. Weave scope
+* Um dos itens a serem mensurados em monitoramento é a latencia. Podemos configurar uma métrica indicando para gerar um alerta de a latência de acesso for superior a 500ms para 99% dos acessos, por exemplo. 
+* É recomendável integrar o Prometheus com o Grafana (https://grafana.com/) para visualizar os gráficos. Há informações como fazer a integração [aqui](https://prometheus.io/docs/visualization/grafana/)
+
 
 # SERVICE MESHES
 * Mais info [aqui](https://smi-spec.io/) e um vídeo explicativo [aqui](https://youtu.be/izVWk7rYqWI)
@@ -151,10 +156,24 @@ O service mesh fornece o conceito de SMI (Service Mesh Interface). É uma coleta
 * Resumidamente, o operator é um POD que gerencia os outros pods. Ele verifica o "Current state" de um POD e tenta levar o pod ao "Desirable state" definido. Assim, o Operator funciona como se um Humano estivesse gerenciando os Pods. Como ele tem um poder muito grande, é importante utilizar Operator confiáveis. Por exemplo, utilizar o Operator oficial do CouchDB para gerenciar pods couchdb, etc. O Operator neste caso, é responsável por instalar, escalar e gerenciar os pods CouchDB. 
 * Há um site onde podemos procurar por Operators [aqui](https://operatorhub.io/)
 
-# Monitoring e Alerting
-* Há um vídeo expicativo [aqui](https://youtu.be/W7aN_z-cyUw)
-* Exemplos de ferramentas de monitoramento: Azure Monitor, Prometheus
 
+# POD Lifecycle
+* Seguem o lifecycle de um pod abaixo:
+1. Pending: Significa que o kubernetes API aceitou o POD, mas ainda não foi aplicado na máquina/vm. Se um POD fica em Pending por muito tempo, pode significar que não há recursos disponíveis para executar o POD, ou seja, pode não haver mais máquinas disponíveis ou não atendem aos requisitos mínimos. Podemos aumentar o tamanho do cluster nesse caso ou ligar o Auto scaling do cluster. 
+1. Creating: Significa que o Scheduler está criando o POD em uma máquina/vm. O Node faz o pull da imagem do registry (docker, ACR, ou outro), 
+1. Running: O POD está sendo executado. 
+1. CrashLoopBackoff: Acontece quando o pod travou e foi reiniciado muitas vezes. Nesse caso, o Kubernetes "back off", ou seja, se afasta e espera um pouco para tentar iniciar o POD novamente. Se o POD travar, o kubernetes espera mais tempo
+
+* Há alguns lifecycle hooks que podem ser utilizados, como post start. É um web hook que é chamado imediatamente após o POD ser executado. 
+* Há o lifecycle hook "pre stop" que é chamado imediatamente antes do container ser finalizado. 
+* Podemos especificar um "Init Container" no POD, indicando que é o container que deve ser executado primeiro. Somente após ele ser executado, os outros container são executados. 
+
+# Customizing Kubernetes API
+* Há um vídeo explicativo [aqui](https://www.youtube.com/watch?v=P7QAfjdbogY&list=PLLasX02E8BPCrIhFrc_ZiINhbRkYMKdPT&index=18)
+* Segue o fluxo quando enviamos algum comando é enviado ao kubernetes: 
+1. O comando é enviado ao API Server do kubernetes. 
+1. O API Server envia do ETCD database. 
+1. 
 
 # **Kubectl**
 
