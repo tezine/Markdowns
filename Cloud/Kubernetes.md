@@ -173,7 +173,13 @@ O service mesh fornece o conceito de SMI (Service Mesh Interface). É uma coleta
 * Segue o fluxo quando enviamos algum comando é enviado ao kubernetes: 
 1. O comando é enviado ao API Server do kubernetes. 
 1. O API Server envia do ETCD database. 
-1. 
+
+
+# Serverless Functions for Kubernetes
+* Há um vídeo explicativo [aqui](https://youtu.be/4nEkdyhgFds)
+* A soluçao open source criada em conjunto como Brendan Burns chama-se Fission.io (https://fission.io/). Ela permite criar funções semelhantes ao AWS Lambda diretamente no kubernetes. 
+* No exemplo apresentado no vídeo, há um namespace Fission que contém vários PODS necessários para implementar Function as a Service (FaaS). 
+* O Fission fornece uma linha de comando própria que aplica os comandos no Kubernetes. Veja mais detalhes no arquivo [Fission](Fission.md)
 
 # **Kubectl**
 
