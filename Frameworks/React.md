@@ -1,23 +1,25 @@
 # REACTJS
+* Site oficial [aqui](https://pt-br.reactjs.org/)
 * Utiliza JSX. JSX é uma extensão de sintaxe ao Javascript.
 * O React não obriga a utilização do JSX, mas torna dificil a não utilização do mesmo. 
-* Para inserir um código Javascript no JSX, basta adicionar entre {} 
+* Para inserir um código Javascript no JSX, basta adicionar entre `{} `
 * Depois da compilação, o JSX é transformado em Javascript. 
 * Como o JSX está mais próximo de Javascript do que do HTML em si, utiliza-se nomenclatura camelCase. Por exemplo, `class` é `className` em JSX, `tabindex` é `tabIndex` em JSX. 
-* Pode-se adicionar o código JSX direto ou dentro de (). 
+* Pode-se adicionar o código JSX direto ou dentro de `()`. 
 Exemplo: 
 ```jsx 
 const element = <img src={user.avatarUrl} />;
-ou 
+//ou 
 const element = (
     <img src={user.avatarUrl} />;
 )
 ```
+
 # ELEMENTS
 * Elements são os menors blocos de uma aplicação React. 
 * Diferente de DOM Elements, React Elements são objetos. React DOM se responsabiliza por atualizar o DOM de acordo com as atualizações no React Element. 
 * Para renderizar um React Element na árvore DOM, basta executar `ReactDOM.render()`. Ex: 
-```
+```jsx
 const element = <h1>Hello, world</h1>;
 ReactDOM.render(element, document.getElementById('root'));
 ```
@@ -120,3 +122,7 @@ function ActionLink() {
   );
 }
 ```
+
+# HOOKS
+* Site oficial [aqui](https://pt-br.reactjs.org/docs/hooks-intro.html)
+* O Hooks permite utilizar o `state` sem escrever uma classe. 

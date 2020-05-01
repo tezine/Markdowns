@@ -232,3 +232,16 @@ public class YAMLConfig {
     private EDatasource datasource = new EDatasource();//classe entity com as propriedades driverClassName, url, ... 
 }
 ```
+
+# CORS
+* Para habilitar CORS no Spring Boot e, com isso permitir com que ele aceite requests de qualquer lugar, crie a classe CorsConfig.java abaixo
+```java
+@Configuration
+@EnableWebMvc
+public class CorsConfig implements WebMvcConfigurer {
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
+    }
+}
+```

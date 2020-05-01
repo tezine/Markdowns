@@ -1,10 +1,24 @@
 # ANGULAR
+* https://angular.io/
 * A partir do angular 6, é possível atualizar os componentes via ng update. Por exemplo, `ng update @angular/core` atualiza todos os packages do angular, o rxjs e typescript.
 * A partir da versao 6, podemos adicionar novas funcionalidades ao projeto via `ng add`. Ex: `ng add @angular/material`.
 * A partir da versão 6, há 3 templates prontos do material para adicionar ao projeto: dashboard, sidebar e datatable. Ex: `ng generate @angular/material:material-nav --name=my-nav`  .
 * A partir da versão 6, é utilizado o angular.json ao invés de .angular-cli.json e há suporte para workspaces. 
 * A versão 6 suporta Custom Elements. https://angular.io/guide/elements. "Custom elements bootstrap themselves - they start automatically when they are added to the DOM, and are automatically destroyed when removed from the DOM".
 * Agora é possível criar bibliotecas facilmente usando `ng generate library`.
+
+
+# Passo a passo (App + Lib)
+* Segue um passo a passo para criar um workspace Angular contendo um app e uma lib abaixo: 
+1. Baixar o Angular CLI [aqui](https://cli.angular.io/)
+1. Executar `ng new nomeworkspace --createApplication="false"` . Há informações sobre os parâmetros do ng new [aqui](https://angular.io/cli/new)
+1. `cd nomeworkspace`
+1. Criar um projeto para a aplicação: `ng generate application nome-app --routing=true --style=scss`
+1. Criar um projeto para a lib: `ng generate library nome-lib`
+1. Instalar os pacotes npm: `npm install`
+1. Executar a aplicação: `ng serve`
+
+# SERVICES
 * A partir da versão 6 não se coloca mais os services como providers. Agora é assim:
 ```typescript 
 @Injectable({
@@ -41,8 +55,44 @@ export class MyService {
 * Mais info [aqui](https://angular.io/guide/attribute-directives)
 
 
+# ViewChild
+*Podemos acessar um elemento do DOM no typescript através do @ViewChild. 
+Seguem um exemplo abaixo:
+html:
+```html
+<input class="col-xs-12 col-md-6" [label]="'Celular'" id="txtCel"></input>
+```
+component.ts:
+```typescript 
+@ViewChild('txtCel',{static: false}) txtCel:any;
+```
+
+
 # UPDATES
 * Para verificar como fazer update de seu projeto, acesse http://update.angular.io 
+
+
+# CORS
+* Para habilitar CORS no Angular e, com isso permitir com que o Angular faça requests para outros domínios e/ou portas, crie o arquivo proxy.conf.json abaixo:
+```json 
+{
+    "/api/*": {
+        "target": "http://localhost:9090",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
+```
+* Agora adicione a linha proxyConfig no angular.json dentro de `serve` do projeto, conforme abaixo:
+```json
+"serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "meuprojeto:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
+```
+
 
 # TESTE UNITÁRIO
 * Mais informações [aqui](https://angular.io/guide/testing)
@@ -58,7 +108,8 @@ export class MyService {
 * Services também podem ser testados. 
 
 
-# Passo a passo para criar um projeto Angular com integração com Swagger. 
+# Integração com Swagger
+* Passo a passo para criar um projeto Angular com integração com Swagger. 
 1. Criar um workspace Angular: `ng new my-workspace --createApplication="false"`
 1. Criar o projeto Angular: `cd my-workspace, ng generate application my-first-app`
 1. Utilizar Angular Routing e SCSS ao ser questionado pelo `ng`. 
@@ -124,8 +175,9 @@ export class AppComponent implements OnInit {
 }
 ```
 
-# Passo a passo para criar um projeto Angular com integração com OpenAPI Generator (alternativa ao Swagger Code Gen)
-> Alternativa ao Swagger. Mais info sobre o OpenAPI Generator [aqui](https://openapi-generator.tech/docs/generators/typescript-angular)
+# Integração com OpenAPI Generator
+* Passo a passo para criar um projeto Angular com integração com OpenAPI Generator (alternativa ao Swagger Code Gen)
+> Alternativa ao Swagger. Mais info sobre o OpenAPI Generator [aqui](https://openapi-generator.tech/docs/generators/typescript-angular)<br>
 > A configuração no projeto Angular é praticamente a mesma da utilizada com o Swagger. Exemplo [aqui](https://github.com/OpenAPITools/openapi-generator/tree/master/samples/client/petstore/typescript-angular-v4/npm)
 1. Instalar a linha de comando do Open API Generator: `npm install @openapitools/openapi-generator-cli -g`
 1. Criar um workspace Angular: `ng new my-workspace --createApplication="false"`
