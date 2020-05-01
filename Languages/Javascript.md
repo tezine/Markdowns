@@ -2,18 +2,17 @@
 * Há um artigo muito legal sobre as perguntas mais frequentes [aqui](https://www.guru99.com/javascript-interview-questions-answers.html) - Ler antes de fazer testes. 
 * Há também [esse](https://www.toptal.com/javascript/interview-questions) site
 * Diferença entre window e document [aqui](http://eligeske.com/jquery/what-is-the-difference-between-document-and-window-objects-2/#targetText=WINDOW%20object%20and%20DOCUMENT%20object,THE%20SAME!!!!!&targetText=The%20document%20object%20is%20your,%2C%20URL%2C%20cookie%2C%20etc.)
-* null===null retorna true
-* []==[] returna false
-* []===[] returna false também
-* typeof undefined == typeof NULL retorna true
-* Javascript sempre passa valores primitivos por valor, não por referência. Assim, alterar o valor dentro da funçao nao altera o valor passado.
+* `null===null` retorna true
+* `[]==[]` returna false
+* `[]===[]` returna false também
+* `typeof undefined == typeof NULL` retorna true. Isso porque `typeof NULL` retorna `undefined`, visto que não existe NULL. Já `typeof null`retorna object 
+* Javascript sempre passa variáveis **primitivas** por valor, não por referência. Assim, alterar o valor dentro da funçao nao altera o valor passado.
 * Arrays e objetos são passados por referência. Assim, ao alterar o valor, altera o objeto. 
-* javascript is single threaded and synchronous. Para contornar esse problema, atualmente é possível a criação de web workers. 
-* asynchronous code with Javascript is handled in the background by engines like V8. 
-* ver o que faz o float:left 
+* **Javascript is single threaded and synchronous**. Para contornar esse problema, atualmente é possível a criação de web workers. 
+* Asynchronous code with Javascript is handled in the background by engines like V8. 
 * Webpack is a module bundler primarily for JavaScript, but it can transform front-end assets like HTML, CSS, and images if the corresponding plugins are included. 
 * Babel is mainly used to convert ECMAScript 2015+ (ES6+) code into a backwards compatible version of JavaScript that can be run by older JavaScript engines.
-* Javascript data types: `number, string, boolean, null, undefined, object, array`, 
+* Javascript data types: `number, string, boolean, undefined, object`.
 * Incluimos um arquivo javascript num código html assim: `<script src="xxx.js">`
 * Podemos incluir um arquivo javascript no html no `<head>` ou no `<body>`
 * O arquivo javascript incluso não contém o tag `<script>`
@@ -56,10 +55,11 @@ function hoisted() {
 ```
 
 # var e let
+
 * Mais informações [aqui](https://www.geeksforgeeks.org/difference-between-var-and-let-in-javascript/)
-* var is function scoped and let is block scoped
-* Graças ao hoisting, variáveis declaradas com a palavra-chave var podem ser utilizadas mesmo antes de sua declaração.
-* Por outro lado, as variáveis criadas com let só podem ser utilizadas após sua declaração, pois, apesar de serem elevadas, elas não são inicializadas.
+* `var` is function scoped and `let` is block scoped
+* Graças ao `hoisting`, variáveis declaradas com a palavra-chave `var` podem ser utilizadas mesmo antes de sua declaração.
+* Por outro lado, as variáveis criadas com `let` só podem ser utilizadas após sua declaração, pois, apesar de serem elevadas, elas não são inicializadas. Se você tentar usar uma variável declarada com let antes de declara-la, vai ter um erro de execução do javascript indicando `error: Uncaught ReferenceError: Cannot access 'x' before initialization`. 
 * A melhor explicação sobre hoisting de var é explicado no último exemplo [aqui](https://www.toptal.com/javascript/interview-questions)
 
 # Self executing functions
@@ -297,6 +297,21 @@ Garbage collector basically looks out for unreachable objects which are removed 
 
 # RxJS
 * Reactive Extensions Library for JavaScript with observables
+
+# Adição de elementos dinamicamente no DOM
+
+```javascript
+<script type="text/javascript"> 
+	function addNode() { 
+	    var element = document.createElement("p"); 
+		var textNode = document.createTextNode("This is a new text node"); 
+		element.appendChild(textNode); 
+    	document.appendChild(element); 
+	} 
+</script>
+```
+
+
 
 # JAVASCRIPT ES6
 *  ... : São os 3 pontos https://dmitripavlutin.com/how-three-dots-changed-javascript/   
