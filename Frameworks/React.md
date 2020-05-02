@@ -1,6 +1,7 @@
 # REACTJS
 * Site oficial [aqui](https://pt-br.reactjs.org/)
 * Utiliza JSX. JSX é uma extensão de sintaxe ao Javascript.
+* React utiliza Virtual DOM .
 * O React não obriga a utilização do JSX, mas torna dificil a não utilização do mesmo. 
 * Para inserir um código Javascript no JSX, basta adicionar entre `{} `
 * Depois da compilação, o JSX é transformado em Javascript. 
@@ -15,7 +16,26 @@ const element = (
 )
 ```
 
+# Virtual DOM vs Real DOM
+
+## Real DOM
+
+1. It updates slow.
+2. Can directly update HTML.
+3. Creates a new DOM if element updates.
+4. DOM manipulation is very expensive.
+5. Too much of memory wastage.
+
+## Virtual DOM
+
+1. It updates faster.
+2. Can’t directly update HTML.
+3. Updates the JSX if element updates.
+4. DOM manipulation is very easy.
+5. No memory wastage.
+
 # ELEMENTS
+
 * Elements são os menors blocos de uma aplicação React. 
 * Diferente de DOM Elements, React Elements são objetos. React DOM se responsabiliza por atualizar o DOM de acordo com as atualizações no React Element. 
 * Para renderizar um React Element na árvore DOM, basta executar `ReactDOM.render()`. Ex: 
@@ -24,7 +44,7 @@ const element = <h1>Hello, world</h1>;
 ReactDOM.render(element, document.getElementById('root'));
 ```
 * Geralmente, aplicações React executam a função render apenas uma vez por componente.  
-* React Elements são imutable. Uma vez criado o elemento, não é possível alterar os children ou os atributos. Assim, `props` é readonly sempre. 
+* React Elements são imutable. Uma vez criado o elemento, não é possível alterar os children ou os atributos. **Assim, `props` é readonly sempre**. 
 * Toda aplicação React tem apenas um `root element`. Assim, não podemos retornar vários React Elements no render do App.js. 
 
 # REACT ATUALIZA SOMENTE O NECESSÁRIO
@@ -78,7 +98,7 @@ constructor(props) {
     super(props);
     this.state = {date: new Date()};
 }
-``` 
+```
 * NUNCA modificar o state diretamente. Sempre via setState. Assim, especifica-se o valor inicial do state no constructor e caso seja necessário alterar o valor em outro lugar, deve-se usar a função setState. Ex: `this.setState({comment: 'Hello'});`
 * IMPORTANTE: O React pode executar vários setStates de uma única vez para aprimorar a performance. Assim, como os valores de state e props são atualizados de forma assíncrona, deve-se fazer o seguinte quando alterar o state dependendo do conteúdo de outro state e/ou props: 
 ```jsx
@@ -123,6 +143,28 @@ function ActionLink() {
 }
 ```
 
+# Lifecycle methods
+
+`render()`: É o único método obrigatório de um componente React. Renderiza o componente na tela e é chamado tanto no mouting quanto no updading, ou seja, ele é chamado toda vez que uma atualização acontecer. **Nota: Não é permitido executar setState() dentro do render**.
+
+`componentDidMount`: É executado assim que o componente estiver pronto, mounted and ready. Este é o ponto ideal para executar Rest API calls. Aqui é permitido executar setState().
+
+`componentDidUpdate`: É executado assim que um update acontecer. É permitido executar o setState aqui, mas é bom verificar por pré condições para não entrar em loop infinito. Veja o exemplo abaixo:
+
+```jsx
+componentDidUpdate(prevProps) {
+ //Typical usage, don't forget to compare the props
+ if (this.props.userName !== prevProps.userName) {
+   this.fetchData(this.props.userName);
+ }
+}
+```
+
+`componentWillUmount`: É executado logo antes do componente ser unmounted e destroyed. Todas as ações de cleanup devem ser executadas aqui. 
+
+Há outros métodos de lifecycle no React, mas estes acima são os principais. 
+
 # HOOKS
+
 * Site oficial [aqui](https://pt-br.reactjs.org/docs/hooks-intro.html)
 * O Hooks permite utilizar o `state` sem escrever uma classe. 

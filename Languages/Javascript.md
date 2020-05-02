@@ -19,8 +19,8 @@
 * Podemos verificar o nome do browser do client assim: `navigator.appName`
 * Há também a função `parseFloat` em javascript
 * === is called as strict equality operator which returns true when the two operands are having the same value without any type conversion.
-* Diferença entre == e === <br>
-  "==" checks only for equality in value whereas "===" is a stricter equality test and returns false if either the value or the type of the two variables are different.
+* Diferença entre == e === 
+  * "==" checks only for equality in value whereas "===" is a stricter equality test and returns false if either the value or the type of the two variables are different.
 * Podemos submeter um formulário em javascript assim: `document.form[0].submit();`
 * Javascript suporta  automatic type conversion.
 * Podemos setar um estilo de um elemento em javascript assim: `document.getElementById("myText").style.fontSize = "20";`
@@ -30,11 +30,10 @@
 * Numbers in JavaScript are all treated with floating point precision
 * Podemos clonar um objeto da seguinte forma: `var objclone = Object.assign({},obj); `
 * Veja sobre o this em javascript [aqui](https://www.w3schools.com/js/js_this.asp)
-* Podemos verificar os nomes de atributos de um objeto usando `Object.keys(obj)'
 * Executar `reverse` em um array inverte o array, mas a referencia continua sendo para o próprio array. 
 
 
-# SUPER IMPORTANTE
+# Hoisting
 Em JavaScript, funções e variáveis são hoisted (ou "levados ao topo"). Hoisting é um comportamento do JavaScript de mover declarações para o topo de um escopo (o escopo global ou da função em que se encontra).
 
 Isso significa que você é capaz de usar uma função ou variável antes mesmo de tê-las declaradas, ou em outras palavras: uma função ou variável podem ser declaradas depois de já terem sido utilizadas.
@@ -62,22 +61,6 @@ function hoisted() {
 * Por outro lado, as variáveis criadas com `let` só podem ser utilizadas após sua declaração, pois, apesar de serem elevadas, elas não são inicializadas. Se você tentar usar uma variável declarada com let antes de declara-la, vai ter um erro de execução do javascript indicando `error: Uncaught ReferenceError: Cannot access 'x' before initialization`. 
 * A melhor explicação sobre hoisting de var é explicado no último exemplo [aqui](https://www.toptal.com/javascript/interview-questions)
 
-# Self executing functions
-In JavaScript, the functions wrapped with parenthesis are called “Immediately Invoked Function Expressions" or "Self Executing Functions.
-
-The purpose of wrapping is to namespace and control the visibility of member functions. It wraps code inside a function scope and decrease clashing with other libraries. This is what we call Immediately Invoked Function Expression (IIFE) or Self Executing Anonymous Function.
-
-Here’s the syntax:
-```javascript 
-(function() {
-   // code
-})();
-```
-As you can see above, the following pair of parentheses converts the code inside the parentheses into an expression:
-
-function(){...}
-In addition, the next pair, i.e. the second pair of parentheses continues the operation. It calls the function, which resulted from the expression above.
-
 # escape
 * Javascript tem uma função chamada `escape` utilizado para transferir informação de um computador para outro. Ex:
 ```
@@ -102,7 +85,7 @@ function isBoolean(arg) {
   return typeof arg === 'boolean';
 }
 ```
-* Outra maneira para verificar: `arg instanceof MinhaClasse`
+* Para verificar objetos, utilizamos  `arg instanceof MinhaClasse`
 * Um grande problema em verificar se é um objeto é que null é considerado um objeto em javascript. Assim typeof arg=='object' retorna true se passamos null. 
 
 # Problema interessante
@@ -159,12 +142,19 @@ function myfunction() {
 # Verificação das propriedades de um objeto
 * Podemos verificar todas as propriedades de um objeto assim: 
 ```javascript 
-for (variable name in object){
+for (var name in object){
 	//statement or block to execute
 }
 ```
 
+Ou então assim:
+
+```javascript
+Object.keys(obj)
+```
+
 # Anonymous function
+
 A function that is declared without any named identifier is known as an anonymous function. In general, an anonymous function is inaccessible after its declaration.
 
 Anonymous function declaration -
@@ -175,7 +165,29 @@ var anon = function() {
 anon();
 ```
 
+# Self executing functions
+
+In JavaScript, the functions wrapped with parenthesis are called “Immediately Invoked Function Expressions" or "Self Executing Functions.
+
+The purpose of wrapping is to namespace and control the visibility of member functions. It wraps code inside a function scope and decrease clashing with other libraries. This is what we call Immediately Invoked Function Expression (IIFE) or Self Executing Anonymous Function.
+
+Here’s the syntax:
+
+```javascript 
+(
+  function(name){
+    console.log('My name is',name);//prints My name is bruno
+  }
+)('bruno')
+```
+
+As you can see above, the following pair of parentheses converts the code inside the parentheses into an expression:
+
+function(){...}
+In addition, the next pair, i.e. the second pair of parentheses continues the operation. It calls the function, which resulted from the expression above.
+
 # Semicolon
+
 * semicolons are technically optional in JavaScript. Assim, o código abaixo retorna undefined pq o conteúdo retornado está na linha debaixo do return e não na mesma linha. O `{` deveria estar na mesma linha do return.
 ```javascript 
 function foo2()
@@ -198,7 +210,7 @@ function foo2()
 1. `function isInteger(x) { return Math.round(x) === x; }`
 
 # Timeouts
-* call `setTimeout()` with a time of 0 ms, the function you specify is not invoked right away. Instead, it is placed on a queue to be invoked “as soon as possible” after any currently pending event handlers finish running. 
+* call `setTimeout()` with a time of 0 ms, the function you specify is **not** invoked right away. Instead, it is placed on a queue to be invoked “as soon as possible” after any currently pending event handlers finish running. 
 * Interessante: 
 ```javascript 
 (function() {
@@ -280,12 +292,21 @@ var a=new Array;
 var a=new Array(5);//cria um array com 5 elementos.
 var a=Array(0,1,2);//é permitido no javascript
 var a=new Array('a','b','c');
+var a=[];
+var a=['a','b','c'];
 ```
 NÃO é permitido criar assim: `var a=new Array[];`
 
 ## slice
+
+Retorna o subarray a partir da posição indicada. Ex: slice(2), indica para começar a partir do 3 elemento
+
+```javascript
 var animals = ['ant', 'bison', 'camel', 'duck', 'elephant'];
 console.log(animals.slice(2));//retorna Array ["camel", "duck", "elephant"]
+```
+
+
 
 ## Criação de um array de 3 dimensões
 `var myArray = [[[]]];`
