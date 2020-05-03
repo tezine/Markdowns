@@ -1,8 +1,9 @@
 # REACTJS
 * Site oficial [aqui](https://pt-br.reactjs.org/)
 * Utiliza JSX. JSX é uma extensão de sintaxe ao Javascript.
-* React utiliza Virtual DOM .
-* O React não obriga a utilização do JSX, mas torna dificil a não utilização do mesmo. 
+* React utiliza Virtual DOM . It follows **uni-directional data flow** or data binding.
+* Using React, writing UI test cases become extremely easy
+* O React não obriga a utilização do JSX, mas torna dificil a não utilização do mesmo. JSX is a shorthand for JavaScript XML. Browsers can only read JavaScript objects but JSX in not a regular JavaScript object. Thus to enable a browser to read JSX, first, we need to transform JSX file into a JavaScript object using JSX transformers like Babel and then pass it to the browser.
 * Para inserir um código Javascript no JSX, basta adicionar entre `{} `
 * Depois da compilação, o JSX é transformado em Javascript. 
 * Como o JSX está mais próximo de Javascript do que do HTML em si, utiliza-se nomenclatura camelCase. Por exemplo, `class` é `className` em JSX, `tabindex` é `tabIndex` em JSX. 
@@ -28,11 +29,19 @@ const element = (
 
 ## Virtual DOM
 
+* A virtual DOM is a lightweight JavaScript object which originally is just the copy of the real DOM. It is a node tree that lists the elements, their attributes and content as Objects and their properties
+
 1. It updates faster.
 2. Can’t directly update HTML.
 3. Updates the JSX if element updates.
 4. DOM manipulation is very easy.
 5. No memory wastage.
+
+# Limitações do React
+
+1. React is just a library, not a full-blown framework.
+2. Its library is very large and takes time to understand
+3. Coding gets complex as it uses inline templating and JSX
 
 # ELEMENTS
 
@@ -82,11 +91,12 @@ class Welcome extends React.Component {
 * O nome de um componente deve sempre começar com maiúscula. 
 * É muito importante liberar os resources na destruição do componente, dentro da função `componentWillUnmount()`.
 * O ReactDOM é responsável por "abrir" o conteúdo de todos os Componentes antes de serem inseridos no DOM Tree. Por exemplo, caso tenhamos um Componente MeuComponente que tem apenas \<h1>\</h1>, o ReactDOM render, substitui o MeuComponente por \<h1>\</h1> para ser inserido no DOM tree.  
-
 * O lifecycle de funções de um componente React é o seguinte: 
-1) constructor
-1) render()
-1) componentDidMount()
+  1. constructor
+  2. render()
+  3. componentDidMount()
+  4. componentDidUpdate()
+  5. componentWillUmount()
 
 ## STATE
 * States estão disponíveis apenas para classes. 
@@ -107,14 +117,26 @@ this.setState((prevState, props) => ({
 }));
 ```
 * Pode-se passar um state como sendo prop de um child. Quando o valor do state é alterado, é alterado o valor do prop no child. Ex: 
-```
+```jsx
 <FormattedDate date={this.state.date} />
 function FormattedDate(props) {
   return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
 }
 ```
 
+# React vs Angular
+
+|                   | React                  | Angular               |
+| ----------------- | ---------------------- | --------------------- |
+| *1. ARCHITECTURE* | Only the View of MVC   | Complete MVC          |
+| *2. RENDERING*    | Server-side rendering  | Client-side rendering |
+| *3. DOM*          | Uses virtual DOM       | Uses real DOM         |
+| *4. DATA BINDING* | One-way data binding   | Two-way data binding  |
+| *5. DEBUGGING*    | Compile time debugging | Runtime debugging     |
+| *6. AUTHOR*       | Facebook               | Google                |
+
 # EVENTS
+
 * Cria-se eventos no react usando nomenclatura camelCase (início em minúscula). Ex: 
 ```jsx
 <button onClick={()=>this.btnClicked()}>
@@ -145,7 +167,7 @@ function ActionLink() {
 
 # Lifecycle methods
 
-`render()`: É o único método obrigatório de um componente React. Renderiza o componente na tela e é chamado tanto no mouting quanto no updading, ou seja, ele é chamado toda vez que uma atualização acontecer. **Nota: Não é permitido executar setState() dentro do render**.
+`render()`: É o único método obrigatório de um componente React. Renderiza o componente na tela e é chamado tanto no mouting quanto no updading, ou seja, ele é chamado toda vez que uma atualização acontecer. O render retorna um único elemento que é a representação do DOM nativo.  **Nota: Não é permitido executar setState() dentro do render**.
 
 `componentDidMount`: É executado assim que o componente estiver pronto, mounted and ready. Este é o ponto ideal para executar Rest API calls. Aqui é permitido executar setState().
 
