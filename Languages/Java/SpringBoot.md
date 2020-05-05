@@ -245,3 +245,24 @@ public class CorsConfig implements WebMvcConfigurer {
     }
 }
 ```
+
+# Docker
+
+* Segue um exemplo abaixo de **Dockerfile** para geração de uma imagem, sendo que o conteúdo do Angular encontra-se na pasta classes/static. Copiar o Dockerfile para o diretório target. 
+
+```Dockerfile
+FROM openjdk:11.0.4-jre-slim
+EXPOSE 9090
+ENV SPRING_CONFIG_LOCATION="classpath:/,/usr/share/myapp/config"
+#RUN addgroup -S spring && adduser -S spring -G spring
+#USER spring:spring
+ADD classes /classes #copia o conteúdo da pasta classes. Colocar o conteúdo angular em classes/static
+ARG JAR_FILE=myapp-0.0.1.jar
+COPY ${JAR_FILE} app.jar
+CMD [ "bash", "-c", "java -Xms256m -Xmx512m -Dspring.profiles.active=prod -jar app.jar"]
+```
+Executar a linha de comando abaixo:
+
+`docker build -t tezine/myapp .`
+
+O comando acima vai gerar a imagem `tezine/myapp:latest`. Pode-se verificar através do comando: `docker images`. Pode-se então, executar o container da seguinte maneira: `docker run -p 9090:9090 --name myapp tezine/myapp`
