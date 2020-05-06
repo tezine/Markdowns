@@ -1,0 +1,88 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: mysql
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: slow
+  namespace: mysql
+provisioner: kubernetes.io/azure-disk
+parameters:
+  skuName: Standard_LRS
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "mysql-pv"
+  namespace: "mysql"
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "slow"
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "5Gi"
+---
+# [START mysql_deployment]
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+      - name: proxy
+        image: gcr.io/google_containers/kubectl-amd64:v1.5.2
+        command:
+        - proxy
+      containers:
+      - name: master
+        image: mysql:5.6
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: MinhaSenha
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        # resources:
+        #   limits:
+        #     cpu: 1000m
+        #     memory: 1000Mi
+        #   requests:
+        #     cpu: 1000m
+        #     memory: 1000Mi
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv
+# [END mysql_deployment]
+# [START mysql_service]
+---
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: mysql
+    namespace: mysql
+  spec:
+    type: LoadBalancer
+    selector:
+      app: master
+    ports:
+      - protocol: TCP
+        port: 3306
+        targetPort: 3306
+        name: mysql-admin-port        
+# [END mysql_service]
