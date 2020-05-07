@@ -4,11 +4,17 @@
 
 # DUMP
 
-* Para fazer o dump  da tabela podall<br>
- `mysqldump --max_allowed_packet=3G -u root -h 188.138.41.18 -p tezinelog podall > podall.sql`
+* Para fazer o dump  da tabela myDatabase.myTable:
+ 
+```bash
+ mysqldump --max_allowed_packet=3G -u root -h 188.138.41.18 -p myDatabase myTable > myTable.sql
+ ```
+ 
+* Para restaurar o backup da tabela criado acima:
 
-* Para restaurar o backup:
-`mysql -u root -h 188.138.41.18 -p tezinelog < podall.sql`
+  ```bash
+  mysql -u root -h 188.138.41.18 -p myDatabase < myTable.sql
+  ```
 
 # Kubernetes - Single Instance
 

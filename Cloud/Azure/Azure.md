@@ -15,9 +15,9 @@
 
 * Segue um passo a passo resumido abaixo:
 
-  1. Acessar  [https://portal.azure.com](https://portal.azure.com/).
+1. Acessar  [https://portal.azure.com](https://portal.azure.com/).
 2. Acessar o menu lateral esquerdo All Services/Containers/Container registries. 
-  3. Criar um novo registry com as configurações default. Ex: myregistry
+3. Criar um novo registry com as configurações default. Ex: myregistry
 4. Editar as variáveis de ambiente de sua máquina e adicionar as entradas abaixo, caso esteja atrás de um proxy:
   
    1. HTTPS_PROXY=http://....
@@ -119,10 +119,21 @@ spec:
         path: /
 ```
 
+# Comandos de Cluster
+
+* Para verificar os service principal associado ao cluster digite: 
+
+```bash
+az aks show --name myAKSCluster --resource-group myResourceGroup
+```
+
+* Para executar o Kubernetes Dashboard em sua máquina, digite:
+
+```bash
+  az aks browse --resource-group myResourceGroup --name myAKSCluster
+```
+
+  
 
 
-## Comandos de Cluster
-
-2. Verifique os pods no cluster da Azure: `kubectl get nodes`
-3. Para verificar os service principal associado ao cluster digite: `az aks show --name test-cluster1 --resource-group dad35.1`
 

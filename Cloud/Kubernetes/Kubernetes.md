@@ -15,6 +15,8 @@
 * Brandan D Burns comenta varias vezes que apenas o CD/Ci pipeline devem ter permissão de acesso ao kubernetes
 * Ele comenta que devemos executar instrusion detection no cluster kubernetes via DaemonSet
 * O Kubernetes é escrito em linguagem Go.
+* O IntelliJ tem um plugin Kubernetes. 
+* O ideal é criar deployments, services, etc em namespaces separados. Assim, por exemplo, podemos ter um namespace para mysql, um namespace para aplicações .Net, etc. 
 
 ## Dashboard
 * A instalação do dashboard é através do script **kubernetes-dashboard.yaml**. Não usar o https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml
@@ -188,6 +190,20 @@ O service mesh fornece o conceito de SMI (Service Mesh Interface). É uma coleta
 * `kubectl logs docker-desktop`: Apresenta os logs do node 'docker-desktop' no windows.
 * `kubectl cluster-info` : Apresenta as informações sobre o cluster
 * ` kubectl logs kubernetes-dashboard-3965212660-pk983 --namespace=kube-system`: Apresenta os logs do dashboard. 
+
+## Exposição para a internet
+
+Podemos expor um Deployment para ser acessível pela internet pública através do comando:
+
+```bash
+kubectl expose deployment mysql --type=LoadBalancer --port=3306 --target-port=3306 --name=mysql
+```
+
+Como alternativa, podemos expor somente um determinado POD para ser acessível assim:
+
+```bash
+kubectl expose pod mysql-7fddc47744-lzhck --name mysql3306 --type LoadBalancer --port 3306 --protocol TCP
+```
 
 ## Comandos do Cluster
 
