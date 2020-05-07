@@ -17,6 +17,112 @@ const element = (
 )
 ```
 
+# Criação de projeto
+
+* Para criar um projeto React, baixe a versão mais atualizada do NPM e Yarn e execute:
+
+  ```bash
+  yarn create react-app my-app
+  cd my-app
+  yarn start
+  ```
+
+* Para desabilitar os warnings de lint, basta desabilitar o ESLint no IntelliJ. 
+
+* Segue um exemplo de arquivo App.jsx abaixo:
+
+  ```jsx
+  import React from 'react';
+  import './App.scss';
+  import {Home} from "./pages/Home";
+  import ReactDOM from 'react-dom';
+  
+  export class App extends React.Component{
+    constructor(props) {
+      super(props);
+    }
+  
+    render() {
+      return (
+          <Home/>
+      );
+    }
+  }
+  
+  export default App;
+  ReactDOM.render(<App />, document.getElementById('root'));
+  ```
+
+* Para gerar o build do projeto, basta executar:
+
+  ```bash
+  yarn build
+  ```
+
+* A maneira mais fácil de utilizar o React ou adiciona-lo em outro projeto é através deste exemplo de [index.html](index.html). Repare que ele conta com um `babel transformer in browser`
+
+* Para facilitar a depuração de uma aplicação React, instale o React DevTools disponível [aqui](https://reactjs.org/blog/2015/09/02/new-react-developer-tools.html#installation).
+
+# Styles
+
+O React suporta inline style assim:
+
+```jsx
+<div style={{width:'100%'}}>
+```
+
+
+
+# SaSS
+
+Por padrão, o projeto não vem com suporte a SaSS. Para utiliza-lo no projeto, siga os passos abaixo:
+
+1. Executar `yarn add node-sass`
+2. Criar um arquivo terminando com `module.scss` e importa-lo no componente, conforme abaixo:
+
+Home.module.scss file below: 
+
+```scss
+@import '../styles/shared';
+
+.corpo{
+  background-color: gray;
+}
+
+.myParagraph{
+  color:red;
+  font-size: 20px;
+  margin-left: 50px;
+}
+
+.myDiv{
+  width: 400px;
+  height: 400px;
+  background-color: #61dafb;
+}
+```
+Home.jsx below:
+```jsx
+import React, {Component} from 'react';
+import styles from './Home.module.scss'
+
+export class Home extends React.Component {
+    render() {
+        return (
+            <div className={styles.corpo}>
+                <p className={styles.myParagraph}>
+                    {this.state.name} ok
+                </p>
+                <div className={styles.myDiv}></div>
+            </div>
+        );
+    }
+}
+```
+
+
+
+
 # Virtual DOM vs Real DOM
 
 ## Real DOM
