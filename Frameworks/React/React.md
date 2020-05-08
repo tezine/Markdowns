@@ -90,24 +90,52 @@ class ToolBar extends Component {
 }
 ```
 
-# SaSS
+E também podemos instalar o [Styled Components](https://github.com/styled-components/styled-components) e fazer assim:
+
+```jsx
+import React, {Component} from 'react';
+import styled from "styled-components";
+
+const Paragraph = styled.p`
+  font-size: 15px;
+  text-align: center;
+`;
+
+class VStyleSample extends Component {
+    render() {
+        return (
+            <Paragraph>hello world!</Paragraph>
+        );
+    }
+}
+```
+
+Para instalar o Styled Components, execute:
+
+```bash
+yarn add styled-components
+yarn add @types/styled-components --dev //no caso se usar typescript
+```
+
+## SaSS
 
 Por padrão, o projeto não vem com suporte a SaSS. Para utiliza-lo no projeto, siga os passos abaixo:
 
 1. Executar `yarn add node-sass`
 2. Criar um arquivo terminando com `module.scss` e importa-lo no componente, conforme abaixo:
 
-Home.module.scss file below: 
+`Home.module.scss` file below: 
 
 ```scss
 @import '../styles/shared';
+$primaryColor:red
 
 .corpo{
   background-color: gray;
 }
 
 .myParagraph{
-  color:red;
+  color:$primaryColor;
   font-size: 20px;
   margin-left: 50px;
 }
@@ -118,7 +146,8 @@ Home.module.scss file below:
   background-color: #61dafb;
 }
 ```
-Home.jsx below:
+`Home.jsx` below:
+
 ```jsx
 import React, {Component} from 'react';
 import styles from './Home.module.scss'
@@ -136,8 +165,6 @@ export class Home extends React.Component {
     }
 }
 ```
-
-
 
 
 # Virtual DOM vs Real DOM
@@ -293,11 +320,19 @@ function ActionLink() {
 
 # Lifecycle methods
 
-`render()`: É o único método obrigatório de um componente React. Renderiza o componente na tela e é chamado tanto no mouting quanto no updading, ou seja, ele é chamado toda vez que uma atualização acontecer. O render retorna um único elemento que é a representação do DOM nativo.  **Nota: Não é permitido executar setState() dentro do render**.
+Há outros métodos de lifecycle no React, mas estes abaixo são os principais:
 
-`componentDidMount`: É executado assim que o componente estiver pronto, mounted and ready. Este é o ponto ideal para executar Rest API calls. Aqui é permitido executar setState().
+## render()
 
-`componentDidUpdate`: É executado assim que um update acontecer. É permitido executar o setState aqui, mas é bom verificar por pré condições para não entrar em loop infinito. Veja o exemplo abaixo:
+É o único método obrigatório de um componente React. Renderiza o componente na tela e é chamado tanto no mouting quanto no updading, ou seja, ele é chamado toda vez que uma atualização acontecer. O render retorna um único elemento que é a representação do DOM nativo.  Nota: Não é permitido executar setState() dentro do render.
+
+## componentDidMount()
+
+É executado assim que o componente estiver pronto, mounted and ready. Este é o ponto ideal para executar Rest API calls. Aqui é permitido executar setState().
+
+## componentDidUpdate()
+
+É executado assim que um update acontecer. É permitido executar o setState aqui, mas é bom verificar por pré condições para não entrar em loop infinito. Veja o exemplo abaixo:
 
 ```jsx
 componentDidUpdate(prevProps) {
@@ -308,11 +343,11 @@ componentDidUpdate(prevProps) {
 }
 ```
 
-`componentWillUmount`: É executado logo antes do componente ser unmounted e destroyed. Todas as ações de cleanup devem ser executadas aqui. 
+## componentWillUmount()
 
-Há outros métodos de lifecycle no React, mas estes acima são os principais. 
+É executado logo antes do componente ser unmounted e destroyed. Todas as ações de cleanup devem ser executadas aqui. 
 
-# Loops
+# Conditional rendering e loops
 
 * Podemos criar loops como `for` em React utilizando ES6 map: 
 
@@ -321,18 +356,16 @@ Há outros métodos de lifecycle no React, mas estes acima são os principais.
   
   function App() {
     return (
-      <div>
-        {names.map(name => (
-          <li>
+      <ul>
+        {names.map((name,index) => (
+          <li key={index}>
             {name}
           </li>
         ))}
-      </div>
+      </ul>
     );
   }
   ```
-
-  
 
 # Typescript
 
@@ -368,8 +401,6 @@ Há outros métodos de lifecycle no React, mas estes acima são os principais.
           };
       }
   ```
-
-  
 
 # Next.js 
 
