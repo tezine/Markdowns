@@ -199,6 +199,28 @@ ou
 ```
 * background-size: cover não faz shrink da imagem. Caso a imagem fique não caiba na tela de fundo, utilizar `background-size: contain`
 
+# Horizontal Layout
+
+* Podemos criar um horizontal layout de 2 maneiras:
+
+  Utilizando Flex layout:
+
+  ```jsx
+  <div style={{display:"flex",flexDirection:"row",width:'500px'}}>
+      <div style={{backgroundColor: 'green',height:'50px',flexGrow:1}}/>
+      <div style={{backgroundColor:'blue',height:'50px',flexGrow:1}}/>
+  </div>
+  ```
+
+* Via float:
+
+  ```jsx
+  <div style={{width:500}}>
+      <div style={{float:'left',backgroundColor:'green',width:'50%',height:50}}/>
+      <div style={{float:'right',backgroundColor:'blue',width:'50%',height:50}}/>
+  </div>
+  ```
+
 # CLIQUES
 * Hack para ampliar a área clicável de um div ou a: 
 ```css
@@ -393,5 +415,27 @@ O Flexbox não é adequado para criar grids. Neste caso, é recomendável utiliz
   </div>
 </body>
 ```
+
+# Query Selector
+
+* Mais informações [aqui](https://www.w3schools.com/cssref/css_selectors.asp).
+
+* Query selector é um método do Element. Ele permite encontrar o primeiro elemento, descendente do parent element que é invocado, em que encontra o css selector ou grupo de css selectors. Ex:
+
+  ```javascript
+  let firstHeading = document.querySelector('h1');//encontra o primeiro elemento h1 no document
+  let heading2 = document.querySelectorAll('h2');//encontra todos os h2 no document
+  let elWithIDMyID=document.querySelector('#MyID');//encontra o primeiro elemento com id MyID
+  ```
+
+| [.*class*](https://www.w3schools.com/cssref/sel_class.asp)   | .intro        | Selects all elements with class="intro"                      |
+| ------------------------------------------------------------ | ------------- | ------------------------------------------------------------ |
+| *.class1.class2*                                             | .name1.name2  | Selects all elements with both *name1* and *name2* set within its class attribute |
+| *.class1 .class2*                                            | .name1 .name2 | Selects all elements with *name2* that is a descendant of an element with *name1* |
+| [#*id*](https://www.w3schools.com/cssref/sel_id.asp)         | #firstname    | Selects the element with id="firstname"                      |
+| [*](https://www.w3schools.com/cssref/sel_all.asp)            | *             | Selects all elements                                         |
+| *[element](https://www.w3schools.com/cssref/sel_element.asp)* | p             | Selects all <p> elements                                     |
+| *[element.class](https://www.w3schools.com/cssref/sel_element_class.asp)* | p.intro       | Selects all <p> elements with class="intro"                  |
+| *[element,element](https://www.w3schools.com/cssref/sel_element_comma.asp)* | div, p        | Selects all <div> elements and all <p> elements              |
 
 # MEDIA QUERIES

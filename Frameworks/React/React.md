@@ -71,7 +71,24 @@ O React suporta inline style assim:
 <div style={{width:'100%'}}>
 ```
 
+Também podemos fazer assim: 
 
+```jsx
+const divStyle = {
+    height: '50px',
+    backgroundColor: 'lightblue',
+    width: '100%'
+};
+
+class ToolBar extends Component {
+    render() {
+        return (
+            <div style={divStyle}>
+            </div>
+        );
+    }
+}
+```
 
 # SaSS
 
@@ -180,14 +197,17 @@ setInterval(tick, 1000);
 ```
 
 # COMPONENTS
+* Há dois tipos de Components em React: Function Components e Class Components. 
 * A maneira mais simples de criar um componente em React é através de uma função que aceita um parâmetro `props` e retorna um React Element. Ex: 
 ```jsx
+//Function component
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
 ```
 Segue o mesmo exemplo em ES6: 
 ```jsx
+//Class component
 class Welcome extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}</h1>;
@@ -291,6 +311,69 @@ componentDidUpdate(prevProps) {
 `componentWillUmount`: É executado logo antes do componente ser unmounted e destroyed. Todas as ações de cleanup devem ser executadas aqui. 
 
 Há outros métodos de lifecycle no React, mas estes acima são os principais. 
+
+# Loops
+
+* Podemos criar loops como `for` em React utilizando ES6 map: 
+
+  ```jsx
+  const names = ['James', 'Paul', 'John', 'George', 'Ringo'];
+  
+  function App() {
+    return (
+      <div>
+        {names.map(name => (
+          <li>
+            {name}
+          </li>
+        ))}
+      </div>
+    );
+  }
+  ```
+
+  
+
+# Typescript
+
+* Podemos adicionar suporte a typescript a um projeto React existente. Para isso, basta executar o comando: 
+
+  ```bash
+  yarn add typescript @types/node @types/react @types/react-dom @types/jest
+  ```
+
+* Após isso, basta criar os componentes com arquivos com extensão .tsx. O React automaticamente vai gerar o arquivo tsconfig.json. 
+
+* Para criar um projeto a partir do zero já com suporte a typescript, digite: 
+
+  ```bash
+  yarn create react-app my-app --typescript
+  ```
+
+* Agora podemos criar componentes .tsx como abaixo:
+
+  ```tsx
+  interface IProps {
+      name?:string;
+  }
+  interface IState {
+      age?: string;
+  }
+  
+  export class VHome extends React.Component<IProps, IState> {
+      constructor(props:IProps) {
+          super(props);
+          this.state = {
+              age: '41'
+          };
+      }
+  ```
+
+  
+
+# Next.js 
+
+O [Next.js](https://nextjs.org/) é utilizado para Server-side rendering. Ele também faz automatic code splitting. Há um documento sobre Next.js [aqui](../Nextjs/Nextjs.md).
 
 # HOOKS
 

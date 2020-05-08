@@ -335,4 +335,27 @@ Garbage collector basically looks out for unreachable objects which are removed 
 
 
 # JAVASCRIPT ES6
-*  ... : São os 3 pontos https://dmitripavlutin.com/how-three-dots-changed-javascript/   
+
+* A partir dessa versão, javascript suporta classes, arrow functions, let, ... 
+
+*  ... : Suporta os 3 pontos. Mais info [aqui](https://dmitripavlutin.com/how-three-dots-changed-javascript/  ).
+
+## Arrow functions
+
+```javascript
+// hello() returns Hello World!
+hello = () => {
+  return "Hello World!";
+}
+
+//hello() returns Hello World!
+hello = () => "Hello World!"; 
+
+// hello('World') returns Hello World
+hello = (val) => "Hello " + val; 
+
+//se a função tiver somente um parâmetro, podemos escrever assim:
+//hello('World') returns Hello World
+hello = val => "Hello " + val; 
+```
+
