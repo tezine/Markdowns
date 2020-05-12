@@ -4,7 +4,7 @@
 * Todos os bins e libs não são compartilhados e são exclusivos do container.
 
 # Para criar uma imagem a partir de um arquivo Dockerfile
-Executar a partir do diretório do Dockerfile: `docker build -t tezine/myimagename .` O parâmetro -t significa tag
+Executar a partir do diretório do Dockerfile: `docker build -t tezine/myimagename:latest .` O parâmetro -t significa tag
 
 ## Para verificar os logs do deamon
 sudo journalctl -fu docker.service

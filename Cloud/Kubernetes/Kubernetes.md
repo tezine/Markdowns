@@ -183,6 +183,53 @@ O service mesh fornece o conceito de SMI (Service Mesh Interface). É uma coleta
 * No exemplo apresentado no vídeo, há um namespace Fission que contém vários PODS necessários para implementar Function as a Service (FaaS). 
 * O Fission fornece uma linha de comando própria que aplica os comandos no Kubernetes. Veja mais detalhes no arquivo [Fission](Fission.md)
 
+# CONFIG MAP
+
+* Mais info [aqui](https://kubernetes.io/docs/concepts/configuration/configmap/)
+* Config maps são utilizados para armazenar informações não confidenciais em pares key-value. 
+* Segue um exemplo abaixo de keymap contendo a url do MySQL abaixo juntamente com o deployment que faz a utilização do keymap:
+
+<i>kubernetes.yaml</i>
+
+```yaml
+#CONFIG MAP
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-config
+  labels:
+    app: myapp
+data:
+  databaseURL: jdbc:mysql://10.0.0.12:3306/mydatabase?useTimezone=true&serverTimezone=UTC
+#DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  labels:
+    app: myapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp
+        #image: myArc.azurecr.io/myapp:v1
+        image: tezine/myapp:v1
+        ports:
+        - containerPort: 9090
+        envFrom:
+          - configMapRef:
+              name: myapp-config  
+---              
+```
+
 # **Kubectl**
 
 * Kubectl é uma linha de comando para executar comandos sobre um cluster Kubernetes. Podemos monitorar as mudanças de status de qualquer comando kubectl através do comando `watch kubect...`
@@ -218,11 +265,33 @@ kubectl expose pod mysql-7fddc47744-lzhck --name mysql3306 --type LoadBalancer -
 ## Comandos de POD
 
 * Um POD é um agrupamento de containers que é executado dentro de um Node. 
+
 * Um pod define variáveis de ambiente, mount storages, etc utilizados pelos containers. 
+
 * `kubectl get pods`: Lista os pods do node. Usar o comando `kubectl get pods -o wide` para indicar o node onde está rodando(no caso de cluster)
+
 * `kubectl get pods --all-namespaces`: Apresenta o status de todos os pods. 
+
 * `kubectl describe pods` : Apresenta um detalhamento sobre os pods no Node 
+
 * `kubectl port-forward myCassandraPODName 9042:9042`: Expoe a porta 9042 do pod myCassandraPODName
+
+* `kubectl exec -t -i mysql-bffc49dc7-bwfr5 --namespace mysql /bin/bash` Executa o bash no POD.
+
+* Por padrão, não há o comando ping no POD. Para isso é necessário instalar o iputils. Execute:
+
+  ```bash
+  apt-get update
+  apt-get install iputils-ping
+  ```
+
+Podemos executar o busybox assim: 
+
+```bash
+kubectl run -i --tty busybox --image=busybox --restart=Never -- sh 
+```
+
+* Para verificar o endereço ip dos PODs: `kubectl get pod -o wide`
 
 ## Comandos de Service
 * Um service é um load balancer que faz o tráfego para um collection de PODS. 

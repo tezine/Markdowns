@@ -133,7 +133,13 @@ az aks show --name myAKSCluster --resource-group myResourceGroup
   az aks browse --resource-group myResourceGroup --name myAKSCluster
 ```
 
-  
+* Para remover um resource group:
+
+```bash
+az group delete --name myResourceGroup
+```
+
+
 
 
 
