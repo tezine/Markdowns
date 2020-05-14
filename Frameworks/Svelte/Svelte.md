@@ -95,10 +95,10 @@
   //or 
   numbers[numbers.length] = numbers.length + 1;
   //than use the array reference like: 
-  $: sum = numbers.reduce((t, n) => t + n, 0);
+  $: sum = numbers.reduce((t, n) => t + n, 0); //re-run (reactive) statement
   ```
 
-  A simple rule: the name of the updated variable must appear on the left hand side of the assignment. Ex:
+  A simple rule: **the name of the updated variable must appear on the left hand side of the assignment**. Ex:
 
   ```javascript
   const foo = obj.foo;
@@ -107,14 +107,79 @@
 
   ...won't update references to `obj.foo.bar`, unless you follow it up with `obj = obj`.
 
+# Props
+
+* Properties allow to pass values to its children. 
+
+* Properties are created in svelte by adding the export keyword. Ex:
+
+  <i>Nested.svelte</i>
+
+  ```html
+  <script>
+  	export let answer='a mystery';
+  </script>
+  
+  <p>The answer is {answer}</p>
+  ```
+
+  <i>App.svelte</i>
+
+  ```html
+  <script>
+  	import Nested from './Nested.svelte';
+  </script>
+  
+  <Nested answer={42}/>
+  ```
+
+## Spread
+
+* If you have an object of properties, you can 'spread'  them, instead of spcecifying each one. Ex:
+
+<i>Info.svelte</i>
+
+  ```html
+  <script>
+  	export let name;
+  	export let version;
+  	export let speed;
+  	export let website;
+  </script>
+  
+  <p>
+  	The <code>{name}</code> package is {speed} fast.
+  	Download version {version} from <a href="https://www.npmjs.com/package/{name}">npm</a>
+  	and <a href={website}>learn more here</a>
+  </p>
+  ```
+
+<i>App.svelte</i>
+
+```html
+<script>
+	import Info from './Info.svelte';
+
+	const pkg = {
+		name: 'svelte',
+		version: 3,
+		speed: 'blazing',
+		website: 'https://svelte.dev'
+	};
+</script>
+<!--both ways are allowed below -->
+<Info name={pkg.name} version={pkg.version} speed={pkg.speed} website={pkg.website}/>
+<Info {...pkg}/>
+```
+
 # Styles
 
 * Stylesheets can be added to the component inside `<style></style`. By default, all rules defined inside it are scoped to the component, so you don't have to worry about css collisions. 
 * SCSS is also supported. Just add <style lang="scss"></style> to use it. 
 
+# Inline Handler
 
 
-## Inline Handler
 
 * Svelte supports inline handlers, so you may insert javascript code inside html: 
 
@@ -135,5 +200,172 @@
   </button>
   ```
 
+
+# HTML Logic
+
+* Svelte allow to express logic like loops and conditionals like below: 
+* A `#` character always indicates a *block opening* tag. A `/` character always indicates a *block closing* tag. A `:` character, as in `{:else}`, indicates a *block continuation* tag. 
+
+## if/else
+
+```html
+{#if user.loggedIn}
+	<button on:click={toggle}>
+		Log out
+	</button>
+{:else}
+	<button on:click={toggle}>
+		Log in
+	</button>
+{/if}
+```
+
+Multiple if/else can be chained like below:
+
+```html
+{#if x > 10}
+	<p>{x} is greater than 10</p>
+{:else if 5 > x}
+	<p>{x} is less than 5</p>
+{:else}
+	<p>{x} is between 5 and 10</p>
+{/if}
+```
+
+## each
+
+Each allow to loop over a list of data. Ex:
+
+```html
+<ul>
+	{#each cats as cat}
+		<li>{cat.name}</li>
+	{/each}
+</ul>
+```
+
+You can get the current index as a second argument. Ex:
+
+```html
+{#each cats as cat, i} <!--i is the current array index-->
+	<li>{i + 1}: {cat.name}</li>
+{/each}
+```
+
+ In case you are going to make changes to the list, use **keyed each blocks** as mentioned [here](https://svelte.dev/tutorial/keyed-each-blocks)
+
+## await
+
+Svelte supports await inside html like this:
+
+```html
+{#await promise}
+	<p>...waiting</p>
+{:then result}
+	<p>The number is {result}</p>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
+```
+
+You can use it in a more simple way:
+
+```html
+{#await promise then value}
+	<p>the value is {value}</p>
+{/await}
+```
+
+# DOM Events
+
+* Dom events are handled with lowercase letters like this:
+
+  ```html
+  <script>
+  	let m = { x: 0, y: 0 };
+  	function handleMousemove(event) {
+  		m.x = event.clientX;
+  		m.y = event.clientY;
+  	}
+  </script>
   
+  <style>
+  	div { width: 100%; height: 100%; }
+  </style>
+  
+  <div on:mousemove={handleMousemove}>
+  	The mouse position is {m.x} x {m.y}
+  </div>
+  ```
+
+* DOM event handlers can have modifiers. Ex:
+
+  ```html
+  <button on:click|once={handleClick}> <!--handleClick will fired only once-->
+  	Click me
+  </button>
+  ```
+
+  Follow the list of modifiers below:
+
+  - `preventDefault` — calls `event.preventDefault()` before running the handler. Useful for client-side form handling, for example.
+  - `stopPropagation` — calls `event.stopPropagation()`, preventing the event reaching the next element
+  - `passive` — improves scrolling performance on touch/wheel events (Svelte will add it automatically where it's safe to do so)
+  - `capture` — fires the handler during the *capture* phase instead of the *bubbling* phase ([MDN docs](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture))
+  - `once` — remove the handler after the first time it runs
+  - `self` — only trigger handler if event.target is the element itself
+
+## Component Events
+
+Components can also dispatch events. To do so, they must create an event dispatcher. Ex:
+
+<i>Inner.svelte</i>
+
+```html
+<script>
+	import { createEventDispatcher } from 'svelte';
+	
+	const dispatch = createEventDispatcher();
+
+	function sayHello() {
+		dispatch('message', { //creates something similar to EventEmitter in Angular
+			text: 'Hello!'
+		});
+	}
+</script>
+
+<button on:click={sayHello}>
+	Click to say hello
+</button>
+```
+
+<i>App.svelte</i>
+
+```html
+<script>
+	import Inner from './Inner.svelte';
+
+	function handleMessage(event) {
+		alert(event.detail.text);
+	}
+</script>
+
+<Inner on:message={handleMessage}/>
+```
+
+Unlike DOM events, component events don't *bubble*. If you want to listen to an event on some deeply nested component, the intermediate components must *forward* the event. More info [here](https://svelte.dev/tutorial/event-forwarding). Event forwarding works for DOM events too. Check it out [here](https://svelte.dev/tutorial/dom-event-forwarding)
+
+# Bindings
+
+As a general rule, data flow in Svelte is *top down* — a parent component can set props on a child component, and a component can set attributes on an element, but not the other way around. To do the way around, use bind:value like below:
+
+```html
+<input bind:value={name}>
+//checkbox below
+<input type=checkbox bind:checked={yes}>
+```
+
+
+
+
 
