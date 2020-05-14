@@ -233,7 +233,22 @@ public class YAMLConfig {
 }
 ```
 
+## Environment Variables
+
+* It's possible to read environment variables like below:
+
+  ```java
+  import org.springframework.beans.factory.annotation.Value;
+  public class MyClass{
+      @Value("${databaseURL}") //faz a leitura da variável de ambiente databaseURL
+      private String databaseURL;
+  }
+  ```
+
+  
+
 # CORS
+
 * Para habilitar CORS no Spring Boot e, com isso permitir com que ele aceite requests de qualquer lugar, crie a classe CorsConfig.java abaixo
 ```java
 @Configuration

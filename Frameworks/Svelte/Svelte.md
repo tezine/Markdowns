@@ -2,7 +2,7 @@
 
 * [Svelte](https://svelte.dev/) is a UI framework without Virtual DOM. It's truly reactive, with faster and smaller bundles than React and others. 
 
-* Svelte means stylish, elegant. The project started by Rich Harris, a frontend developer of New York Times.  
+* Svelte means slender, stylish, elegant... The project started by Rich Harris, a frontend developer of New York Times.  
 
 * Similar to Vue, Svelte combines html, style and script into the same file, with `.svelte` extension. IntelliJ already provides a plugin for Svelte. 
 
@@ -39,17 +39,73 @@
   </script>
   ```
 
+* Svelte officially supports [Webpack](https://github.com/sveltejs/svelte-loader) and [Rollup](https://github.com/sveltejs/rollup-plugin-svelte).
+
 # Html injection
 
 * It's possible to inject raw html inside a Svelte component like this:
 
   ```html
-  <p>
-      {@html string}
-  </p>
+  <script>
+  	let content = "this string contains some <strong>HTML!!!</strong>";
+  </script>
+  
+  <p>{@html content}</p>
   ```
 
 * Svelte doesn't perform any sanitization before it gets inserted into the DOM, so avoid using it since it exposes users to XSS attacks. 
+
+# Reactive Declarations
+
+* Reactive Declarations indicates the to Svelte to re-run the code whenever any of the referenced values change. 
+
+  ```html
+  <script>
+  	let count = 0;
+  	$: doubled = count * 2;
+  </script>
+  
+  <button on:click={(event)=>count+=1}>Click me</button>
+  <p>{count} doubled = {doubled}</p>
+  ```
+
+* Whenever the button is clicked above, the `count` variable is incremented. `$:` indicates Svelte to re-run the line whenever the reference values changes. In this case, whenever count*2 changes. 
+
+* We're not limited to declaring reactive *values* — we can also run arbitrary *statements* reactively. For example, we can log the value of `count` whenever it changes:
+
+  ```javascript
+  $: console.log(`the count is ${count}`);
+  ```
+
+* **So, the line within `$: ` is re-executed whenever any of the referenced values change **
+
+* It's possible to group these re-executable statements in a block: 
+
+  ```javascript
+  $: {
+  	console.log(`the count is ${count}`);
+  	alert(`I SAID THE COUNT IS ${count}`);
+  }
+  ```
+
+* Svelte's reactivity is triggered by assignments, so array methods like push and splice don't trigger re-executable blocks. To contour this problem, Svelte requires that we use assignments, to trigger re-executable blocks. Ex: 
+
+  ```javascript
+  numbers = [...numbers, numbers.length + 1];
+  //or 
+  numbers[numbers.length] = numbers.length + 1;
+  //than use the array reference like: 
+  $: sum = numbers.reduce((t, n) => t + n, 0);
+  ```
+
+  A simple rule: the name of the updated variable must appear on the left hand side of the assignment. Ex:
+
+  ```javascript
+  const foo = obj.foo;
+  foo.bar = 'baz';
+  ```
+
+  ...won't update references to `obj.foo.bar`, unless you follow it up with `obj = obj`.
 
 # Styles
 
