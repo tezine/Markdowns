@@ -1,6 +1,6 @@
 # Svelte
 
-* [Svelte](https://svelte.dev/) is a UI framework without Virtual DOM. It's truly reactive, with faster and smaller bundles than React and others. 
+* [Svelte](https://svelte.dev/) is a UI framework without Virtual DOM. It's truly reactive, with faster and smaller bundles than React and others.    
 
 * Svelte means slender, stylish, elegant... The project started by Rich Harris, a frontend developer of New York Times.  
 
