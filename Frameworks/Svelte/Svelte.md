@@ -365,6 +365,93 @@ As a general rule, data flow in Svelte is *top down* — a parent component can 
 <input type=checkbox bind:checked={yes}>
 ```
 
+When names match, you can simplify the expression. Ex:
+
+```html
+<textarea bind:value={value}></textarea>
+<!--can be simplified by the code below-->
+<textarea bind:value></textarea>
+```
+
+
+
+## Group inputs
+
+Svelte allows to group inputs. Ex:
+
+```html
+<script>
+	let flavours = ['Mint choc chip'];
+	let menu = [
+	'Cookies and cream',
+	'Mint choc chip',
+	'Raspberry ripple'
+	];
+</script>
+
+<h2>Flavours</h2>
+
+{#each menu as menuItem}
+	<label>
+		<input type=checkbox bind:group={flavours} value={menuItem}>
+		{menuItem}
+	</label>
+{/each}
+
+<p>
+	Flavours selected: {flavours}
+    <!-- If all checkboxes are checked, it displays:-->
+    <!--Cookies and cream,Mint choc chip,Raspberry ripple-->
+</p>
+```
+
+## Multiple Binding
+
+It's possible to select multiple options with Svelte, by using `multiple` attribute:
+
+```html
+<script>
+	let flavours = ['Mint choc chip'];
+	let menu = [
+		'Cookies and cream',
+		'Mint choc chip',
+		'Raspberry ripple'
+	];
+</script>
+
+<select multiple bind:value={flavours}>
+	{#each menu as menuItem}
+		<option value={menuItem}>
+			{menuItem}
+		</option>
+	{/each}
+</select>
+
+<h2>Selected: </h2>
+<p>{flavours}</p>
+```
+
+
+
+# Forms
+
+You can create forms like the example below:
+
+```html
+<form on:submit|preventDefault={handleSubmit}>
+	<select bind:value={selected} on:change={() => answer = ''}>
+		{#each questions as question}
+			<option value={question}>
+				{question.text}
+			</option>
+		{/each}
+	</select>
+
+	<input bind:value={answer}>
+	<button disabled={!answer} type=submit>Submit</button>
+</form>
+```
+
 
 
 
