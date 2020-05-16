@@ -431,7 +431,76 @@ It's possible to select multiple options with Svelte, by using `multiple` attrib
 <p>{flavours}</p>
 ```
 
+* Svelte also supports contenteditable bindings. Take a look [here](https://svelte.dev/tutorial/contenteditable-bindings)
 
+* It's also possible to bind to each blocks. More info [here](https://svelte.dev/tutorial/each-block-bindings)
+
+* There are several bindings for audio and video [here](https://svelte.dev/tutorial/media-elements)
+
+* You can get clientWidth and clientHeight of a block level element like <div> by using `bind:clientWidth={w} bind:clientHeight={h}`
+
+* Svelte provides the readonly `this` binding. Ex:
+
+  ```html
+  <!--Note that the value of myInput will be undefined until the component has mounted-->
+  <input bind:this={myInput}>
+  <button on:click={btnClicked}>Click me</button>
+  
+  <script>
+      let myInput; 
+      function btnClicked() {
+          console.log(myInput.value);
+      }
+  </script>
+  ```
+
+# Lifecycle
+
+## onMount
+
+Runs after the component is first rendered to the DOM
+
+```html
+<script>
+    import { onMount } from 'svelte';
+    let photos = [];
+    
+    onMount(async () => {
+        const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
+        photos = await res.json();
+    });
+</script>
+```
+
+## onDestroy
+
+Runs when the component is destroyed
+
+```html
+<script>
+	import { onDestroy } from 'svelte';
+
+	let seconds = 0;
+	const interval = setInterval(() => seconds += 1, 1000);
+
+	onDestroy(() => clearInterval(interval));
+</script>
+```
+
+## beforeUpdate
+
+* The `beforeUpdate` function schedules work to happen immediately before the DOM has been updated.
+* Note that `beforeUpdate` will first run before the component has mounted,
+
+## afterUpdate
+
+* `afterUpdate` is used for running code once the DOM is in sync with your data.
+
+## tick
+
+* tick is a special function that can be called any time. It returns a promise that resolves as soon as any pending state changes have been applied to the DOM (or immediately, if there are no pending state changes). 
+
+  
 
 # Forms
 
