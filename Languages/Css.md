@@ -31,7 +31,21 @@
 }
 ```
 
+## VIA ATTRIBUTE SELECTOR
+
+```html
+<div contenteditable="true"></div>
+<style>
+	[contenteditable] {
+		padding: 0.5em;
+	}
+</style>
+```
+
+
+
 # ORDEM 
+
 * A ordem é top, right, bottom, left. Ex:
 `padding:10px 5px 15px 20px;`
 

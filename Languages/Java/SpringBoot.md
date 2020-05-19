@@ -1,5 +1,5 @@
 # Spring Boot
-* Podemos usar o Maven ou Gradle como build tool. Aqui usam mais o Maven. Também é possível usar o Java ou Kotlin como linguagem. 
+* Podemos usar o Maven ou Gradle como build tool. Aqui usam mais o Maven. Também é possível usar o Java ou Kotlin como linguagem.    
 * Para agilizar a criação de projetos Spring Boot, podemos criar um projeto rapidamente através do [Spring Initialzr](https://start.spring.io/)
 * Se o proxy estiver com problema (no vscode ou no maven), vão aparecer muitas mensagens indicando que não foi possível baixar o artifact... assim que abrir o projeto no vscode. 
 * Lembre-se de Não utilizar o maven wrapper no vscode. Baixar o maven do site e lembrar de configurar o proxy no arquivo de configuração dele. 
