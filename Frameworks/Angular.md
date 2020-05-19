@@ -43,7 +43,7 @@ export class MyService {
 * Podemos passar parâmetros para o componente através do @Input(). Ex:
 ```typescript 
 @Input() count: number = 0;
-```  
+```
 
 # EVENTOS
 * Podemos ouvir os html events que acontecem dentro de um componente da seguinte maneira:
@@ -150,7 +150,7 @@ function apiConfigFactory() : Configuration {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-``` 
+```
 1. Repare que é possível especificar as credenciais JWT, entre outros na função apiConfigFactory. 
 1. Agora já é possível acessar as apis. Segue um exemplo abaixo:
 ```typescript
@@ -175,53 +175,6 @@ export class AppComponent implements OnInit {
 }
 ```
 
-# Integração com OpenAPI Generator
-* Passo a passo para criar um projeto Angular com integração com OpenAPI Generator (alternativa ao Swagger Code Gen)
-> Alternativa ao Swagger. Mais info sobre o OpenAPI Generator [aqui](https://openapi-generator.tech/docs/generators/typescript-angular)<br>
-> A configuração no projeto Angular é praticamente a mesma da utilizada com o Swagger. Exemplo [aqui](https://github.com/OpenAPITools/openapi-generator/tree/master/samples/client/petstore/typescript-angular-v4/npm)
-1. Instalar a linha de comando do Open API Generator: `npm install @openapitools/openapi-generator-cli -g`
-1. Criar um workspace Angular: `ng new my-workspace --createApplication="false"`
-1. Criar o projeto Angular: `cd my-workspace, ng generate application my-first-app`
-1. Utilizar Angular Routing e SCSS ao ser questionado pelo `ng`. 
-1. O projeto `my-first-app` é criado dentro da pasta projects. 
-1. Criar uma lib para o Open API Generator: `ng generate library openapigenerator`
-1. Remover todo conteúdo da pasta src do projeto openapigenerator.
-1. Executar o openapi para gerar o código a partir do openapi. Ex: `openapi-generator generate -i api.yaml -g typescript-angular -o ./openapigenerator --additional-properties="ngVersion=8.2.14"`
-1. Copiar o conteúdo gerado DENTRO da pasta openapigenerator para DENTRO da pasta src do projeto Angular openapigenerator.
-1. Importar o módulo da lib openapigenerator no seu projeto -my-first-app. Para isso, edite o arquivo app.module.ts da seguinte maneira: 
-```typescript
-import { Configuration, ConfigurationParameters } from './../../../swagger/src/configuration';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { ApiModule, BASE_PATH } from 'projects/openapigenerator/src';
-
-function apiConfigFactory (): Configuration  {
-  const params: ConfigurationParameters = {
-    // set configuration parameters here.
-  }
-  return new Configuration(params);
-}
-
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ApiModule.forRoot(apiConfigFactory)
-  ],
-  providers: [{provide: BASE_PATH, useValue: 'https://your-web-service.com'}],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
-1. Repare que é possível especificar as credenciais JWT, entre outros na função apiConfigFactory. 
-1. Agora já é possível acessar as apis. Segue um exemplo abaixo:
 ```typescript
 import { Component, OnInit } from '@angular/core';
 import { DefaultService } from 'projects/openapigenerator/src';
@@ -242,3 +195,5 @@ export class AppComponent implements OnInit {
   }
 }
 ```
+
+* You can also integrate with Open API Generator. More info [here](../OpenAPIGenerator.md).
