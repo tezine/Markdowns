@@ -1,4 +1,5 @@
 # PYTHON
+* Follow a snippet to compile a SpringBoot project and deploy into kubernetes [here](./kubernetes.py)
 * É uma linguagem de alto nível. 
 * Pode-se extender as funcionalidades com bibliotecas em C. 
 * O nome veio de “Monty Python’s Flying Circus”. 
@@ -79,9 +80,10 @@ for x in range(1, 11):
 
 ## FOR com in
 ```python
-def testfor2(self):
+def testfor2(self)->bool:
     for i in [0,2,4,6,8,10]:
         print('valor de i',i)
+        return True
 ```
 
 ## VERIFICAÇÃO DE VALOR EM RANGE
@@ -102,7 +104,17 @@ nome='bruno'
 nome= nome[0:2] # 'br'
 ```
 
+* String interpolation:
+
+```python
+dockerImageName = 'tezine/myrepo:v2'
+print(f'building docker image {dockerImageName}')
+```
+
+  
+
 # LISTAS
+
 ``` python
 cubes = [1, 8, 27, 65, 125]
 cubes[0] ->resultado: 1
@@ -156,7 +168,7 @@ Assim, podemos importar um submódulo da seguinte maneira: `import sound.formats
 
 # CLASSES 
 ```python
-class MinhaClasse(object:Any):
+class MinhaClasse:
     i:int = 10
 
     def minhaFuncao(self):
@@ -180,13 +192,29 @@ if __name__ == '__main__':
 ```
 
 # TRATAMENTO DE EXCEÇÃO
+
+We may capture exceptions this way:
+
+```python
+    @staticmethod
+    def applyKubernetes() -> bool:
+        try:
+            print(a) #raise exception			
+            return True
+        except Exception as e:
+            print('Error:'+ str(e))
+            return False
 ```
+
+
+
+```python
 if i == 9:
     raise ValueError('valor invalido 9')
 ```
 
-
 # MÉTODO ESTÁTICO
+
 ```python
 @staticmethod
 def soma(a, b):
@@ -205,7 +233,23 @@ def soma(a, b):
 
 
 
+# FILE HANDLING
+
+You may open a file in read/write mode and replace a string in it this way:
+
+```python
+file = open("Kubernetes.yaml", "r+")
+data = file.read()
+data = data.replace('$containerImage', dockerImageName)
+file.seek(0)
+file.write(data)
+file.close()
+```
+
+
+
 # FUNÇÕES INTERESSANTES
+
 * `print()`
 * `x = int(input("Please enter an integer: "))`
 * `dir(modulo)` -> indica os __names__ que o módulo define. 
@@ -220,9 +264,12 @@ def soma(a, b):
 * Python suporta doc string. Podemos documentar uma função da seguinte maneira:
 
   ```python
-      def testDocString(self):
-          """Demonstrate docstrings and does nothing really."""
-          bla=4
+  def testDocString(self) -> bool:
+      """Demonstrate docstrings and does nothing really."""
+      bla=4
+      return true
   ```
-
+```
+  
   E aí podemos verificar o conteúdo assim: `print(Basics.testDocString.__doc__)`
+```

@@ -1,9 +1,12 @@
 # Typescript
 
+* You may find some Typescript snippets [here](Helper.ts).
+
 ## Let e var
 -let é igual a var, só que var fica visivel a toda funcao, enquanto que let fica visivel somente ao escopo:
 --Ex: for(var i=0;i<5;i++) --> i fica visivel na funcao onde está declarado o for
 --Ex: for(let i=0;i<5;i++) --> i fica visível somente dentro do for. \
+
 * Para navegar por um array: \
 `for(let folder of this.folders)`
 
