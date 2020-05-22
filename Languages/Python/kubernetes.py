@@ -20,7 +20,7 @@ class Logger:
         print(colored(msg, 'green'))
 
 
-class ClaimPublisher:
+class Publisher:
 
     @staticmethod
     def compileAndPackageProject() -> bool:
@@ -78,13 +78,13 @@ class ClaimPublisher:
 
 
 if __name__ == '__main__':
-    ok = ClaimPublisher.compileAndPackageProject()
+    ok = Publisher.compileAndPackageProject()
     if not ok: exit(0)
-    ok = ClaimPublisher.buildDockerImage()
+    ok = Publisher.buildDockerImage()
     if not ok: exit(0)
-    ok = ClaimPublisher.pushDockerImage()
+    ok = Publisher.pushDockerImage()
     if not ok: exit(0)
-    ok = ClaimPublisher.applyKubernetes()
+    ok = Publisher.applyKubernetes()
     if not ok: exit(0)
     Logger.logSuccess("SUCCESS")
 
