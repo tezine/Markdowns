@@ -54,3 +54,12 @@ Deno was built with:
 - Tokio (the event loop written in Rust)
 - TypeScript (Deno supports both JavaScript and TypeScript out of the box)
 - V8 (Google’s JavaScript runtime used in Chrome and Node, among others)
+
+# Examples
+
+Follow a sample to compile a SpringBoot project, build a Docker Image and deploy into Kubernetes [here](./Kubernetes.ts). Execute it with the required permissions like below:
+
+```bash
+deno run --allow-env --allow-run --allow-read --allow-net Kubernetes.ts
+```
+
