@@ -1,0 +1,26 @@
+﻿@page "/counter"
+@using Flurl.Http
+
+<h1>Contador</h1>
+<p>Current count: @currentCount</p>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<input @bind-value="meuTexto" />
+
+<MyComponent OnClicado="@ClickHandler" Nome="Timoteo"></MyComponent>
+
+
+@code {
+    private int currentCount = 0;
+    public string meuTexto = "";
+
+    private async void IncrementCount() {
+        currentCount++;
+        //Example poco = await "http://dummy.restapiexample.com/api/v1/employees".GetJsonAsync<Example>();
+    }
+
+
+    void ClickHandler(string newMessage) {
+        Console.WriteLine("click handler. Received message:" + newMessage);
+    }
+
+}

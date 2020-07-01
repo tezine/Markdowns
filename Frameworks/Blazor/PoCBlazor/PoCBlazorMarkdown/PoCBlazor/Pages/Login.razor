@@ -1,0 +1,57 @@
+﻿@page "/login"
+@page "/"
+@inject NavigationManager navigationManager
+@inject SUsersService usersService
+
+<div class="container">
+    <img src="/images/johndeere.gif" class="loginImg" />
+
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input class="form-control" type="text" id="Email" name="Email" @bind-value="email" />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Senha:</label>
+        <input class="form-control" type="password" id="Password" name="Password" @bind-value="password" />
+    </div>
+
+    <button class="btn btn-primary float-right" @onclick="OnBtnLoginClick" id="loginButton">Login</button>
+
+    <div class="row">
+        @if (errorMsg != null) {
+            <div class="alert alert-danger col-md-12" role="alert" id="errorDiv">
+                @errorMsg
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@code {
+    public String email, password, errorMsg;
+
+    async void OnBtnLoginClick() {
+        if (!await AuthenticateUser()) return;
+        navigationManager.NavigateTo("/users");
+    }
+
+    public async Task<bool> AuthenticateUser() {
+        errorMsg = null;
+        var ok=await usersService.Authenticate(email, password);
+        if (ok) return true;
+        errorMsg = "Email ou senha inválidos";
+        return false;
+    }
+}
+
+
+<style>
+    .loginImg {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+    }
+</style>

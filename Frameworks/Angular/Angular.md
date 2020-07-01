@@ -2,7 +2,6 @@
 * https://angular.io/
 * A partir do angular 6, é possível atualizar os componentes via ng update. Por exemplo, `ng update @angular/core` atualiza todos os packages do angular, o rxjs e typescript.
 * A partir da versao 6, podemos adicionar novas funcionalidades ao projeto via `ng add`. Ex: `ng add @angular/material`.
-* A partir da versão 6, há 3 templates prontos do material para adicionar ao projeto: dashboard, sidebar e datatable. Ex: `ng generate @angular/material:material-nav --name=my-nav`  .
 * A partir da versão 6, é utilizado o angular.json ao invés de .angular-cli.json e há suporte para workspaces. 
 * A versão 6 suporta Custom Elements. https://angular.io/guide/elements. "Custom elements bootstrap themselves - they start automatically when they are added to the DOM, and are automatically destroyed when removed from the DOM".
 * Agora é possível criar bibliotecas facilmente usando `ng generate library`.
@@ -96,16 +95,106 @@ component.ts:
 
 # TESTE UNITÁRIO
 * Mais informações [aqui](https://angular.io/guide/testing)
+
 * Os testes unitários são realizados através de Karma e Jasmine. 
+
 * Jasmine é o framework mais popular para testes no Angular. 
+
 * Karma é uma ferramenta criada pelo time de Angular para rodar testes unitários. Ele carrega o browser, lê os testes a partir de um arquivo config, executa e apresenta o resultado em um terminal. 
+
 * Protractor (opcional) é um framework de teste end-to-end. Ele executa o teste no browser da mesma maneira que um usuário executaria. Assim, ele faz o teste de UI. O Protractor se baseia no WebdriverJS e Selenium, assim, deve-se estar familiarizado com essas ferramentas para usa-lo.
+
 * O formato dos testes é especificado pelo [Jasmine](https://jasmine.github.io/)
+
 * Os testes de cada componente são escritos no arquivo .spec.ts. 
+
 * Para iniciar os testes, basta digitar `ng test`. Será aberto o Chrome e vai ser apresentado o resultado de todos os testes executados. O resultado também é apresentado no console. 
+
 * Ao modificar um componente e salvar, será executado o teste novamente. 
+
 * As configurações dos testes ficam em karma.conf.js e test.ts na pasta src. 
+
 * Services também podem ser testados. 
+
+* Segue um exemplo de teste unitário para a tela de login abaixo:
+
+  ```typescript
+  //Login.component.ts
+  export class LoginComponent implements OnInit {
+  
+    email?:string;
+    password?:string;
+    errorMsg?:string;
+    @ViewChild('errorDiv') errorDiv?: HTMLDivElement; //div must be like <div #errorDiv></div>
+  
+    constructor(protected router: Router, private usersService:UsersService) { }
+  
+    ngOnInit(): void {}
+  
+    async onBtnLoginClicked():Promise<void>{
+      if(!await this.authenticateUser()) return;
+      else await this.router.navigate([Defines.routeUsers]);
+    }
+  
+    async authenticateUser():Promise<boolean>{
+      this.errorMsg=undefined;
+      let ok=await this.usersService.authenticate(this.email,this.password);
+      if(ok)return true;;
+      this.errorMsg = 'Email ou senha inválidos';
+      return false;
+    }
+  }
+  ```
+
+  ```typescript
+  //login.component.spec.ts
+  describe('LoginComponent', () => {
+    let component: LoginComponent;
+    let fixture: ComponentFixture<LoginComponent>;
+  
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [ LoginComponent ],
+        imports: [RouterTestingModule, HttpClientModule],
+        providers:[UsersService]
+      })
+      .compileComponents();
+    }));
+  
+    beforeEach(() => {
+      fixture = TestBed.createComponent(LoginComponent);
+      fixture.debugElement.nativeElement.style.visibility = "hidden";//use this to hide the component from karma result
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  
+    // it('Criação do componente', () => {
+    //   expect(component).toBeTruthy();
+    // });
+  
+    it('Teste com email/senha inválidos', async () => {
+      component.email=undefined;
+      component.password=undefined;
+      let result=await component.authenticateUser();
+      expect(result).toBeFalse();
+      //let's wait for dom updates and check if the error div is displayed.
+      fixture.detectChanges();
+      let errorDiv = fixture.debugElement.query(By.css('#errorDiv')); //div must be like <div id="errorDiv"></div>
+      //expect(component.errorDiv).toBeTruthy()
+      //ou
+      expect(errorDiv).toBeTruthy()
+    });
+  
+    it('Teste com email/senha válidos', async () => {
+      component.email='bruno@tezine.com';
+      component.password='tata';
+      let result=await component.authenticateUser();
+      expect(result).toBeTrue()
+    });
+  });
+  ```
+
+  
 
 
 # Integração com Swagger

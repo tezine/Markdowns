@@ -1,0 +1,182 @@
+﻿@page "/users"
+@using Flurl.Http
+@inject NavigationManager navigationManager
+
+    <div class="container">
+        @if (users == null) {
+            <p><em>Carregando...</em></p>
+        } else {
+            <input class="usersSearchInput" placeholder="Pesquisa por nome" @onkeyup="@(async (args)=>  {  if (args.Key == "Enter") await OnSearchByName(); } )" @bind-value="searchTxt" />
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr class="usersHeader">
+                        <th></th>
+                        <th @onclick="@(()=>SortBy("id"))">Id</th>
+                        <th @onclick="@(()=>SortBy("name"))">Nome</th>
+                        <th>Skills</th>
+                        <th>Editar</th>
+                        <th>Remover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eUser in users) {
+                        <tr class="usersLine">
+                            <td><img src="@eUser.avatarUrl" class="usersAvatar" /></td>
+                            <td>@eUser.id</td>
+                            <td>@eUser.name</td>
+                            <td @onclick="@(()=>OnBtnSkillsClicked(eUser))" class="usersMyBtn">skills</td>
+                            <td @onclick="@(()=>OnBtnEditClicked(eUser))" class="usersMyBtn">editar</td>
+                            <td @onclick="@(()=>OnBtnDeleteClicked(eUser))" class="usersMyBtn">remover</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <nav aria-label="Navigation">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link usersMyBtn" @onclick="OnBtnPreviousClicked">Anterior</a></li>
+                    <li class="page-item"><a class="page-link usersMyBtn" @onclick="OnBtnNextClicked">Próxima</a></li>
+                </ul>
+            </nav>
+            @if (loading) {
+                <p><em>aguarde...</em></p>
+            }
+            <button class="btn btn-primary float-left" @onclick="OnBtnAddClicked">Adicionar</button>
+            <button class="btn btn-primary float-right" @onclick="OnBtnChartClicked">Gráfico</button>
+        }
+    </div>
+
+@if (showModal) {
+    <div class="modal fade show" style="display:block" aria-modal="true" role="dialog" @onclick="@(() => showModal = false)">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <label for="Name">Name:</label>
+                    <input class="form-control" type="text" id="Name" name="Name" @bind-value="selectedUser.name" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" @onclick="OnBtnSaveClicked">Salvar</button>
+                    <button type="button" class="btn" @onclick="@(async ()=>await OnBtnDeleteClicked(selectedUser))">Remover</button>
+                    <button type="button" class="btn" @onclick="@(()=>  showModal = false)">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    protected List<EUser> users;
+    bool showModal = false;
+    bool loading = false;
+    string searchTxt = "";
+    int currentPage=1;
+    bool pagingEnabled=true;
+    EUser selectedUser = new EUser { id = 0 };
+
+    protected override async Task OnInitializedAsync() {
+        users= await GetUsers();
+    }
+
+    protected async Task<List<EUser>> GetUsers() {
+        if(pagingEnabled) return await (SDefines.MockAPIBaseUrl + "/user?page="+this.currentPage+"&limit="+SDefines.PageSize).GetJsonAsync<List<EUser>>();
+        else return await (SDefines.MockAPIBaseUrl + "/user").GetJsonAsync<List<EUser>>();
+    }
+
+    void OnBtnAddClicked() {
+        this.selectedUser = new EUser { id = 0 };
+        this.showModal = true;
+    }
+
+    void OnBtnEditClicked(EUser user) {
+        this.selectedUser = user;
+        this.showModal = true;
+    }
+
+    void OnBtnSkillsClicked(EUser user) {
+        navigationManager.NavigateTo("/skills/" + user.id);
+    }
+
+    async Task OnBtnPreviousClicked() {
+        pagingEnabled = true;
+        if (currentPage == 1) return;
+        currentPage--;
+        users = await GetUsers();
+    }
+
+    async Task OnBtnNextClicked() {
+        pagingEnabled = true;
+        this.currentPage++;
+        this.users = await GetUsers();
+    }
+
+    async Task OnBtnSaveClicked() {
+        showModal = false;
+        EUser result;
+        loading = true;
+        if (selectedUser.id == 0) result = await (SDefines.MockAPIBaseUrl + "/user").PostJsonAsync(selectedUser).ReceiveJson<EUser>();
+        else result = await (SDefines.MockAPIBaseUrl + "/user/" + selectedUser.id).PutJsonAsync(selectedUser).ReceiveJson<EUser>();
+        users = await GetUsers();
+        loading = false;
+    }
+
+    async Task OnBtnDeleteClicked(EUser user) {
+        loading = true;
+        var result = await (SDefines.MockAPIBaseUrl + "/user/" + user.id).DeleteAsync().ReceiveJson<EUser>();
+        users = await GetUsers();
+        loading = false;
+    }
+
+    void OnBtnChartClicked() {
+        this.navigationManager.NavigateTo("/pocchart");
+    }
+
+    async Task OnSearchByName() {
+        pagingEnabled = false;
+        if (searchTxt.Trim().Length == 0) {
+            pagingEnabled = true;
+            this.users = await GetUsers();
+            return;
+        }
+        var resultList = new List<EUser>();
+        var users= await GetUsers();
+        foreach (var user in users) {
+            if (user.name.ToLower().IndexOf(searchTxt.ToLower()) > -1) resultList.Add(user);
+        }
+        this.users = resultList;
+    }
+
+    void SortBy(string columnName) {
+        if (users == null) return;
+        switch (columnName) {
+            case "id":
+                users = users.OrderBy(x => x.id).ToList();
+                break;
+            case "name":
+                users = users.OrderBy(x => x.name, StringComparer.OrdinalIgnoreCase).ToList();
+                break;
+        }
+    }
+}
+
+<style>
+    .usersMyBtn {
+        cursor: pointer;
+    }
+
+    .usersLine:hover {
+        background-color: lightgray;
+    }
+
+    .usersAvatar {
+        width: 24px;
+        height: 24px;
+    }
+
+    .usersSearchInput {
+        width: 100%;
+    }
+
+    .usersHeader {
+        cursor: pointer;
+    }
+</style>
+

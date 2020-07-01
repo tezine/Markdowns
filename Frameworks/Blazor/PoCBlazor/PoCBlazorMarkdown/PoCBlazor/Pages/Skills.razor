@@ -1,0 +1,180 @@
+﻿@page "/skills/{userId:long}"
+@using Flurl.Http
+@inject NavigationManager navigationManager
+
+    <div class="container">
+        @if (skills == null) {
+            <p><em>Carregando...</em></p>
+        } else {
+            <input class="skillsSearchInput" placeholder="Pesquisa por nome" @onkeyup="@(async (args)=>  { if (args.Key == "Enter") await OnSearchByName(); } )" @bind-value="searchTxt" />
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr class="skillsHeader">
+                        <th @onclick="@(()=>SortBy("id"))">Id</th>
+                        <th @onclick="@(()=>SortBy("name"))">Nome</th>
+                        <th @onclick="@(()=>SortBy("level"))">Nível</th>
+                        <th>Editar</th>
+                        <th>Remover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var skill in skills) {
+                        <tr class="skillsLine">
+                            <td>@skill.id</td>
+                            <td>@skill.name</td>
+                            <td>@skill.level</td>
+                            <td @onclick="(()=>OnBtnEditClicked(skill))" class="skillsMyBtn">editar</td>
+                            <td @onclick="(async ()=>await OnBtnDeleteClicked(skill))" class="skillsMyBtn">remover</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <nav aria-label="Navigation">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link skillsMyBtn" @onclick="OnBtnPreviousClicked">Anterior</a></li>
+                    <li class="page-item"><a class="page-link skillsMyBtn" @onclick="OnBtnNextClicked">Próxima</a></li>
+                </ul>
+            </nav>
+            @if (loading) {
+                <p><em>aguarde...</em></p>
+            }
+            <button class="btn btn-primary float-left" @onclick="OnBtnAddClicked">Adicionar</button>
+        }
+    </div>
+
+<!--DIALOG BELOW-->
+@if (showModal == true) {
+    <div class="modal fade show" style="display:block;" aria-modal="true" role="dialog" @onclick="@(() => showModal = false)">
+        <div class="modal-dialog" @onclick:stopPropagation="true">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <label for="Name">Nome:</label>
+                    <input class="form-control" type="text" id="Name" name="Name" @bind-value="selectedSkill.name" />
+                    <label for="Level">Nível:</label>
+                    <input class="form-control" type="text" id="Level" name="Level" @bind-value="selectedSkill.level" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" @onclick="OnBtnSaveClicked">Salvar</button>
+                    <button type="button" class="btn" @onclick="@(async ()=>await OnBtnDeleteClicked(selectedSkill))">Remover</button>
+                    <button type="button" class="btn" @onclick="@(()=>  showModal = false)">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@code {
+    ESkill selectedSkill = new ESkill { id = 0 };
+    List<ESkill> skills;
+    bool showModal = false;
+    bool loading = false;
+    string searchTxt = "";
+    int currentPage = 1;
+    bool pagingEnabled = true;
+    [Parameter] public long userId { get; set; }
+
+    protected override async Task OnInitializedAsync() {
+        skills = await GetSkills();
+    }
+
+    private async Task<List<ESkill>> GetSkills() {
+        if (userId < 1) navigationManager.NavigateTo("/users");
+        if(pagingEnabled) return await (SDefines.MockAPIBaseUrl + "/user/" + userId + "/skills?page=" + this.currentPage + "&limit=" + SDefines.PageSize).GetJsonAsync<List<ESkill>>();
+        else return await (SDefines.MockAPIBaseUrl + "/user/" + userId + "/skills").GetJsonAsync<List<ESkill>>();
+    }
+
+    void OnBtnAddClicked() {
+        selectedSkill = new ESkill { id = 0 };
+        showModal = true;
+    }
+
+    void OnBtnEditClicked(ESkill skill) {
+        selectedSkill = skill;
+        showModal = true;
+    }
+
+    async Task OnBtnPreviousClicked() {
+        pagingEnabled = true;
+        if (currentPage == 1) return;
+        currentPage--;
+        skills = await GetSkills();
+    }
+
+    async Task OnBtnNextClicked() {
+        pagingEnabled = true;
+        this.currentPage++;
+        skills = await GetSkills();
+    }
+
+    async Task OnBtnSaveClicked() {
+        showModal = false;
+        ESkill result;
+        loading = true;
+        if (selectedSkill.id == 0) result = await (SDefines.MockAPIBaseUrl + "/user/" + userId + "/skills").PostJsonAsync(selectedSkill).ReceiveJson<ESkill>();
+        else result = await (SDefines.MockAPIBaseUrl + "/user/" + userId + "/skills/" + selectedSkill.id).PutJsonAsync(selectedSkill).ReceiveJson<ESkill>();
+        skills = await GetSkills();
+        loading = false;
+    }
+
+    async Task OnBtnDeleteClicked(ESkill skill) {
+        loading = true;
+        var result = await (SDefines.MockAPIBaseUrl + "/user/" + userId + "/skills/" + skill.id).DeleteAsync();
+        skills = await GetSkills();
+        loading = false;
+    }
+
+    async Task OnSearchByName() {
+        pagingEnabled = false;
+        if (searchTxt.Trim().Length == 0) {
+            pagingEnabled = true;
+            this.skills = await GetSkills();
+            return;
+        }
+        var skills= await GetSkills();
+        var resultList = new List<ESkill>();
+        foreach (var skill in skills) {
+            if (skill.name.ToLower().IndexOf(this.searchTxt.ToLower()) > -1) resultList.Add(skill);
+        }
+        this.skills = resultList;
+    }
+
+    void SortBy(string columnName) {
+        if (skills == null) return;
+        switch (columnName) {
+            case "id":
+                skills = skills.OrderBy(x => x.id).ToList();
+                break;
+            case "name":
+                skills = skills.OrderBy(x => x.name, StringComparer.OrdinalIgnoreCase).ToList();
+                break;
+            case "level":
+                skills = skills.OrderBy(x => x.level).ToList();
+                break;
+        }
+    }
+}
+
+<style>
+    .skillsMyBtn {
+        cursor: pointer;
+    }
+
+    .skillsLine:hover {
+        background-color: lightgray;
+    }
+
+    .skillsAvatar {
+        width: 24px;
+        height: 24px;
+    }
+
+    .skillsSearchInput {
+        width: 100%;
+    }
+
+    .skillsHeader {
+        cursor: pointer;
+    }
+</style>

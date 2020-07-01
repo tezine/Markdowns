@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Flurl.Http" Version="2.4.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+      <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.20" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="System.ComponentModel.Annotations, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <HintPath>..\..\..\..\..\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\3.1.0\ref\netcoreapp3.1\System.ComponentModel.Annotations.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>

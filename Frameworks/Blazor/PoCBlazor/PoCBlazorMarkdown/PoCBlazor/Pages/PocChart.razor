@@ -1,0 +1,90 @@
+﻿@page "/pocchart"
+@using ChartJs.Blazor.ChartJS.BarChart
+@using ChartJs.Blazor.ChartJS.BarChart.Axes
+@using ChartJs.Blazor.ChartJS.Common.Axes
+@using ChartJs.Blazor.ChartJS.Common.Axes.Ticks
+@using ChartJs.Blazor.ChartJS.Common.Properties
+@using ChartJs.Blazor.Charts
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.ChartJS.Common.Wrappers
+@using Flurl.Http
+
+
+<ChartJsBarChart @ref="_barChart"
+                 Config="@_barChartConfig"
+                 Width="600"
+                 Height="300" />
+
+@code {
+    private BarConfig _barChartConfig;
+    private ChartJsBarChart _barChart;
+    private BarDataset<DoubleWrapper> _barDataSet;
+    private List<EChartItem> chartItems = new List<EChartItem>();
+
+    protected override async Task OnInitializedAsync() {
+        _barChartConfig = new BarConfig {
+            Options = new BarOptions {
+                Title = new OptionsTitle {
+                    Display = true,
+                    Text = "Gráfico: nro de pessoas/skill"
+                },
+                Scales = new BarScales {
+                    XAxes = new List<CartesianAxis>
+                    {
+                        new BarCategoryAxis
+                        {
+                            BarPercentage = 0.5,
+                            BarThickness = BarThickness.Flex
+                        }
+                    },
+                    YAxes = new List<CartesianAxis>
+                    {
+                        new BarLinearCartesianAxis
+                        {
+                            Ticks = new LinearCartesianTicks
+                            {
+                                BeginAtZero = true
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        _barDataSet = new BarDataset<DoubleWrapper> {
+            Label = "Nro de usuários:",
+            BackgroundColor = new[] { ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(),
+            ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(),
+            ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(),
+            ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString(), ColorUtil.RandomColorString()},
+            BorderWidth = 0,
+            HoverBackgroundColor = ColorUtil.RandomColorString(),
+            HoverBorderColor = ColorUtil.RandomColorString(),
+            HoverBorderWidth = 1,
+            BorderColor = "#ffffff"
+        };
+
+        //_barDataSet.AddRange(new double[] { 8, 5, 3, 7 }.Wrap());
+        //_barChartConfig.Data.Datasets.Add(_barDataSet);
+        var users = await (SDefines.MockAPIBaseUrl + "/user").GetJsonAsync<List<EUser>>();
+        var usersCount = users.Count;
+
+        foreach (var user in users) {
+            var skills = await (SDefines.MockAPIBaseUrl + "/user/" + user.id + "/skills").GetJsonAsync<List<ESkill>>();
+            foreach (var skill in skills) {
+                if (!chartItems.Any(x => x.name == skill.name)) chartItems.Add(new EChartItem { name = skill.name, value = 1 });
+                else {
+                    var eSkill = this.chartItems.FirstOrDefault(x => x.name == skill.name);
+                    if (eSkill != null) eSkill.value += 1;
+                }
+            }
+        }
+
+        foreach (var chartItem in chartItems) {
+            _barChartConfig.Data.Labels.Add(chartItem.name);
+            _barDataSet.Add(chartItem.value);
+           }
+        _barChartConfig.Data.Datasets.Add(_barDataSet);
+    }
+}
+

@@ -1,0 +1,29 @@
+﻿
+<p class="MyComponent-MyText">Nome: @Nome</p>
+
+
+<button @onclick="OnBtnClicked">Emitir evento</button>
+
+<button @onclick="@(e => Console.WriteLine("Hello, world!"))">Say hello</button>
+
+<button @onclick="@(() => OnClicado.InvokeAsync("Hello from ChildComponent"))">Click me</button>
+
+@code{
+
+    [Parameter] public string Nome { get; set; }
+    [Parameter] public EventCallback<string> OnClicado { get; set; }
+
+    public string backGroundColor = "red";
+
+    public void OnBtnClicked() {
+        Console.WriteLine("clicado");
+        OnClicado.InvokeAsync("Hello again");
+    }
+
+}
+
+<style>
+    .MyComponent-MyText{
+        background-color:@backGroundColor
+    }
+</style>

@@ -89,3 +89,7 @@ rEM curl http://localhost:9090/v3/api-docs -o api.json
 openapi-generator generate -i api.json  -g typescript-angular  -o ./projects/apiproject  --additional-properties="ngVersion=8.2.14" --import-mappings=Date=java.sql.Date --type-mappings=Date=string
 ```
 
+# Flutter
+
+* openapi-generator generate --input-spec swagger.json -g dart --output api --additional-properties=disallowAdditionalPropertiesIfNotPresent=false,pubName=pocapi
+
