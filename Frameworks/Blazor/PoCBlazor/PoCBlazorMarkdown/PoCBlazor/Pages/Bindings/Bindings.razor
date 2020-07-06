@@ -1,0 +1,13 @@
+﻿@page "/bindings"
+
+<p>
+    <input type="text" @bind="paragraphStyle" />
+</p>
+
+<p @bind-style="paragraphStyle" @bind-style:event="onchange">
+    Blazorify the app!
+</p>
+
+@code {
+    private string paragraphStyle = "color:red";
+}

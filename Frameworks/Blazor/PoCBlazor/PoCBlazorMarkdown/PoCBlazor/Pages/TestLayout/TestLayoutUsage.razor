@@ -1,0 +1,31 @@
+﻿@page "/layouts"
+@layout TestLayout
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var eUser in users) {
+            <tr>
+                <td>@eUser.name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@code {
+    List<EUser> users = new List<EUser>();
+
+    protected override void OnInitialized() {
+        base.OnInitialized();
+        for(int i = 0; i < 10; i++) {
+            users.Add(new EUser { name = "User" + i });
+        }
+    }
+}

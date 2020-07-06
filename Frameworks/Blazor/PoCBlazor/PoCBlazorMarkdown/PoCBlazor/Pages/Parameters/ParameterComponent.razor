@@ -1,0 +1,9 @@
+﻿<h2>Parameter Component</h2>
+<p>Year: @Year</p>
+
+<input @bind-value="@Year" />
+
+@code {
+    [Parameter] public int Year { get; set; }
+    [Parameter] public EventCallback<int> YearChanged { get; set; }
+}

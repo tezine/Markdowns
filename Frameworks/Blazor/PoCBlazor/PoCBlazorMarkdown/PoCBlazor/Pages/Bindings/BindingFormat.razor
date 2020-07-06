@@ -1,0 +1,8 @@
+﻿@page "/bindings-format"
+
+<input @bind="StartDate" @bind:format="dd/MM/yyyy" />
+
+@code {
+    [Parameter]
+    public DateTime StartDate { get; set; } = new DateTime(2020, 1, 1);
+}

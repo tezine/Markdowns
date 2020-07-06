@@ -2,23 +2,14 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"net/http"
+	"time"
 )
 
 func main() {
+	fmt.Println(time.Now().Format(time.RFC822))//
+}
 
-	fmt.Println("ola")
-
-	nums := []int{2, 3, 4}
-
-	for _,k:= range nums{
-		fmt.Println("k:",k)
-	}
-	for j:= range nums{
-		fmt.Println("j:",j)
-	}
-
-	//result:time.Now()
-	//fmt.Println(result)
-	os.Exit(0)
+func hello(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "Ola Josiel!!!!\n")
 }

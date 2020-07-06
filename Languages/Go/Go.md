@@ -1,5 +1,7 @@
 # GO
 
+* There's a good documentation about it [here](https://gobyexample.com/)
+* Go packages can be found [here](https://golang.org/pkg/)
 * Go does not support classes, but we can can create Structs with methods.
 * `fmt package` provides formatted io similar to printf in C language. Ex: `fmt.Println("hello")`
 * functions in Go start with `func`
@@ -720,9 +722,9 @@ Worker 1 done
 
 * *[Rate limiting](http://en.wikipedia.org/wiki/Rate_limiting)* is an important mechanism for controlling resource utilization and maintaining quality of service. Go elegantly supports rate limiting with goroutines, channels, and [tickers](https://gobyexample.com/tickers).
 
+```go
 
-
-
+```
 
 
 

@@ -1,4 +1,5 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">BlazorApp1</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -22,16 +23,40 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="bindings">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Data Binding
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="bindings-format">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Binding Format
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="parameters">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Parameters
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="layouts">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Layouts
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="form-sample">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Form Sample
+            </NavLink>
+        </li>
     </ul>
 </div>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool collapseNavMenu = false;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
+    private void ToggleNavMenu() {
         collapseNavMenu = !collapseNavMenu;
     }
 }

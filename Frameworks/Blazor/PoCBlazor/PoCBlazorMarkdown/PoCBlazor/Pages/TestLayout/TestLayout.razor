@@ -1,0 +1,16 @@
+﻿@inherits LayoutComponentBase
+
+<header>
+    <h1>Header content</h1>
+</header>
+
+
+@Body
+
+<footer>
+    @FooterContent
+</footer>
+
+@code {
+    public string FooterContent { get; set; } ="My footer content" ;
+}

@@ -1,0 +1,16 @@
+﻿@page "/parameters" 
+
+<ParameterComponent @bind-Year="MyYear"></ParameterComponent>
+
+<button class="btn btn-primary" @onclick="ChangeTheYear">
+    Change Year to 1986
+</button>
+
+@code{
+    [Parameter]
+    public int MyYear { get; set; } = 1978;
+
+    private void ChangeTheYear() {
+        MyYear = 1986;
+    }
+}
