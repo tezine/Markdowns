@@ -203,45 +203,44 @@ component.ts:
 
 * Avoid using named router-outlet. Instead, prefer using several <router-outlet> with child routes. Ex: 
 
-  1. Let's suppose you have a main angular project. 
+1. Let's suppose you have a main angular project. 
 
-  2. There's a <router-outlet> in the app.component.html
+2. There's a <router-outlet> in the app.component.html
 
-  3. Than, after the user login, you display a Home.component. 
+3. Than, after the user login, you display a Home.component. 
 
-  4. In this HomeComponent, you have another <router-outlet> 
+4. In this HomeComponent, you have another <router-outlet> 
 
-  5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
+5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
 
-  6. To do so, create the following routes in your main project: 
+6. To do so, create the following routes in your main project: 
 
-  7. ```typescript
-     const routes: Routes = [
-       {path: '', redirectTo: 'login', pathMatch: 'full'},
-       {path: 'login', component: LoginComponent},
-       {path: 'home', component: HomeComponent, children:[
-           //this is a child route, because we have a <router-outlet> inside HomeComponent
-           {path: 'cadastros', loadChildren: () => 	 import('../../cadastros/src/lib/cadastros.module').then(m => m.CadastrosModule)},
-         ]
-       },
-       // {path: '**', component:LoginComponent},
-     ];
-     ```
+```typescript
+const routes: Routes = [
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: 'login', component: LoginComponent},
+    {path: 'home', component: HomeComponent, children:[
+        //this is a child route, because we have a <router-outlet> inside HomeComponent
+        {path: 'cadastros', loadChildren: () => 	 import('../../cadastros/src/lib/cadastros.module').then(m => m.CadastrosModule)},
+    ]
+    },
+    // {path: '**', component:LoginComponent},
+];
+```
+8. Now, under Cadastros module, add the followint routes:
 
-  8. Now, under Cadastros module, add the followint routes:
+```typescript
+const routes: Routes = [
+    {path: '', component: CadastrosComponent, children: [//route: /cadastros
+    {path: 'clients', component: ClientsComponent,},
+    {path: 'clients/edit', component: ClientsEditComponent},//this cannot be a child route of clients, since we don't have a router-outlet inside clients
+]}];
+```
 
-  9. ```typescript
-     const routes: Routes = [
-         {path: '', component: CadastrosComponent, children: [//route: /cadastros
-         {path: 'clients', component: ClientsComponent,},
-         {path: 'clients/edit', component: ClientsEditComponent},//this cannot be a child route of clients, since we don't have a router-outlet inside clients
-         ]}];
-     ```
+10. Now, you can load the Cadastros module from HomeComponent, by adding the code: 
 
-  10. Now, you can load the Cadastros module from HomeComponent, by adding the code: 
+```typescript
+await this.router.navigate(['home/cadastros/clientes']);
+```
 
-  11. ```typescript
-      await this.router.navigate(['home/cadastros/clientes']);
-      ```
-
-  12. This will do the lazy loading of the Cadastros module and display the ClientsComponent inside the router-outlet in HomeComponent.
+12. This will do the lazy loading of the Cadastros module and display the ClientsComponent inside the router-outlet in HomeComponent.
