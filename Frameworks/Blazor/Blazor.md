@@ -7,6 +7,7 @@
 * With Blazor, it's possible to create web applications with C#, HTML and CSS. Javascript interoperability is provided when necessary, but the main idea is to create web apps with C# instead of Javascript. 
 * Almost all .Net standard nuget packages are compatible with Blazor. 
 * Components and Pages are created with .razor file extension and can be shared and distributed as Razor class libraries or Nuget packages. 
+* Remember to use `System.Text.Json` instead of `Newtonsoft`, since it's faster. More info [here](https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-migrate-from-newtonsoft-how-to)
 
 ## Components
 

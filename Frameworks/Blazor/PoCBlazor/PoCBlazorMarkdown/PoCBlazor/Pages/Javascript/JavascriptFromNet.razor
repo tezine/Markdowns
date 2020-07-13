@@ -1,0 +1,15 @@
+﻿@page "/javascriptfromnet"
+@inject IJSRuntime jsRuntime
+
+<h3>Sample to demonstrate how to call javascript from .Net</h3>
+
+<input @bind-value="content" placeholder="Type something to display via javascript"/>
+<button @onclick="OnBtnClicked">Call Javascript</button>
+
+@code {
+    public String content { get; set; }
+
+    protected  void OnBtnClicked() {
+        jsRuntime.InvokeAsync<string>("window.alert",content);
+    }
+}

@@ -1,0 +1,15 @@
+﻿@page "/reference-sample"
+
+<h3>ReferenceSample</h3>
+
+<MyInput @ref="myInput"></MyInput>
+
+<button @onclick="OnBtnClicked">Change Input</button>
+
+@code {
+    private MyInput myInput;
+
+    void OnBtnClicked() {
+        myInput.SetText("Mafalda trabalha com Bozo");
+    }
+}

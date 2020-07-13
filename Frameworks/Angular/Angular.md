@@ -7,7 +7,7 @@
 * Agora é possível criar bibliotecas facilmente usando `ng generate library`.
 
 
-# Passo a passo (App + Lib)
+# Angular Workspace (App + one Lib)
 * Segue um passo a passo para criar um workspace Angular contendo um app e uma lib abaixo: 
 1. Baixar o Angular CLI [aqui](https://cli.angular.io/)
 1. Executar `ng new nomeworkspace --createApplication="false"` . Há informações sobre os parâmetros do ng new [aqui](https://angular.io/cli/new)
@@ -44,7 +44,7 @@ export class MyService {
 @Input() count: number = 0;
 ```
 
-# EVENTOS
+# Events
 * Podemos ouvir os html events que acontecem dentro de um componente da seguinte maneira:
 ```typescript 
 @HostListener('mouseenter') onMouseEnter() {
@@ -93,7 +93,7 @@ component.ts:
 ```
 
 
-# TESTE UNITÁRIO
+# Unit Testing
 * Mais informações [aqui](https://angular.io/guide/testing)
 
 * Os testes unitários são realizados através de Karma e Jasmine. 
@@ -194,95 +194,54 @@ component.ts:
   });
   ```
 
-  
 
+# Open API Generator
 
-# Integração com Swagger
-* Passo a passo para criar um projeto Angular com integração com Swagger. 
-1. Criar um workspace Angular: `ng new my-workspace --createApplication="false"`
-1. Criar o projeto Angular: `cd my-workspace, ng generate application my-first-app`
-1. Utilizar Angular Routing e SCSS ao ser questionado pelo `ng`. 
-1. O projeto `my-first-app` é criado dentro da pasta projects. 
-1. Criar uma lib para o Swagger: `ng generate library swagger`
-1. Remover todo conteúdo da pasta src do projeto swagger.
-1. Gerar o código para Angular fazendo o upload da especificação openapi de seu projeto através do `https://app.swaggerhub.com/`> . Lembre-se de especificar a versão do Angular antes de gerar (em CodeGen Options). 
-1. Descomprimir o download gerado pelo site e colocar na pasta swagger/src. 
-1. Importar o módulo da lib swagger no seu projeto -my-first-app. Para isso, edite o arquivo app.module.ts da seguinte maneira: 
-```typescript
-import { ConfigurationParameters, Configuration } from './../../../swagger/src/configuration';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+* In order to generate the REST APIs automatically for  your Angular project using [Open API Generator](https://openapi-generator.tech/), take a look at the Open API Genrator [here](../../OpenAPIGenerator.md).
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ApiModule } from 'projects/swagger/src';
-import { HttpClientModule } from '@angular/common/http';
+# Router-outlet
 
-function apiConfigFactory() : Configuration {
-  const params: ConfigurationParameters = {
-    // set configuration parameters here.    
-  }
-  return new Configuration(params);
-}
+* Avoid using named router-outlet. Instead, prefer using several <router-outlet> with child routes. Ex: 
 
-@NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ApiModule.forRoot(apiConfigFactory)
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
-1. Repare que é possível especificar as credenciais JWT, entre outros na função apiConfigFactory. 
-1. Agora já é possível acessar as apis. Segue um exemplo abaixo:
-```typescript
-import { DefaultService } from './../../../swagger/src/api/default.service';
-import { APIS } from './../../../swagger/src/api/api';
-import { Component, OnInit } from '@angular/core';
+  1. Let's suppose you have a main angular project. 
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
-})
-export class AppComponent implements OnInit {
-  title = 'my-first-app';
+  2. There's a <router-outlet> in the app.component.html
 
-  constructor(private apiGateway: DefaultService){
-  }
+  3. Than, after the user login, you display a Home.component. 
 
-  async ngOnInit(){
-    let result= await this.apiGateway.getProducts().toPromise();
-  }
-}
-```
+  4. In this HomeComponent, you have another <router-outlet> 
 
-```typescript
-import { Component, OnInit } from '@angular/core';
-import { DefaultService } from 'projects/openapigenerator/src';
+  5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
-})
-export class AppComponent implements OnInit {
-  title = 'my-first-app';
+  6. To do so, create the following routes in your main project: 
 
-  constructor(private apiGateway: DefaultService){
-  }
+  7. ```typescript
+     const routes: Routes = [
+       {path: '', redirectTo: 'login', pathMatch: 'full'},
+       {path: 'login', component: LoginComponent},
+       {path: 'home', component: HomeComponent, children:[
+           //this is a child route, because we have a <router-outlet> inside HomeComponent
+           {path: 'cadastros', loadChildren: () => 	 import('../../cadastros/src/lib/cadastros.module').then(m => m.CadastrosModule)},
+         ]
+       },
+       // {path: '**', component:LoginComponent},
+     ];
+     ```
 
-  async ngOnInit(){
-    let result= await this.apiGateway.getProducts().toPromise();
-  }
-}
-```
+  8. Now, under Cadastros module, add the followint routes:
 
-* You can also integrate with Open API Generator. More info [here](../OpenAPIGenerator.md).
+  9. ```typescript
+     const routes: Routes = [
+         {path: '', component: CadastrosComponent, children: [//route: /cadastros
+         {path: 'clients', component: ClientsComponent,},
+         {path: 'clients/edit', component: ClientsEditComponent},//this cannot be a child route of clients, since we don't have a router-outlet inside clients
+         ]}];
+     ```
+
+  10. Now, you can load the Cadastros module from HomeComponent, by adding the code: 
+
+  11. ```typescript
+      await this.router.navigate(['home/cadastros/clientes']);
+      ```
+
+  12. This will do the lazy loading of the Cadastros module and display the ClientsComponent inside the router-outlet in HomeComponent.

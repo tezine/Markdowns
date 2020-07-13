@@ -1,4 +1,5 @@
 ﻿#region Imports
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Flurl.Http;
@@ -14,9 +15,13 @@ namespace Crud.Components {
         protected List<EUser> users;
     
         protected override async Task OnAfterRenderAsync(bool firstRender) {
-            if (firstRender) {
-                users = await (SharedDefines.BaseURL + "/api/v1/SUsers/GetAll").GetJsonAsync<List<EUser>>();
-                StateHasChanged();
+            try {
+                if (firstRender) {
+                    users = await (SharedDefines.BaseURL + "/api/v1/SUsers/GetAll").GetJsonAsync<List<EUser>>();
+                    StateHasChanged();
+                }
+            } catch (Exception ex) {
+                SLogger.LogError(ex);                
             }
         }
     }

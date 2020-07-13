@@ -1,0 +1,15 @@
+﻿<h3>MyInput</h3>
+
+
+<input @bind-value="inputText" />
+
+@code {
+
+    String inputText { get; set; }
+
+    public void SetText(String txt) {
+        inputText = txt;
+        StateHasChanged();
+    }
+
+}
