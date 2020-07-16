@@ -408,5 +408,5 @@ O [Next.js](https://nextjs.org/) é utilizado para Server-side rendering. Ele ta
 
 # HOOKS
 
-* Site oficial [aqui](https://pt-br.reactjs.org/docs/hooks-intro.html)
+* Oficial website [here](https://pt-br.reactjs.org/docs/hooks-intro.html)
 * O Hooks permite utilizar o `state` sem escrever uma classe. 
