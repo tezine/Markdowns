@@ -6,6 +6,9 @@
                 :items-per-page="5"
                 class="elevation-1"
         ></v-data-table>
+        <HelloWorld
+         @emit-clicked="onHelloWorldClicked">
+        </HelloWorld>
     </div>
 </template>
 
@@ -13,9 +16,10 @@
     import {Component, Vue} from "vue-property-decorator";
     import {EUser} from "@/entities/EUser";
     import {UsersService} from "@/services/user.service";
+    import HelloWorld from "@/components/HelloWorld.vue";
 
     @Component({
-        components: {}
+        components: {HelloWorld}
     })
     export default class Users extends Vue {
 
@@ -27,6 +31,10 @@
 
         async mounted() {
             this.users = (await UsersService.getUsers()).data;
+        }
+
+        onHelloWorldClicked(){
+            console.log('hello world clicked');
         }
 
         async onBtnSaveClicked(){

@@ -10,6 +10,8 @@ vue add vuetify
 ```
 
 * In case you want to remove eslint checking, execute `npm remove @vue/cli-plugin-eslint`
+* Styles can be scoped in Vue. Just add `<style scoped></style>` 
+* Vue supports SCSS and others. Add in your .vue file: `<style scoped lang="scss">`
 
 ## Vue vs Angular
 
@@ -131,12 +133,33 @@ const routes: Array<RouteConfig> = [
 </script>
 ```
 
-## Events
+## DOM Events
 
 * We can capture DOM events in Vue like this:
 
 ```html
 <v-btn small color="primary" class="ml-auto mr-3" @click="onBtnEnterClicked" @mouseover="onMouseOverFired">Enter</v-btn>
+```
+
+## Component Events
+
+* It's possible to create custom events in Vue.js similar to Angular. Follow a sample below:
+
+```typescript
+//HelloWorld.vue
+@Emit()
+emitClicked(n: number) {
+    console.log('emit clicked. add optional code here');
+}
+//you can fire the event by calling this.emitClicked(1)
+```
+
+* The event above can be captured in the parent component/page like this:
+
+```html
+<HelloWorld
+  @emit-clicked="onHelloWorldClicked">
+</HelloWorld>
 ```
 
 
