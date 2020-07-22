@@ -55,6 +55,7 @@ vue add vuetify
 * In case you want to remove eslint checking and messages, execute `npm remove @vue/cli-plugin-eslint`
 * Styles can be scoped in Vue. Just add `<style scoped></style>`.
 * Vue supports SCSS and others. Add in your .vue file: `<style scoped lang="scss">`
+* Boostrap integration is easy with [BoostrapVue](https://bootstrap-vue.org/) project. 
 
 # Vue vs Angular
 
@@ -68,8 +69,8 @@ Vue is has many similarities with Angular, but here are some differences:
 | [v-model](https://vuejs.org/v2/guide/forms.html)             | [ [(ngModel)]](https://angular.io/api/forms/NgModel)         |
 | [v-for](https://vuejs.org/v2/guide/list.html)                | [*ngFor](https://angular.io/api/common/NgForOf)              |
 | @click or [v-on:click](https://vuejs.org/v2/guide/events.html) | [(click)](https://angular.io/guide/user-input)               |
-| @Prop()                                                      | @Input()                                                     |
-| @Emit()                                                      | @Output()                                                    |
+| @Prop()                                                      | [@Input()](https://angular.io/api/core/Input)                |
+| @Emit()                                                      | [@Output()](https://angular.io/guide/inputs-outputs)         |
 | [<slot>](https://vuejs.org/v2/guide/components-slots.html)   | <ng-content>                                                 |
 
 * Please note that code refactoring is not so easy as it is with Angular. IDEs do not refactor appropriately when file/class changes by the time of this writing. 
@@ -108,7 +109,7 @@ Vue is has many similarities with Angular, but here are some differences:
     },
     methods: {
       itemClicked: function() {
-        console.log('clicou no item')
+        console.log('item clicked')
       }
     }
   }
@@ -124,7 +125,7 @@ export default class MeuComponente extends Vue {
     meuNome:string="Bozo";
 
     itemClicked() {
-        console.log('clicou no item')
+        console.log('item clicked')
     }
 }
 ```
@@ -170,8 +171,8 @@ export default class HelloWorld extends Vue {
 ```typescript
 @Component
 export default class HelloWorld extends Vue {
-  firstName = 'John'
-  lastName = 'Doe'
+  firstName = 'Mafalda'
+  lastName = 'Barbosa'
 
   // Declared as computed property getter
   get name() {
@@ -328,8 +329,8 @@ emitClicked(n: number) {
 
 # SLOTS
 
-* More info [here](https://vuejs.org/v2/guide/components-slots.html)
-* Slots are a way to project content into a Vue Component. In brief, whatever you send between opening and closing tag of the component will be rendered where the <slot/> word is. Ex:
+* Slots are a way to project content into a Vue Component. In brief, whatever you send between opening and closing tag of the component will be rendered where the <slot/> word is. More info [here](https://vuejs.org/v2/guide/components-slots.html) 
+* Example:
 
 ```html
 <!--App.vue-->
@@ -376,8 +377,20 @@ export default class Mixins  extends mixins(HelloMixin, WorldMixin) {
 
 # VueX
 
+* [VueX](https://vuex.vuejs.org/) is a state management pattern for Vue.js applications. "It serves as a centralized store for all the components in an application, with rules ensuring that the state can only be mutated in a predictable fashion. It also integrates with Vue's official [devtools extension](https://github.com/vuejs/vue-devtools) to provide advanced features such as zero-config time-travel debugging and state snapshot export / import."
 
+* There are a few concepts related to Vuex that we need to understand outlined below:
+
+1. **Store**: It is immutable central container to hold application state. The only way to change state of store is by committing mutations.
+2. **Mutations:** These are methods where we change the state of the store. We get state of store and payload - the object that we can pass from Vue components to store and perform mutations on state. Mutations are synchronous transactions. Mutations are committed using commit statement e.g. `store.commit('increment')`
+3. **Actions:** Actions are used to commit mutations and can be asynchronous. Actions are also methods and receive context as parameter. Context has same methods/properties as store but context is actually not store. so, mutations are committed using` context.commit('increment')`. Actions are triggered from Vue components using `store.dispatch('increment')` where increment is name of action
+4. **Modules:** To simplify large store, Vuex allows us to divide store into modules. Each module can contain its own state, mutations, actions and even nested module.
+
+The Vue PoC provides a simple VueX sample. You can check how it's done [here](./PoC-Vue/src/views/Vuex.vue)
 
 # Nuxt
+
+* Nuxt.js is built on top of Vue and provides a standardized way to combine libraries, execute Server Side Rendering, SEO and speed optimization. 
+* Nuxt.js has many cool features. For instance, it's possible to configure routes automatically without defining routes as mentioned prior  in this document, and it also does automatically code-splitting. :-) 
 
 * More info about Nuxt using javascript [here](https://nuxtjs.org/) and in typescript [here](https://typescript.nuxtjs.org/)

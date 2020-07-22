@@ -17,6 +17,9 @@
     })
     export default class App extends Vue {
         eUser = <EUser>{firstName: 'Bruno', lastName: 'Tezine'};
-
     }
 </script>
+
+<style lang="scss">
+    @import "./styles";
+</style>

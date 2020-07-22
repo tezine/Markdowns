@@ -5,6 +5,7 @@ import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import Slots from "@/views/Slots.vue";
 import Mixins from "@/views/Mixins.vue";
+import Vuex from "@/views/Vuex.vue";
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,7 @@ const routes: Array<RouteConfig> = [
             {path: '/users', name: 'Users', component: Users},
             {path: '/slots', name: 'Slots', component: Slots},
             {path: '/mixins', name: 'Mixins', component: Mixins},
+            {path: '/vuex', name: 'Vuex', component: Vuex},
             {path: '/about', name: 'About', component: () => import(/* webpackChunkName: "about" */'../views/About.vue')},//lazy loading
         ]
     },

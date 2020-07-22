@@ -1,21 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import ToDoModel from "@/entities/TodoModel";
+import ETodoItem from "@/entities/ETodoItem";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    todos: Array<ToDoModel>()
+    todos: Array<ETodoItem>()
   },
   mutations: {
-    addToDo(state, todoModel: ToDoModel) {
+    addToDo(state, todoModel: ETodoItem) {
       state.todos.push(todoModel);
     }
   },
   actions: {
-    addToDo(context, todoModel: ToDoModel) {
-      context.commit('addToDo', todoModel);
+    addToDo(context, todoModel: ETodoItem) {
+      return new Promise((resolve, reject) => {
+        context.commit('addToDo', todoModel);
+        resolve();
+      });
     }
   },
   modules: {

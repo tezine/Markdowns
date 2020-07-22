@@ -36,7 +36,7 @@
             {title: 'Slots', route:'/slots', icon: 'mdi-image'},
             {title: 'Datatable', route:'/users', icon: 'mdi-table'},
             {title: 'Mixins', route:'/mixins', icon: 'mdi-view-dashboard'},
-            {title: 'Todo', route:'/todo', icon: 'mdi-image'},
+            {title: 'Vuex', route:'/vuex', icon: 'mdi-image'},
             {title: 'About', route:'/about', icon: 'mdi-help'},
             {title: 'Logout', route:'/', icon: 'mdi-logout'},
         ];

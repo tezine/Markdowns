@@ -12,7 +12,7 @@
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
     import {EUser} from "@/entities/EUser";
-    import {UsersService} from "@/services/user.service";
+    import {UsersService} from "@/services/UsersService";
     import HelloWorld from "@/components/VHelloWorld.vue";
 
     @Component({
