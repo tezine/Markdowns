@@ -1,3 +1,5 @@
+[TOC]
+
 # Vue.js
 
 * Vuejs is a reactive, progressive javascript framework that uses Virtual DOM. Its website provides an extensive documentation in [English](https://vuejs.org/v2/guide/) and in [Portuguese](https://br.vuejs.org/v2/guide/). 
@@ -310,8 +312,10 @@ emitClicked(n: number) {
   Hello <slot/>!
 </div>
 
-<!--Output: Hello World! -->
+<!--Output: Hello world! -->
 ```
+
+## Mixins
 
 
 

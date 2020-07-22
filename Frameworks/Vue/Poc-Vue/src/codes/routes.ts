@@ -9,11 +9,11 @@ Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
     {path: '/', name: 'Login', component: Login},//not lazy loading
-   {
+    {
         path: '/home', name: 'Home', component: Home, children: [
             {path: '/users', name: 'Users', component: Users},
             {path: '/slots', name: 'Slots', component: Slots},
-           {path: '/about', name: 'About', component: () => import(/* webpackChunkName: "about" */'../views/About.vue')},//lazy loading
+            {path: '/about', name: 'About', component: () => import(/* webpackChunkName: "about" */'../views/About.vue')},//lazy loading
         ]
     },
     {path: '/login', name: 'Login', component: Login},
