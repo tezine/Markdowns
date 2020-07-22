@@ -1,10 +1,8 @@
-[TOC]
+# Vue.js 
 
-# Vue.js
+* Vue.js is a reactive, progressive javascript framework that uses Virtual DOM. Its website provides an extensive documentation in [English](https://vuejs.org/v2/guide/) and in [Portuguese](https://br.vuejs.org/v2/guide/). 
 
-* Vuejs is a reactive, progressive javascript framework that uses Virtual DOM. Its website provides an extensive documentation in [English](https://vuejs.org/v2/guide/) and in [Portuguese](https://br.vuejs.org/v2/guide/). 
-
-* Vuejs can be added into an existing website or create a new one from scratch with Router, Lazy loading and others. 
+* Vue.js can be added into an existing website or create a new one from scratch with Router, Lazy loading and others. 
 
 * It can be installed with npm, by unpkg or cdn by simply adding the line below:
 
@@ -48,7 +46,7 @@ Vue is has many similarities with Angular, but here are some differences:
 | @Emit()                                                      | @Output                                                      |
 | [<slot>](https://vuejs.org/v2/guide/components-slots.html)   | <ng-content>                                                 |
 
-## Html Template
+# Html Template
 
 * Follow a simple html template written in Vuejs below:
 
@@ -64,7 +62,7 @@ Vue is has many similarities with Angular, but here are some differences:
 </template>
 ```
 
-## Vue Scripts
+# Vue Scripts
 
 * Scripts can be written in Javascript or Typescript. Follow a javascript sample below:
 
@@ -103,7 +101,7 @@ export default class MeuComponente extends Vue {
 }
 ```
 
-## Lifecycle
+# Lifecycle
 
 * Follow the Vue.js lifecycle below. More info [here](https://www.digitalocean.com/community/tutorials/vuejs-component-lifecycle):
 
@@ -133,7 +131,7 @@ export default class HelloWorld extends Vue {
 }
 ```
 
-## Typescript 
+# Typescript 
 
 * There are several ways to use typescript in a Vue project. You can use "Options API", "Composition API" and "Class API" approaches. They are demonstrated [here](https://typescript.nuxtjs.org/cookbook/components/#script)
 * In this tutorial, I'll use Class API or "Class Components". More info about it [here](https://class-component.vuejs.org/guide/class-component.html)
@@ -154,15 +152,15 @@ export default class HelloWorld extends Vue {
 }  
 ```
 
-## Binding
+# Binding
 
-### Text binding
+## Text binding
 
 ```html
 <span>Message: {{ msg }}</span>
 ```
 
-### Property binding
+## Property binding
 
 * More info [here](https://vuejs.org/v2/guide/syntax.html#v-bind-Shorthand)
 
@@ -180,7 +178,7 @@ export default class HelloWorld extends Vue {
 @Prop({ type: Object, required: true }) readonly eUser!: EUser
 ```
 
-### Class and Style binding
+## Class and Style binding
 
 * More info [here](https://vuejs.org/v2/guide/class-and-style.html)
 * Follow a sample on how to bind css classes below:
@@ -210,7 +208,7 @@ export default class HelloWorld extends Vue {
 </script>
 ```
 
-## Router
+# Router
 
 * Vue has its own official router. More info about it [here](https://router.vuejs.org/)
 * The router supports Nested route/view mapping, Route params, query, wildcards, transitions, ... 
@@ -235,7 +233,7 @@ const routes: Array<RouteConfig> = [
 
 * In the example above, the comment `/* webpackChunkName: "about" */` indicates to webpack to do code-splitting and create a separate js chunk for the About page. 
 
-## Watchers
+# Watchers
 
 * Vue has support for variable watchers. More info [here](https://vuejs.org/v2/guide/computed.html)
 * Watchers are helpful when we need to call a function whenever the content of a variable changes. Follow a sample below:
@@ -265,7 +263,7 @@ const routes: Array<RouteConfig> = [
 
 * In the example above, whenever the `email` variable content changes, the function `emailChanged` is fired. 
 
-## DOM Events
+# DOM Events
 
 * We can capture DOM events in Vue like this:
 
@@ -275,7 +273,7 @@ const routes: Array<RouteConfig> = [
 
 * `@click` is the shorthand for the old `v-on:click` used in Vuejs.
 
-## Component Events
+# Component Events
 
 * It's possible to create custom events in Vue.js similar to Angular. Follow a sample below:
 
@@ -296,7 +294,7 @@ emitClicked(n: number) {
 </HelloWorld>
 ```
 
-## SLOTS
+# SLOTS
 
 * More info [here](https://vuejs.org/v2/guide/components-slots.html)
 * Slots are a way to project content into a Vue Component. In brief, whatever you send between opening and closing tag of the component will be rendered where the <slot/> word is. Ex:
@@ -315,7 +313,7 @@ emitClicked(n: number) {
 <!--Output: Hello world! -->
 ```
 
-## Mixins
+# Mixins
 
 
 
