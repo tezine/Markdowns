@@ -34,14 +34,12 @@
         @Emit() itemClicked(route:string) {}
         items = [
             {title: 'Slots', route:'/slots', icon: 'mdi-image'},
-            {title: 'Users', route:'/users', icon: 'mdi-view-dashboard'},
+            {title: 'Datatable', route:'/users', icon: 'mdi-table'},
+            {title: 'Mixins', route:'/mixins', icon: 'mdi-view-dashboard'},
             {title: 'Todo', route:'/todo', icon: 'mdi-image'},
-            {title: 'About', route:'/about', icon: 'mdi-help-box'},
-            {title: 'Logout', route:'/', icon: 'mdi-help-box'},
+            {title: 'About', route:'/about', icon: 'mdi-help'},
+            {title: 'Logout', route:'/', icon: 'mdi-logout'},
         ];
     }
 </script>
 
-<style scoped>
-
-</style>

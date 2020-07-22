@@ -8,10 +8,6 @@
 
     @Component({components: {VSlot}})
     export default class Slots extends Vue {
-
     }
 </script>
 
-<style scoped>
-
-</style>

@@ -17,16 +17,13 @@
 <script lang="ts">
     import {Vue, Component, Prop, Watch} from 'vue-property-decorator'
 
-    @Component({
-        components: {},
-    })
+    @Component({components: {},})
     export default class Login extends Vue {
-
         email = '';
 
         @Watch('email', {immediate: true, deep: true})
         emailChanged(value: string, oldValue: string) {
-            console.log('email alterado', value);
+            console.log('email changed:', value);
             this.email = value;
         }
 

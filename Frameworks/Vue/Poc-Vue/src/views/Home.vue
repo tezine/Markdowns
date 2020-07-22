@@ -15,7 +15,6 @@
     })
     export default class Home extends Vue {
 
-
         onLeftMenuItemClicked(route:string){
             if(route=='/')return this.$router.replace('/')
             //it's required to check the current route, or View Router will throw an exception if you attempt to push a route already visible
@@ -24,6 +23,3 @@
     }
 </script>
 
-<style scoped>
-
-</style>
