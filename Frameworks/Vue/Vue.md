@@ -1,3 +1,26 @@
+
+
+<!-- toc -->
+
+- [Vue.js](#vuejs)
+  * [Vue vs Angular](#vue-vs-angular)
+- [Html Template](#html-template)
+- [Vue Scripts](#vue-scripts)
+- [Lifecycle](#lifecycle)
+- [Typescript](#typescript)
+- [Binding](#binding)
+  * [Text binding](#text-binding)
+  * [Property binding](#property-binding)
+  * [Class and Style binding](#class-and-style-binding)
+- [Router](#router)
+- [Watchers](#watchers)
+- [DOM Events](#dom-events)
+- [Component Events](#component-events)
+- [SLOTS](#slots)
+- [Mixins](#mixins)
+
+<!-- tocstop -->
+
 # Vue.js 
 
 * Vue.js is a reactive, progressive javascript framework that uses Virtual DOM. Its website provides an extensive documentation in [English](https://vuejs.org/v2/guide/) and in [Portuguese](https://br.vuejs.org/v2/guide/). 
@@ -314,8 +337,3 @@ emitClicked(n: number) {
 ```
 
 # Mixins
-
-
-
-
-
