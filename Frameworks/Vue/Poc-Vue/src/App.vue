@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-main>
-<!--            <HelloWorld :e-user="eUser"/>-->
+            <HelloWorld :e-user="eUser"/>
             <router-view></router-view>
         </v-main>
     </v-app>

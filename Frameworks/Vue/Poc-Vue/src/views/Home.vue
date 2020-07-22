@@ -4,7 +4,6 @@
         </LeftMenu>
         <router-view ></router-view>
     </div>
-
 </template>
 
 <script lang="ts">
@@ -15,6 +14,7 @@
         components: {LeftMenu}
     })
     export default class Home extends Vue {
+
 
         onLeftMenuItemClicked(route:string){
             console.log('clicou em ',route);

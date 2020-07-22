@@ -19,5 +19,19 @@ export class UsersService{
     public static deleteUser(eUser:EUser) {
         return axios.delete(`${Defines.mockAPIBaseUrl}/user/${eUser.id}`);
     }
+
+    /*
+    Instead of passing the complete url to axios, it's also possible to do like this:
+        export default axios.create({
+            baseURL: "http://localhost:8080/api",
+            headers: {
+                "Content-type": "application/json"
+            }
+        });
+        public static addUser(eUser:EUser) {
+            return axios.post('/user/',  eUser );
+        }
+     */
 }
+
 
