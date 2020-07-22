@@ -8,17 +8,18 @@
 
 <script lang="ts">
     import {Vue, Component, Prop, Watch} from 'vue-property-decorator'
-    import LeftMenu from "@/components/LeftMenu.vue";
+    import VLeftMenu from "@/components/VLeftMenu.vue";
 
     @Component({
-        components: {LeftMenu}
+        components: {LeftMenu: VLeftMenu}
     })
     export default class Home extends Vue {
 
 
         onLeftMenuItemClicked(route:string){
-            console.log('clicou em ',route);
-            this.$router.push(route);
+            if(route=='/')return this.$router.replace('/')
+            //it's required to check the current route, or View Router will throw an exception if you attempt to push a route already visible
+            if (this.$route.path !== route) this.$router.push(route);
         }
     }
 </script>

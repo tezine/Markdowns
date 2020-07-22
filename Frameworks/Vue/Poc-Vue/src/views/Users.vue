@@ -16,7 +16,7 @@
     import {Component, Vue} from "vue-property-decorator";
     import {EUser} from "@/entities/EUser";
     import {UsersService} from "@/services/user.service";
-    import HelloWorld from "@/components/HelloWorld.vue";
+    import HelloWorld from "@/components/VHelloWorld.vue";
 
     @Component({
         components: {HelloWorld}

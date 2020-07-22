@@ -1,14 +1,14 @@
 <template>
     <v-app>
         <v-main>
-            <HelloWorld :e-user="eUser"/>
+<!--            <VHelloWorld :e-user="eUser"/>-->
             <router-view></router-view>
         </v-main>
     </v-app>
 </template>
 
 <script lang="ts">
-    import HelloWorld from './components/HelloWorld.vue';
+    import HelloWorld from './components/VHelloWorld.vue';
     import {Vue, Component, Prop} from 'vue-property-decorator'
     import {EUser} from "@/entities/EUser";
 

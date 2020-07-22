@@ -44,6 +44,7 @@ Vue is has many similarities with Angular, but here are some differences:
 | @click or [v-on:click](https://vuejs.org/v2/guide/events.html) | [(click)](https://angular.io/guide/user-input)               |
 | @Prop()                                                      | @Input                                                       |
 | @Emit()                                                      | @Output                                                      |
+| [<slot>](https://vuejs.org/v2/guide/components-slots.html)   | <ng-content>                                                 |
 
 ## Html Template
 
@@ -291,6 +292,25 @@ emitClicked(n: number) {
 <HelloWorld
   @emit-clicked="onHelloWorldClicked">
 </HelloWorld>
+```
+
+## SLOTS
+
+* More info [here](https://vuejs.org/v2/guide/components-slots.html)
+* Slots are a way to project content into a Vue Component. In brief, whatever you send between opening and closing tag of the component will be rendered where the <slot/> word is. Ex:
+
+```html
+<!--App.vue-->
+<MyComponent> 
+  world!
+</MyComponent>
+
+<!--MyComponent-->
+<div> 
+  Hello <slot/>!
+</div>
+
+<!--Output: Hello World! -->
 ```
 
 

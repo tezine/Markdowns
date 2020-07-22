@@ -30,12 +30,14 @@
     import {Vue, Component, Prop, Watch, Emit} from 'vue-property-decorator'
 
     @Component({components: {}})
-    export default class LeftMenu extends Vue {
+    export default class VLeftMenu extends Vue {
         @Emit() itemClicked(route:string) {}
         items = [
-            {title: 'Users', route:'users', icon: 'mdi-view-dashboard'},
-            {title: 'Todo', route:'todo', icon: 'mdi-image'},
-            {title: 'About', route:'about', icon: 'mdi-help-box'},
+            {title: 'Slots', route:'/slots', icon: 'mdi-image'},
+            {title: 'Users', route:'/users', icon: 'mdi-view-dashboard'},
+            {title: 'Todo', route:'/todo', icon: 'mdi-image'},
+            {title: 'About', route:'/about', icon: 'mdi-help-box'},
+            {title: 'Logout', route:'/', icon: 'mdi-help-box'},
         ];
     }
 </script>

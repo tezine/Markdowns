@@ -1,6 +1,6 @@
 <template>
     <div @click="emitClicked(1)" :style="styleObject">
-            {{hello}} {{eUser.firstName+' '+eUser.lastName}}
+<!--            {{hello}} {{eUser.firstName+' '+eUser.lastName}}-->
     </div>
 </template>
 
@@ -9,8 +9,8 @@
     import {EUser} from "@/entities/EUser";
 
     @Component
-    export default class HelloWorld extends Vue {
-        @Prop({ type: Object, required: true }) readonly eUser!: EUser
+    export default class VHelloWorld extends Vue {
+        // @Prop({ type: Object, required: true }) readonly eUser!: EUser
         // @Prop() readonly msg!: string
         // @Prop({default: 'John doe'}) readonly name: string
         // @Prop({required: true}) readonly age: number
