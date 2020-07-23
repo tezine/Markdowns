@@ -393,7 +393,7 @@ There are a few concepts related to Vuex that we need to understand outlined bel
 3. **Actions:** Actions are used to commit mutations and can be asynchronous. Actions are also methods and receive context as parameter. Context has same methods/properties as store but context is actually not store. so, mutations are committed using` context.commit('increment')`. Actions are triggered from Vue components using `store.dispatch('increment')` where increment is name of action
 4. **Modules:** To simplify large store, Vuex allows us to divide store into modules. Each module can contain its own state, mutations, actions and even nested module.
 
-The Vue PoC provides a simple VueX sample. You can check the code and its execution [here](./PoC-Vue/src/views/Vuex.vue) and the tutorial explaining the details about it [here](https://medium.com/@RupaniChirag/vuex-with-typescript-b83a62aa48a8).
+The Vue PoC provides a simple VueX sample. You can check the code and its execution [here](./PoC-Vue) and the tutorial explaining the details about it [here](https://medium.com/@RupaniChirag/vuex-with-typescript-b83a62aa48a8).
 
 # Nuxt
 
