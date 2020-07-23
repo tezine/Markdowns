@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from 'axios';
 import {EUser} from "@/entities/EUser";
-import {Defines} from "@/codes/defines";
+import {Defines} from "@/codes/Defines";
 
 export class UsersService{
 

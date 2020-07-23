@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
-import router from './codes/routes'
-import store from './store/store'
+import router from './codes/Routes'
+import store from './store/Store'
 import vuetify from './plugins/vuetify';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
