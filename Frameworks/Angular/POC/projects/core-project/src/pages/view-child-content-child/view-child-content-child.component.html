@@ -1,1 +1,17 @@
-<p>view-child-content-child works!</p>
+<mat-toolbar color="primary">
+    <button mat-button (click)="onBtnUpateChildClicked()" color="secondary">Update Child</button>
+    <span class="example-spacer"></span>
+    <span>ViewChild/ContentChild</span>
+</mat-toolbar>
+<mat-tab-group animationDuration="0ms">
+    <mat-tab label="View Child" >
+        <div class="container p-3">
+            <div class="row">
+                <div class="viewChildDiv col-md-6" #viewChildDiv>hello</div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Content Child">
+        <VHello>World!</VHello>
+    </mat-tab>
+</mat-tab-group>

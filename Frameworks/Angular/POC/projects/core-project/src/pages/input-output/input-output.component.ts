@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InputOutputComponent implements OnInit {
 
+  nameTxt:string='';
+  phoneTxt:string='';
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onTxtNameChanged(txt:string){
+    this.nameTxt=txt;
   }
 
 }

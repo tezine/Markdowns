@@ -25,6 +25,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { VHelloComponent } from './components/vhello/vhello.component';
+import { VLazyComponent } from './components/vlazy/vlazy.component';
+import { TranslationsComponent } from './pages/translations/translations.component';
+import { VInputComponent } from './components/vinput/vinput.component';
 
 export function getBasePath(): string {
     //if(!GlobalsService.isDevMode())return Constants.boschServerURL
@@ -43,7 +47,11 @@ export function getBasePath(): string {
         InputOutputComponent,
         ViewChildContentChildComponent,
         LazyComponentComponent,
-        DashboardComponent
+        DashboardComponent,
+        VHelloComponent,
+        VLazyComponent,
+        TranslationsComponent,
+        VInputComponent
     ],
     imports: [
         BrowserModule,

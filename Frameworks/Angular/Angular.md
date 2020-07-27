@@ -47,7 +47,8 @@
 
 # POC
 
-* hddh
+* There's a Proof of Concept project following this material. You can find the code [here](./POC). The purpose of the POC is to exemplify all subjects mentioned in this document. It's composed by an Angular workspace with 1 application (core-project), 1 Angular library (users-lib)... 
+* It uses Material Design components, bootstrap css, internationalization, animations, services, template and reactive forms and many other features. 
 
 # Project Structure
 
@@ -57,8 +58,41 @@
 
 In Angular, sometimes we get confused on when to create a library and when to create a Angular Module. Here are the basic differences between them: 
 
-* Module: A Module resides inside the project and it's only used within it. We can add components and others into the module and load the module at runtime when needed. A common scenario is to do Lazy Loading triggered by a specific route in your website. Ex: /users load the Users module, containing all users components, services... 
-* Library: A library is more appropriate when you wish to share it with several projects. This way, the application that uses the library doesn't have to access the library code, only the compiled bundle. 
+* [Module](https://angular.io/guide/architecture-modules): A Module resides inside the project and it's only used within it. We can add components and others into the module and load the module at runtime when needed. A common scenario is to do Lazy Loading triggered by a specific route in your website. Ex: /users load the Users module, containing all users components, services... . Unfortunately, this approach requires you to download the module source code in order to accomplish the lazy load, and that's why it's called as "mono repository" approach. 
+* [Library](https://angular.io/guide/libraries): A library is more appropriate when you wish to share it with several projects. This way, the application that uses the library doesn't have to access the library code, only the compiled bundle. It's even possible to do lazy loading of a library without having its source code, but it requires you to define a module wrapper into the consumer application. 
+
+## Libraries
+
+Angular libraries can only be used within Angular projects. If you intend to create a library to be used outside Angular, create a [Angular Element](https://angular.io/guide/elements). We can create a Angular library by executing the following command: 
+
+```bash
+ng new my-workspace --create-application=false # creates the an empty Angular workspace
+cd my-workspace
+ng generate library my-lib # creates the library project. 
+```
+
+Remember to define which components are exported by your library in your "my-lib.module.ts". Components not explicitly exported cannot be imported and used in an Angular app. 
+
+After finalizing the library code, you can build it like this:
+
+```bash
+ng build my-lib --prod
+cd dist/my-lib
+npm publish # This published into NPM repository. Please notice that Angular do not recommend to publish Ivy libraries to npm. 
+```
+
+You can consume your library, by executing the following command in your app:
+
+```bash
+npm install my-lib --save
+# now you can import its components, services... in your app module. 
+```
+
+### Lazy Loading Libraries
+
+It's possible to do lazy loading of Angular libraries. To do so, follow the steps below
+
+There's a detailed description about lazy loading libraries [here](https://medium.com/@tomastrajan/why-and-how-to-lazy-load-angular-libraries-a3bf1489fe24). 
 
 # Components
 
@@ -109,9 +143,9 @@ It's also possible to have html/typescript/css into the same file, but it's not 
 
 ## ViewChild
 
-*Podemos acessar um elemento do DOM no typescript através do @ViewChild. 
-Seguem um exemplo abaixo:
-html:
+* Podemos acessar um elemento do DOM no typescript através do @ViewChild. 
+  Seguem um exemplo abaixo:
+  html:
 
 ```html
 <input class="col-xs-12 col-md-6" [label]="'Celular'" id="txtCel"></input>
@@ -409,7 +443,11 @@ Every Angular workspace has a `tsconfig.json` file. All typescript configuration
 
 ## Component Lazy Loading
 
-* ver https://netbasal.com/welcome-to-the-ivy-league-lazy-loading-components-in-angular-v9-e76f0ee2854a
+* One of the cool features that Ivy brougth to Angular in version 9, was the ability to do Lazy Loading for Angular Components. 
+
+* There are several tutorials explaining on how to make it work in several ways. Check it out [here](https://indepth.dev/lazy-loading-angular-modules-with-ivy/) and [here](https://netbasal.com/welcome-to-the-ivy-league-lazy-loading-components-in-angular-v9-e76f0ee2854a). 
+
+  
 
 ## Webassembly
 

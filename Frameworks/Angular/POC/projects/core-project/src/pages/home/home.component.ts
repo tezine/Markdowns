@@ -16,9 +16,9 @@ export class HomeComponent implements OnInit {
     this.menuItems.push(<EMenuItem>{title:'Dashboard',route:'dashboard',iconName:'dashboard'});
     this.menuItems.push(<EMenuItem>{title:'Animations',route:'animations',iconName:'home'});
     this.menuItems.push(<EMenuItem>{title:'Input/Output',route:'input-output',iconName:'home'});
-    this.menuItems.push(<EMenuItem>{title:'Forms',route:'forms',iconName:'home'});
-    this.menuItems.push(<EMenuItem>{title:'Users',route:'users',iconName:'home'});
-    this.menuItems.push(<EMenuItem>{title:'Translations',route:'translations',iconName:'home'});
+    this.menuItems.push(<EMenuItem>{title:'Forms',route:'forms',iconName:'aspect_ratio'});
+    this.menuItems.push(<EMenuItem>{title:'Users',route:'users',iconName:'group'});
+    this.menuItems.push(<EMenuItem>{title:'Translations',route:'translations',iconName:'language'});
     this.menuItems.push(<EMenuItem>{title:'ViewChild/ContentChild',route:'viewchild-contentchild',iconName:'home'});
     this.menuItems.push(<EMenuItem>{title:'Lazy component',route:'lazy-component',iconName:'home'});
     this.menuItems.push(<EMenuItem>{title:'About',route:'about',iconName:'home'});

@@ -1,1 +1,22 @@
-<p>lazy-component works!</p>
+<mat-toolbar color="primary">
+    <button mat-button (click)="onBtnLoadClicked()" color="secondary">Load 1</button>
+    <button mat-button (click)="onBtnLoad2Clicked()" color="secondary">Load 2</button>
+    <span class="example-spacer"></span>
+    <span>Lazy Load Component</span>
+</mat-toolbar>
+
+<mat-tab-group animationDuration="0ms">
+    <mat-tab label="Option 1" >
+        <ng-container #anchor></ng-container>
+    </mat-tab>
+    <mat-tab label="Option 2" >
+        <ng-container *ngIf="lazy2">
+            <ng-template [ngComponentOutlet]="lazy2 | async"></ng-template>
+        </ng-container>
+    </mat-tab>
+</mat-tab-group>
+
+
+
+
+

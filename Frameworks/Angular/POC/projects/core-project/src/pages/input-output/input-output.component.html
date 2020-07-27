@@ -1,1 +1,31 @@
-<p>input-output works!</p>
+<mat-toolbar color="primary">
+    <span class="example-spacer"></span>
+    <span>@Input/@Output</span>
+</mat-toolbar>
+<mat-tab-group animationDuration="0ms">
+    <mat-tab label="Input" >
+        <div class="container p-3">
+            <div class="row">
+                <VInput label="Name" class="col-md-6" text="Bruno Tezine"></VInput>
+                <VInput label="Phone" class="col-md-6"></VInput>
+            </div>
+            <div class="row">
+                <VInput label="Address" class="col-md-6"></VInput>
+                <VInput label="PostalCode" class="col-md-6"></VInput>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Output">
+        <div class="container p-3">
+            <div class="row">
+                <VInput label="Name" class="col-md-6" (textChanged)="onTxtNameChanged($event)"></VInput>
+                <VInput label="Phone" class="col-md-6" (textChanged)="phoneTxt=$event"></VInput>
+            </div>
+            <div class="row">
+                <VInput label="Name copy" class="col-md-6" [text]="nameTxt"></VInput>
+                <VInput label="Phone copy" class="col-md-6" [text]="phoneTxt"></VInput>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+
