@@ -1,0 +1,9 @@
+
+.gridLayout{
+  margin-top: 10px;
+  margin-left: 10px;
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  justify-content: space-around;
+  row-gap: 20px;
+}

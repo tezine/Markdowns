@@ -1,34 +1,82 @@
+<!--toc generated automatically by running markdown-toc -i Angular.md-->
+
+<!-- toc -->
+
+- [ANGULAR](#angular)
+- [POC](#poc)
+- [Project Structure](#project-structure)
+- [Modules](#modules)
+- [Components](#components)
+  * [File structrure](#file-structrure)
+  * [Lifecycle](#lifecycle)
+  * [Input properties/parameters](#input-propertiesparameters)
+  * [Output events](#output-events)
+  * [ViewChild](#viewchild)
+  * [ContentChild](#contentchild)
+  * [Hooks](#hooks)
+  * [Animations](#animations)
+- [Forms](#forms)
+  * [Template-driven forms](#template-driven-forms)
+  * [Reactive forms](#reactive-forms)
+- [Services](#services)
+- [Pipes](#pipes)
+- [Directives](#directives)
+  * [Attribute Directives](#attribute-directives)
+  * [Structural Directives](#structural-directives)
+- [HttpClient](#httpclient)
+- [Router](#router)
+- [Angular Elements](#angular-elements)
+- [Internationalization](#internationalization)
+- [Server Side Rendering](#server-side-rendering)
+- [PWA](#pwa)
+- [Angular Workspace (App + one Lib)](#angular-workspace-app--one-lib)
+- [Tests](#tests)
+- [Deployment](#deployment)
+- [Open API Integration](#open-api-integration)
+- [CORS](#cors)
+
+<!-- tocstop -->
+
 # ANGULAR
-* https://angular.io/
-* A partir do angular 6, é possível atualizar os componentes via ng update. Por exemplo, `ng update @angular/core` atualiza todos os packages do angular, o rxjs e typescript.
-* A partir da versao 6, podemos adicionar novas funcionalidades ao projeto via `ng add`. Ex: `ng add @angular/material`.
-* A partir da versão 6, é utilizado o angular.json ao invés de .angular-cli.json e há suporte para workspaces. 
-* A versão 6 suporta Custom Elements. https://angular.io/guide/elements. "Custom elements bootstrap themselves - they start automatically when they are added to the DOM, and are automatically destroyed when removed from the DOM".
-* Agora é possível criar bibliotecas facilmente usando `ng generate library`.
 
+* [Angular](https://angular.io/) is progressive, reactive typescript web framework that allows the creation of Single Page applications. The project is sponsored by Google and mostly used by enterprise level websites with complex and lots of pages and code files. It provides Behavior Driven Testing (BDD) out of the box, Router, Internationalization, Ahead of Time compiling, Server Side Rendering, Dependency injection, Animations, ...., and its own http client. 
+* Angular provides its own [Command Line Interface (CLI)](https://cli.angular.io/) from where you can easily create applications, libraries and others. Angular also has support for centralized workspaces, where each [workspace](https://angular.io/guide/file-structure) may contain several Angular projects. "The top level of the workspace contains workspace-wide configuration files, configuration files for the root-level application, and subfolders for the root-level application source and test files."
+* Applications can be easily updated to the newest version by following the procedure described [here](https://update.angular.io/) and there's an official material design components built in Angular. More info [here](https://material.angular.io/). 
+* Angular has a built-in support for [Web Component](https://developer.mozilla.org/en-US/docs/Web/Web_Components) standard. By using a web component, it's possible to export Angular Components to be used outside Angular projects, so you may use them in a React, Vuejs, or any other Web framework. "Custom elements bootstrap themselves - they start automatically when they are added to the DOM, and are automatically destroyed when removed from the DOM". A more detailed information on how to create Web Components [here](https://angular.io/guide/elements).
+* There are many enterprise level websites running Angular. You can check its showcase [here](https://www.madewithangular.com/)
 
-# Angular Workspace (App + one Lib)
-* Segue um passo a passo para criar um workspace Angular contendo um app e uma lib abaixo: 
-1. Baixar o Angular CLI [aqui](https://cli.angular.io/)
-1. Executar `ng new nomeworkspace --createApplication="false"` . Há informações sobre os parâmetros do ng new [aqui](https://angular.io/cli/new)
-1. `cd nomeworkspace`
-1. Criar um projeto para a aplicação: `ng generate application nome-app --routing=true --style=scss`
-1. Criar um projeto para a lib: `ng generate library nome-lib`
-1. Instalar os pacotes npm: `npm install`
-1. Executar a aplicação: `ng serve`
+# POC
 
-# SERVICES
-* A partir da versão 6 não se coloca mais os services como providers. Agora é assim:
-```typescript 
-@Injectable({
-  providedIn: 'root',
-})
-export class MyService {
-  constructor() { }
-}
-```
+* hddh
 
-# LIFECYCLE
+# Project Structure
+
+* 
+
+# Modules and Libraries
+
+In Angular, sometimes we get confused on when to create a library and when to create a Angular Module. Here are the basic differences between them: 
+
+* Module: A Module resides inside the project and it's only used within it. We can add components and others into the module and load the module at runtime when needed. A common scenario is to do Lazy Loading triggered by a specific route in your website. Ex: /users load the Users module, containing all users components, services... 
+* Library: A library is more appropriate when you wish to share it with several projects. This way, the application that uses the library doesn't have to access the library code, only the compiled bundle. 
+
+# Components
+
+In Angular, every page or every widget is a considered a component. There's no difference between them. 
+
+## File structrure
+
+Different from [Vuejs](https://vuejs.org/) or [Svelte](https://svelte.dev/), Angular Components are usually splitted into 3 files: 
+
+1. Html template file (.html)
+2. Typescript file (.ts), where the component's logic resides. 
+3. Stylesheet file (scss, css, stylus, less...). Stylesheets are scoped/isolated by default in Angular, so whatever you define in your component stylesheet is not spread over other components. 
+4. Spec file. Spec files are [Jasmine](https://jasmine.github.io/) test files that are executed by [Karma](https://karma-runner.github.io/latest/index.html). 
+
+It's also possible to have html/typescript/css into the same file, but it's not a common usage and discouraged by the community. 
+
+## Lifecycle
+
 * ngOnChanges()
 * ngOnInit()
 * ngDoCheck()
@@ -38,62 +86,178 @@ export class MyService {
 * ngAfterViewChecked()
 * ngOnDestroy()
 
-# INPUT
+## Input properties/parameters
+
 * Podemos passar parâmetros para o componente através do @Input(). Ex:
+
 ```typescript 
 @Input() count: number = 0;
 ```
 
-# Events
+## Output events
+
 * Podemos ouvir os html events que acontecem dentro de um componente da seguinte maneira:
+
 ```typescript 
 @HostListener('mouseenter') onMouseEnter() {
   this.highlight('yellow');
 }
 ```
+
 * Mais info [aqui](https://angular.io/guide/attribute-directives)
 
 
-# ViewChild
+## ViewChild
+
 *Podemos acessar um elemento do DOM no typescript através do @ViewChild. 
 Seguem um exemplo abaixo:
 html:
+
 ```html
 <input class="col-xs-12 col-md-6" [label]="'Celular'" id="txtCel"></input>
 ```
+
 component.ts:
+
 ```typescript 
 @ViewChild('txtCel',{static: false}) txtCel:any;
 ```
 
+## ContentChild
 
-# UPDATES
-* Para verificar como fazer update de seu projeto, acesse http://update.angular.io 
+* dkdhd
 
+## Hooks
 
-# CORS
-* Para habilitar CORS no Angular e, com isso permitir com que o Angular faça requests para outros domínios e/ou portas, crie o arquivo proxy.conf.json abaixo:
-```json 
-{
-    "/api/*": {
-        "target": "http://localhost:9090",
-        "secure": false,
-        "logLevel": "debug"
-    }
+* h
+
+## Animations
+
+* 
+
+# Forms
+
+* dkdhd
+
+## Template-driven forms
+
+* dhdh
+
+## Reactive forms
+
+* 
+
+# Services
+
+* A partir da versão 6 não se coloca mais os services como providers. Agora é assim:
+
+```typescript 
+@Injectable({
+  providedIn: 'root',
+})
+export class MyService {
+  constructor() { }
 }
 ```
-* Agora adicione a linha proxyConfig no angular.json dentro de `serve` do projeto, conforme abaixo:
-```json
-"serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "meuprojeto:build",
-            "proxyConfig": "src/proxy.conf.json"
-          },
+
+# Pipes
+
+* ddkdh
+
+# Directives
+
+* dkdhd
+
+## Attribute Directives
+
+* sddd
+
+## Structural Directives
+
+* 
+
+# Router
+
+* Avoid using named router-outlet. Instead, prefer using several <router-outlet> with child routes. Ex: 
+
+1. Let's suppose you have a main angular project. 
+
+2. There's a <router-outlet> in the app.component.html
+
+3. Than, after the user login, you display a Home.component. 
+
+4. In this HomeComponent, you have another <router-outlet> 
+
+5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
+
+6. To do so, create the following routes in your main project: 
+
+```typescript
+const routes: Routes = [
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: 'login', component: LoginComponent},
+    {path: 'home', component: HomeComponent, children:[
+        //this is a child route, because we have a <router-outlet> inside HomeComponent
+        {path: 'cadastros', loadChildren: () => 	 import('../../cadastros/src/lib/cadastros.module').then(m => m.CadastrosModule)},
+    ]
+    },
+    // {path: '**', component:LoginComponent},
+];
 ```
 
+8. Now, under Cadastros module, add the followint routes:
 
-# Unit Testing
+```typescript
+const routes: Routes = [
+    {path: '', component: CadastrosComponent, children: [//route: /cadastros
+    {path: 'clients', component: ClientsComponent,},
+    {path: 'clients/edit', component: ClientsEditComponent},//this cannot be a child route of clients, since we don't have a router-outlet inside clients
+]}];
+```
+
+10. Now, you can load the Cadastros module from HomeComponent, by adding the code: 
+
+```typescript
+await this.router.navigate(['home/cadastros/clientes']);
+```
+
+12. This will do the lazy loading of the Cadastros module and display the ClientsComponent inside the router-outlet in HomeComponent.
+
+# HttpClient
+
+* ddff
+
+# Angular Elements
+
+* dkdhd
+
+# Internationalization
+
+* 
+
+# Server Side Rendering
+
+* 
+
+# PWA
+
+* 
+
+# Angular Workspace (App + one Lib)
+
+* Segue um passo a passo para criar um workspace Angular contendo um app e uma lib abaixo: 
+1. Baixar o Angular CLI [aqui](https://cli.angular.io/)
+1. Executar `ng new nomeworkspace --createApplication="false"` . Há informações sobre os parâmetros do ng new [aqui](https://angular.io/cli/new)
+1. `cd nomeworkspace`
+1. Criar um projeto para a aplicação: `ng generate application nome-app --routing=true --style=scss`
+1. Criar um projeto para a lib: `ng generate library nome-lib`
+1. Instalar os pacotes npm: `npm install`
+1. Executar a aplicação: `ng serve`
+
+* 
+
+
+# Tests
 * Mais informações [aqui](https://angular.io/guide/testing)
 
 * Os testes unitários são realizados através de Karma e Jasmine. 
@@ -195,52 +359,58 @@ component.ts:
   ```
 
 
-# Open API Generator
+
+# Deployment
+
+* dd
+
+
+# Open API Integration
 
 * In order to generate the REST APIs automatically for  your Angular project using [Open API Generator](https://openapi-generator.tech/), take a look at the Open API Genrator [here](../../OpenAPIGenerator.md).
 
-# Router-outlet
+12. 
 
-* Avoid using named router-outlet. Instead, prefer using several <router-outlet> with child routes. Ex: 
+# CORS
 
-1. Let's suppose you have a main angular project. 
+* Para habilitar CORS no Angular e, com isso permitir com que o Angular faça requests para outros domínios e/ou portas, crie o arquivo proxy.conf.json abaixo:
 
-2. There's a <router-outlet> in the app.component.html
-
-3. Than, after the user login, you display a Home.component. 
-
-4. In this HomeComponent, you have another <router-outlet> 
-
-5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
-
-6. To do so, create the following routes in your main project: 
-
-```typescript
-const routes: Routes = [
-    {path: '', redirectTo: 'login', pathMatch: 'full'},
-    {path: 'login', component: LoginComponent},
-    {path: 'home', component: HomeComponent, children:[
-        //this is a child route, because we have a <router-outlet> inside HomeComponent
-        {path: 'cadastros', loadChildren: () => 	 import('../../cadastros/src/lib/cadastros.module').then(m => m.CadastrosModule)},
-    ]
-    },
-    // {path: '**', component:LoginComponent},
-];
-```
-8. Now, under Cadastros module, add the followint routes:
-
-```typescript
-const routes: Routes = [
-    {path: '', component: CadastrosComponent, children: [//route: /cadastros
-    {path: 'clients', component: ClientsComponent,},
-    {path: 'clients/edit', component: ClientsEditComponent},//this cannot be a child route of clients, since we don't have a router-outlet inside clients
-]}];
+```json 
+{
+    "/api/*": {
+        "target": "http://localhost:9090",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}
 ```
 
-10. Now, you can load the Cadastros module from HomeComponent, by adding the code: 
+* Agora adicione a linha proxyConfig no angular.json dentro de `serve` do projeto, conforme abaixo:
 
-```typescript
-await this.router.navigate(['home/cadastros/clientes']);
+```json
+"serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "meuprojeto:build",
+            "proxyConfig": "src/proxy.conf.json"
+          },
 ```
 
-12. This will do the lazy loading of the Cadastros module and display the ClientsComponent inside the router-outlet in HomeComponent.
+# Security
+
+# Typescript properties
+
+Every Angular workspace has a `tsconfig.json` file. All typescript configurations used by the projects in the workspace are written in it. There are a few [compiler options](https://www.typescriptlang.org/docs/handbook/compiler-options.html) that are very important and are described below:
+
+1. strict: Strict is an important option that is disabled by default, but it's highly recommended to enable it. Basically, when disabled, you can write typescript as pure javascript (non typed). If you enable it, the compiler will display an error whenever you try to create a property that should never be null (without `?` at the end. Ex: `title:string` ). It'll display an error when you don't specify function parameter types, and many other options. There's a good explanation about `strict` [here](https://medium.com/webhint/going-strict-with-typescript-be3f3f7e3295).
+2. removeComments: I have no idea why, but this flag is disabled by default, so it's important to enable it in order to remove your code comments for the production build. 
+
+# Advanced Scenarios
+
+## Component Lazy Loading
+
+* ver https://netbasal.com/welcome-to-the-ivy-league-lazy-loading-components-in-angular-v9-e76f0ee2854a
+
+## Webassembly
+
+* 

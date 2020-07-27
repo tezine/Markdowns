@@ -1,0 +1,27 @@
+
+<div class="container">
+    <p *ngIf="!clientes"><em>Carregando...</em></p>
+    <table class="table" *ngIf="clientes">
+        <thead class="thead-dark">
+        <tr class="header">
+            <th>Id</th>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Pai</th>
+            <th>Mãe</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let cliente of clientes;index as i;" class="line">
+            <td>{{cliente.id}}</td>
+            <td>{{cliente.nome}}</td>
+            <td>{{cliente.cpf}}</td>
+            <td>{{cliente.nomePai}}</td>
+            <td>{{cliente.nomeMae}}</td>
+            <td (click)="onBtnEditClicked(cliente)">editar</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<router-outlet></router-outlet>

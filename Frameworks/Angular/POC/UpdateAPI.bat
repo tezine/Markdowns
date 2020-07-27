@@ -1,0 +1,1 @@
+openapi-generator generate -i http://localhost:5000/swagger/v1/swagger.json -g typescript-angular -o ./projects/cadastros-api --additional-properties="ngVersion=9.1.9" --import-mappings=Date=java.sql.Date --type-mappings=Date=string
