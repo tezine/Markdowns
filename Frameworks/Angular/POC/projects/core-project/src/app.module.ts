@@ -29,6 +29,11 @@ import { VHelloComponent } from './components/vhello/vhello.component';
 import { VLazyComponent } from './components/vlazy/vlazy.component';
 import { TranslationsComponent } from './pages/translations/translations.component';
 import { VInputComponent } from './components/vinput/vinput.component';
+import { StylesComponent } from './pages/styles/styles.component';
+import { HooksComponent } from './pages/hooks/hooks.component';
+import { ServicesComponent } from './pages/services/services.component';
+import { DirectivesComponent } from './pages/directives/directives.component';
+import { PipesComponent } from './pages/pipes/pipes.component';
 
 export function getBasePath(): string {
     //if(!GlobalsService.isDevMode())return Constants.boschServerURL
@@ -51,7 +56,12 @@ export function getBasePath(): string {
         VHelloComponent,
         VLazyComponent,
         TranslationsComponent,
-        VInputComponent
+        VInputComponent,
+        StylesComponent,
+        HooksComponent,
+        ServicesComponent,
+        DirectivesComponent,
+        PipesComponent
     ],
     imports: [
         BrowserModule,

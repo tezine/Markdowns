@@ -1,3 +1,5 @@
+# ANGULAR CRASH COURSE
+
 <!--toc generated automatically by running markdown-toc -i Angular.md-->
 
 <!-- toc -->
@@ -36,8 +38,6 @@
 - [CORS](#cors)
 
 <!-- tocstop -->
-
-# ANGULAR
 
 * [Angular](https://angular.io/) is progressive, reactive typescript web framework that allows the creation of Single Page applications. The project is sponsored by Google and mostly used by enterprise level websites with complex and lots of pages and code files. It provides Behavior Driven Testing (BDD) out of the box, Router, Internationalization, Ahead of Time compiling, Server Side Rendering, Dependency injection, Animations, ...., and its own http client. 
 * Angular provides its own [Command Line Interface (CLI)](https://cli.angular.io/) from where you can easily create applications, libraries and others. Angular also has support for centralized workspaces, where each [workspace](https://angular.io/guide/file-structure) may contain several Angular projects. "The top level of the workspace contains workspace-wide configuration files, configuration files for the root-level application, and subfolders for the root-level application source and test files."

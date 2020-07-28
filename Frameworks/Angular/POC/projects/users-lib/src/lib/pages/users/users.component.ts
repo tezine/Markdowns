@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Defines} from '../../codes/Defines';
-import {ClientesService, ECliente} from '../../../../../users-api';
+import {EmployeesService} from '../../services/employees.service';
+import {EEmployee} from '../../entities/EEmployee';
 
 @Component({
   selector: 'lib-clientes',
@@ -10,16 +11,16 @@ import {ClientesService, ECliente} from '../../../../../users-api';
 })
 export class UsersComponent implements OnInit {
 
-  clientes?:ECliente[];
+  employees?:EEmployee[];
 
-  constructor(private clientesService:ClientesService,protected router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private employeesService:EmployeesService,protected router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   async ngOnInit() {
-    this.clientes= await this.clientesService.getAll("1",100).toPromise();
+    this.employees= await this.employeesService.getEmployees();
   }
 
-  async onBtnEditClicked(eCliente:ECliente){
+  async onBtnEditClicked(eCliente:any){
     await this.router.navigate(['edit'],{relativeTo: this.activatedRoute});
   }
 

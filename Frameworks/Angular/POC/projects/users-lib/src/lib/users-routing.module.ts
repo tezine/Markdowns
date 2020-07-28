@@ -1,8 +1,8 @@
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {Defines} from './codes/Defines';
-import {UsersEditComponent} from './components/users-edit/users-edit.component';
-import {UsersComponent} from './components/users/users.component';
+import {UsersEditComponent} from './pages/users-edit/users-edit.component';
+import {UsersComponent} from './pages/users/users.component';
 
 const routes: Routes = [
     {

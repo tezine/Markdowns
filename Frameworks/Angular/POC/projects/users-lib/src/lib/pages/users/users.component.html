@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+    <span class="example-spacer"></span>
+    <span>Http</span>
+</mat-toolbar>
+<div class="container-fluid p-3">
+    <p *ngIf="!employees"><em>Carregando...</em></p>
+    <table class="table" *ngIf="employees">
+        <thead class="thead-light">
+        <tr class="header">
+            <th>Id</th>
+            <th>Name</th>
+<!--            <th>CPF</th>-->
+<!--            <th>Pai</th>-->
+<!--            <th>Mãe</th>-->
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let cliente of employees;index as i;" class="line">
+            <td>{{cliente.id}}</td>
+            <td>{{cliente.employee_name}}</td>
+<!--            <td>{{cliente.cpf}}</td>-->
+<!--            <td>{{cliente.nomePai}}</td>-->
+<!--            <td>{{cliente.nomeMae}}</td>-->
+            <td (click)="onBtnEditClicked(cliente)">editar</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<router-outlet></router-outlet>

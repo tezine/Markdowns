@@ -11,6 +11,11 @@ import {ViewChildContentChildComponent} from './pages/view-child-content-child/v
 import {LazyComponentComponent} from './pages/lazy-component/lazy-component.component';
 import {DashboardComponent} from './pages/dashboard/dashboard.component';
 import {TranslationsComponent} from './pages/translations/translations.component';
+import {StylesComponent} from './pages/styles/styles.component';
+import {HooksComponent} from './pages/hooks/hooks.component';
+import {ServicesComponent} from './pages/services/services.component';
+import {DirectivesComponent} from './pages/directives/directives.component';
+import {PipesComponent} from './pages/pipes/pipes.component';
 
 
 const routes: Routes = [
@@ -20,11 +25,16 @@ const routes: Routes = [
           {path: 'dashboard', component: DashboardComponent},
           {path: 'forms', component: FormsComponent},
           {path: 'animations', component: AnimationsComponent},
+          {path: 'hooks', component: HooksComponent},
           {path: 'input-output', component: InputOutputComponent},
           {path: 'viewchild-contentchild', component: ViewChildContentChildComponent},
           {path: 'lazy-component', component: LazyComponentComponent},
           {path: 'translations', component: TranslationsComponent},
+          {path: 'services', component: ServicesComponent},
           {path: 'about', component: AboutComponent},
+          {path: 'pipes', component: PipesComponent},
+          {path: 'directives', component: DirectivesComponent},
+          {path: 'styles', component: StylesComponent},
            {path: 'users', loadChildren:  async () => (await import('../../users-lib/src/lib/users.module')).UsersModule,},
           // {
           //     path: 'users',

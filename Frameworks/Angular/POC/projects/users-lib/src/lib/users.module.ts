@@ -2,16 +2,16 @@ import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {UsersRoutingModule} from './users-routing.module';
 import {CommonModule} from '@angular/common';
-import {UsersEditComponent} from './components/users-edit/users-edit.component';
-import {UsersComponent} from './components/users/users.component';
-import {ApiModule, Configuration, ConfigurationParameters} from '../../../users-api';
+import {UsersEditComponent} from './pages/users-edit/users-edit.component';
+import {UsersComponent} from './pages/users/users.component';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
-export function apiConfigFactory(): Configuration {
-    const params: ConfigurationParameters = {
-        // set configuration parameters here.
-    };
-    return new Configuration(params);
-}
+// export function apiConfigFactory(): Configuration {
+//     const params: ConfigurationParameters = {
+//         // set configuration parameters here.
+//     };
+//     return new Configuration(params);
+// }
 
 @NgModule({
     declarations: [
@@ -19,9 +19,10 @@ export function apiConfigFactory(): Configuration {
         UsersComponent
     ],
     imports: [
-        ApiModule.forRoot(apiConfigFactory),
+        //ApiModule.forRoot(apiConfigFactory),
         CommonModule,
-        UsersRoutingModule
+        UsersRoutingModule,
+        MatToolbarModule
     ],
     bootstrap: [],
     exports: [UsersComponent]
