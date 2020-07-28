@@ -2,4 +2,14 @@
     <span class="example-spacer"></span>
     <span>Directives</span>
 </mat-toolbar>
-<p>directives works!</p>
+<mat-tab-group >
+    <mat-tab label="Atribute Directives">
+        <p appUnderline>Underline me!</p>
+    </mat-tab>
+    <mat-tab label="Structural Directives">
+        <p *displayUnless="condition">condition is set to false</p>
+        <p>Current condition value:{{condition}}</p>
+        <button mat-raised-button color="primary" (click)="onBtnToggleClicked()" > Toggle</button>
+    </mat-tab>
+</mat-tab-group>
+

@@ -2,4 +2,11 @@
     <span class="example-spacer"></span>
     <span>Pipes</span>
 </mat-toolbar>
-<p>pipes works!</p>
+
+<div class="container p-3">
+    <div>
+        <p>File: {{ file.name }}</p>
+        <p>File size: {{ file.size | fileSize }}</p>
+    </div>
+</div>
+

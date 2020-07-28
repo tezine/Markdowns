@@ -35,6 +35,9 @@ import { ServicesComponent } from './pages/services/services.component';
 import { DirectivesComponent } from './pages/directives/directives.component';
 import { PipesComponent } from './pages/pipes/pipes.component';
 import {MatTableModule} from '@angular/material/table';
+import { UnderlineDirective } from './directives/underline.directive';
+import { DisplayUnlessDirective } from './directives/display-unless.directive';
+import { FileSizePipe } from './pipes/file-size.pipe';
 
 export function getBasePath(): string {
     //if(!GlobalsService.isDevMode())return Constants.boschServerURL
@@ -62,7 +65,10 @@ export function getBasePath(): string {
         HooksComponent,
         ServicesComponent,
         DirectivesComponent,
-        PipesComponent
+        PipesComponent,
+        UnderlineDirective,
+        DisplayUnlessDirective,
+        FileSizePipe
     ],
     imports: [
         BrowserModule,

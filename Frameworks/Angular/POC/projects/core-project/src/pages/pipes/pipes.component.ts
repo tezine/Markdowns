@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PipesComponent implements OnInit {
 
+  file = { name: 'logo.svg', size: 2120109, type: 'image/svg' };
+
   constructor() { }
 
   ngOnInit(): void {

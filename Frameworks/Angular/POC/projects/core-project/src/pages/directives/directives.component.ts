@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DirectivesComponent implements OnInit {
 
+  condition=false;
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onBtnToggleClicked(){
+    this.condition=!this.condition;
+  }
 }

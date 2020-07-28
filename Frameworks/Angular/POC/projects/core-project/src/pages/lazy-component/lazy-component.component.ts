@@ -18,7 +18,7 @@ export class LazyComponentComponent implements OnInit {
   }
 
   async onBtnLoadClicked(){
-    const{VLazyComponent} = await import('../../components/vlazy/vlazy.component');
+    const{VLazyComponent} = await import( '../../components/vlazy/vlazy.component');
     const factory = this.factoryResolver.resolveComponentFactory(VLazyComponent);
     if(this.anchor) this.anchor.createComponent(factory);
   }
