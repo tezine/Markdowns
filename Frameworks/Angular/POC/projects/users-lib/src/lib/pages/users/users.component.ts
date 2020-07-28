@@ -12,6 +12,7 @@ import {EEmployee} from '../../entities/EEmployee';
 export class UsersComponent implements OnInit {
 
   employees?:EEmployee[];
+  displayedColumns: string[] = ['id', 'employee_name'];
 
   constructor(private employeesService:EmployeesService,protected router: Router, private activatedRoute: ActivatedRoute) {
   }

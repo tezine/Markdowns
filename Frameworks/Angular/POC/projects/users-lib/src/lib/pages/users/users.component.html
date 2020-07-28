@@ -2,29 +2,48 @@
     <span class="example-spacer"></span>
     <span>Http</span>
 </mat-toolbar>
-<div class="container-fluid p-3">
-    <p *ngIf="!employees"><em>Carregando...</em></p>
-    <table class="table" *ngIf="employees">
-        <thead class="thead-light">
-        <tr class="header">
-            <th>Id</th>
-            <th>Name</th>
-<!--            <th>CPF</th>-->
-<!--            <th>Pai</th>-->
-<!--            <th>Mãe</th>-->
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let cliente of employees;index as i;" class="line">
-            <td>{{cliente.id}}</td>
-            <td>{{cliente.employee_name}}</td>
-<!--            <td>{{cliente.cpf}}</td>-->
-<!--            <td>{{cliente.nomePai}}</td>-->
-<!--            <td>{{cliente.nomeMae}}</td>-->
-            <td (click)="onBtnEditClicked(cliente)">editar</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+
+<table mat-table [dataSource]="employees" class="mat-elevation-z8 container">
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="employee_name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<!--<div class="container-fluid p-3">-->
+<!--    <p *ngIf="!employees"><em>Carregando...</em></p>-->
+<!--    <table class="table" *ngIf="employees">-->
+<!--        <thead class="thead-light">-->
+<!--        <tr class="header">-->
+<!--            <th>Id</th>-->
+<!--            <th>Name</th>-->
+<!--&lt;!&ndash;            <th>CPF</th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Pai</th>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th>Mãe</th>&ndash;&gt;-->
+<!--            <th></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr *ngFor="let cliente of employees;index as i;" class="line">-->
+<!--            <td>{{cliente.id}}</td>-->
+<!--            <td>{{cliente.employee_name}}</td>-->
+<!--&lt;!&ndash;            <td>{{cliente.cpf}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{cliente.nomePai}}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td>{{cliente.nomeMae}}</td>&ndash;&gt;-->
+<!--            <td (click)="onBtnEditClicked(cliente)">editar</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
 <router-outlet></router-outlet>

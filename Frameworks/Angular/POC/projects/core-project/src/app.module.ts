@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './pages/app/app.component';
 import {LoginComponent} from './pages/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 //import {BASE_PATH} from '../../cadastros-api';
@@ -34,6 +34,7 @@ import { HooksComponent } from './pages/hooks/hooks.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { DirectivesComponent } from './pages/directives/directives.component';
 import { PipesComponent } from './pages/pipes/pipes.component';
+import {MatTableModule} from '@angular/material/table';
 
 export function getBasePath(): string {
     //if(!GlobalsService.isDevMode())return Constants.boschServerURL
@@ -72,6 +73,8 @@ export function getBasePath(): string {
         HttpClientModule,
         MatIconModule,
         AppRoutingModule,
+        ReactiveFormsModule,//to allow reactive forms
+        MatTableModule,
         BrowserAnimationsModule,
         MatListModule,
         MatTabsModule,

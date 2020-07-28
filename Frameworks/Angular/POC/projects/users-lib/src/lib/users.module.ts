@@ -5,6 +5,7 @@ import {CommonModule} from '@angular/common';
 import {UsersEditComponent} from './pages/users-edit/users-edit.component';
 import {UsersComponent} from './pages/users/users.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTableModule} from '@angular/material/table';
 
 // export function apiConfigFactory(): Configuration {
 //     const params: ConfigurationParameters = {
@@ -22,6 +23,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
         //ApiModule.forRoot(apiConfigFactory),
         CommonModule,
         UsersRoutingModule,
+        MatTableModule,
         MatToolbarModule
     ],
     bootstrap: [],

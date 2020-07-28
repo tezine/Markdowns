@@ -212,15 +212,15 @@ export class MyService {
 
 # Router
 
-* Avoid using named router-outlet. Instead, prefer using several <router-outlet> with child routes. Ex: 
+* Avoid using named router-outlet. Instead, prefer using several \<router-outlet> with child routes. Ex: 
 
 1. Let's suppose you have a main angular project. 
 
-2. There's a <router-outlet> in the app.component.html
+2. There's a \<router-outlet> in the app.component.html
 
 3. Than, after the user login, you display a Home.component. 
 
-4. In this HomeComponent, you have another <router-outlet> 
+4. In this HomeComponent, you have another \<router-outlet> 
 
 5. When user clicks on a button, you want to load another module into the router-outlet inside the HomeComponent. 
 
