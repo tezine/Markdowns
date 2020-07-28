@@ -6,6 +6,7 @@ import {UsersEditComponent} from './pages/users-edit/users-edit.component';
 import {UsersComponent} from './pages/users/users.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTableModule} from '@angular/material/table';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 // export function apiConfigFactory(): Configuration {
 //     const params: ConfigurationParameters = {
@@ -24,7 +25,8 @@ import {MatTableModule} from '@angular/material/table';
         CommonModule,
         UsersRoutingModule,
         MatTableModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatProgressBarModule
     ],
     bootstrap: [],
     exports: [UsersComponent]

@@ -8,10 +8,17 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class FormsComponent implements OnInit {
 
-
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  //===========================TEMPLATE DRIVEN BELOW============================
+
+  firstName='';
+  email='';
+
+  onTemplateDrivenFormSubmit(){
+    console.log('Template driven form values:', this.firstName, this.email);
   }
 
 
@@ -23,15 +30,8 @@ export class FormsComponent implements OnInit {
     emailControl:this.emailControl
   });
 
-  isFirstNameInvalid():boolean{
-    let firstNameControl=this.profileForm.get('firstName');//we can also use this.firstNameControl instead
-    if(!firstNameControl)return true;
-    if(firstNameControl.invalid && (firstNameControl.dirty || firstNameControl.touched))return true;
-    return false;
-  }
-
   onReactiveFormSubmit(){
-    console.log('Profile form values:', this.profileForm.value);
+    console.log('Reactive form values:', this.profileForm.value);
     this.profileForm.markAllAsTouched();
   }
 

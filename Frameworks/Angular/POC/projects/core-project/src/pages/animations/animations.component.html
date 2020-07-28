@@ -2,4 +2,15 @@
     <span class="example-spacer"></span>
     <span>Animations</span>
 </mat-toolbar>
-<p>animations works!</p>
+
+<div class="topContainer">
+    <div class="container p-3" [class.mat-elevation-z8]="true" [@openClose]="isOpen ? 'open' : 'closed'" >
+        <div class="row">
+            <VInput label="Email" class="col-md-12"></VInput>
+        </div>
+        <div class="row">
+            <VInput label="Password" class="col-md-12"></VInput>
+        </div>
+        <button mat-raised-button color="primary" (click)="onBtnToggleClicked()" class="float-right">Toggle</button>
+    </div>
+</div>

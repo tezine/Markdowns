@@ -1,1 +1,16 @@
 
+#txtFirstName.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+#txtEmail.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+ #txtFirstName.ng-invalid:not(form) {
+  border-left: 5px solid #a94442; /* red */
+}
+
+#txtEmail.ng-invalid:not(form) {
+  border-left: 5px solid #a94442; /* red */
+}
