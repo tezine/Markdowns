@@ -55,7 +55,7 @@
 
 # Project Structure
 
-* 
+* There's a best practice article describing a great approach [here]([https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#:~:text=References-,Folder%20for%20each%20Angular%20Module,named%20after%20the%20Module%20Name.](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#:~:text=References-,Folder for each Angular Module,named after the Module Name.))
 
 # Modules and Libraries
 

@@ -4,10 +4,7 @@ import {UsersRoutingModule} from './users-routing.module';
 import {CommonModule} from '@angular/common';
 import {UsersEditComponent} from './pages/users-edit/users-edit.component';
 import {UsersComponent} from './pages/users/users.component';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTableModule} from '@angular/material/table';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MyLibService} from "./services/my-lib.service";
+import {BrowserModule} from "@angular/platform-browser";
 
 // export function apiConfigFactory(): Configuration {
 //     const params: ConfigurationParameters = {
@@ -25,9 +22,6 @@ import {MyLibService} from "./services/my-lib.service";
         //ApiModule.forRoot(apiConfigFactory),
         CommonModule,
         UsersRoutingModule,
-        MatTableModule,
-        MatToolbarModule,
-        MatProgressBarModule
     ],
     bootstrap: [],
     exports: [UsersComponent]

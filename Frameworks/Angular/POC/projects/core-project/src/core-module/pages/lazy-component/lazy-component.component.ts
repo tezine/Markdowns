@@ -26,9 +26,8 @@ export class LazyComponentComponent implements OnInit {
   async onBtnLoad2Clicked(){
     if (!this.lazy2) {
       console.log('lazy 2')
-      //this.lazy2 = async () => (await import(`../../components/vlazy/vlazy.component`)).VLazyComponent;
-      this.lazy2 = import(`../../components/vlazy/vlazy.component`)
-          .then(({ VLazyComponent }) => VLazyComponent);
+      // this.lazy2 =  () => (import('../../components/vlazy/vlazy.component')).VLazyComponent;
+       this.lazy2 = import('../../components/vlazy/vlazy.component').then(({ VLazyComponent }) => VLazyComponent);
     }
   }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Defines} from '../../codes/Defines';
 import {MyLibService} from '../../services/my-lib.service';
-import {EEmployee} from '../../entities/EEmployee';
+import {EBozo} from '../../entities/EBozo';
 
 @Component({
   selector: 'lib-clientes',
@@ -11,7 +11,7 @@ import {EEmployee} from '../../entities/EEmployee';
 })
 export class UsersComponent implements OnInit {
 
-  employees?:EEmployee[];
+  employees?:EBozo[];
   displayedColumns: string[] = ['id', 'employee_name'];
 
   constructor(private employeesService:MyLibService, protected router: Router, private activatedRoute: ActivatedRoute) {

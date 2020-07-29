@@ -1,4 +1,5 @@
-export interface EEmployee {
+ export interface EBozo {
     id:number;
     employee_name:string;
 }
+

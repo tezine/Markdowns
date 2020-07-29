@@ -1,13 +1,12 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule} from '../app-routing.module';
 import {AppComponent} from './pages/app/app.component';
 import {LoginComponent} from './pages/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
-//import {BASE_PATH} from '../../cadastros-api';
 import {RouterModule} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -109,5 +108,5 @@ export function HttpLoaderFactory(http: HttpClient) {
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
+export class CoreModule {
 }

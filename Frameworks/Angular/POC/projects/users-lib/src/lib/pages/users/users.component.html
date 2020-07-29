@@ -1,26 +1,21 @@
-<mat-toolbar color="primary">
-    <span class="example-spacer"></span>
-    <span>Http</span>
-</mat-toolbar>
-<mat-progress-bar mode="indeterminate" *ngIf="!employees"></mat-progress-bar>
+
 
 <div class="container p-3">
-    <table mat-table [dataSource]="employees" class="mat-elevation-z8 container">
-        <!-- ID Column -->
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
-        <!-- Name Column -->
-        <ng-container matColumnDef="employee_name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.employee_name}} </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <table class="table" *ngIf="employees">
+        <thead class="thead-dark">
+        <tr class="header">
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of employees;index as i;" class="line">
+            <td>{{user.id}}</td>
+            <td>{{user.employee_name}}</td>
+        </tr>
+        </tbody>
     </table>
 </div>
 
 
-<router-outlet></router-outlet>
+

@@ -23,6 +23,10 @@
       ],
       "@myLib/*": [
         "dist/users-lib/*"
+      ],
+      "test-lib": [
+        "dist/test-lib/test-lib",
+        "dist/test-lib"
       ]
     }
   },

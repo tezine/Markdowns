@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
     this.menuItems.push(<EMenuItem>{title:'Input/Output',route:'input-output',iconName:'repeat'});
     this.menuItems.push(<EMenuItem>{title:'Lazy component',route:'lazy-component',iconName:'redo'});
     this.menuItems.push(<EMenuItem>{title:'Lazy lib',route:'users',iconName:'redo'});
+    this.menuItems.push(<EMenuItem>{title:'Lazy module',route:'lazy-module',iconName:'redo'});
     this.menuItems.push(<EMenuItem>{title:'Pipes',route:'pipes',iconName:'wifi'});
     this.menuItems.push(<EMenuItem>{title:'Services',route:'services',iconName:'wifi'});
     this.menuItems.push(<EMenuItem>{title:'Styles',route:'styles',iconName:'border_style'});
