@@ -18,9 +18,11 @@
       "dom"
     ],
     "paths": {
-      "cadastros": [
-        "dist/cadastros/cadastros",
-        "dist/cadastros"
+      "@myLib": [
+        "dist/users-lib"
+      ],
+      "@myLib/*": [
+        "dist/users-lib/*"
       ]
     }
   },

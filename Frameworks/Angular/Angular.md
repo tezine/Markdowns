@@ -50,6 +50,9 @@
 * There's a Proof of Concept project following this material. You can find the code [here](./POC). The purpose of the POC is to exemplify all subjects mentioned in this document. It's composed by an Angular workspace with 1 application (core-project), 1 Angular library (users-lib)... 
 * It uses Material Design components, bootstrap css, internationalization, animations, services, template and reactive forms and many other features. 
 
+![alt text](POC.jpg "Screenshot")
+
+
 # Project Structure
 
 * 
@@ -63,7 +66,7 @@ In Angular, sometimes we get confused on when to create a library and when to cr
 
 ## Libraries
 
-Angular libraries can only be used within Angular projects. If you intend to create a library to be used outside Angular, create a [Angular Element](https://angular.io/guide/elements). We can create a Angular library by executing the following command: 
+[Angular libraries](https://angular.io/guide/creating-libraries) can only be used within Angular projects. If you intend to create a library to be used outside Angular, create a [Angular Element](https://angular.io/guide/elements). We can create a Angular library by executing the following command: 
 
 ```bash
 ng new my-workspace --create-application=false # creates the an empty Angular workspace

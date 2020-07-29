@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GlobalsService} from '../../codes/globals.service';
-import {EmployeesService} from 'users-lib/src/lib/services/employees.service';
-import {EEmployee} from 'users-lib/src/lib/entities/EEmployee';
 import {LoggerService} from "../../services/logger.service";
+import {EmployeesService} from "../../services/employees.service";
 
 @Component({
   selector: 'app-services',
@@ -11,7 +10,7 @@ import {LoggerService} from "../../services/logger.service";
 })
 export class ServicesComponent implements OnInit {
 
-  employees:EEmployee[]=[];
+  employees:any[]=[];
 
   constructor(public globals:GlobalsService, protected  employeesService:EmployeesService, private loggerService:LoggerService) { }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Defines} from '../../codes/Defines';
-import {EmployeesService} from '../../services/employees.service';
+import {MyLibService} from '../../services/my-lib.service';
 import {EEmployee} from '../../entities/EEmployee';
 
 @Component({
@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   employees?:EEmployee[];
   displayedColumns: string[] = ['id', 'employee_name'];
 
-  constructor(private employeesService:EmployeesService,protected router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private employeesService:MyLibService, protected router: Router, private activatedRoute: ActivatedRoute) {
   }
 
   async ngOnInit() {

@@ -1,3 +1,4 @@
+//region imports
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {Defines} from './codes/defines';
@@ -15,6 +16,7 @@ import {HooksComponent} from './pages/hooks/hooks.component';
 import {ServicesComponent} from './pages/services/services.component';
 import {DirectivesComponent} from './pages/directives/directives.component';
 import {PipesComponent} from './pages/pipes/pipes.component';
+//endregion
 
 
 const routes: Routes = [
@@ -33,17 +35,8 @@ const routes: Routes = [
           {path: 'pipes', component: PipesComponent},
           {path: 'directives', component: DirectivesComponent},
           {path: 'styles', component: StylesComponent},
-           {path: 'users', loadChildren:  async () => (await import('../../users-lib/src/lib/users.module')).UsersModule,},
-          // {
-          //     path: 'users',
-          //     loadChildren: './codes/lazy-wrapper.module#UsersLibWrapperModule'
-          // },
-          // {
-          //     path: 'users',
-          //      loadChildren: () => import('@users-lib').then(m => m.UsersModule)
-          // },
-       //{path: 'cadastros', loadChildren: () => import('../../users-lib/src/lib/cadastros.module').then(m => m.UsersModule)},
-          //{path: Defines.routeCadastros, loadChildren: () => import('../../../dist/bjdweb-core/cadastros-src-lib-cadastros-module-es5.js').then(m =>{console.log('carregou'); console.log(m);  /*m.UsersModule*/})},
+           // {path: 'users', loadChildren:  async () => (await import('../../users-lib/src/lib/users.module')).UsersModule,},
+          {path: 'users', loadChildren: () => import('@myLib').then(m => m.UsersModule)},
     ]
   },
 
