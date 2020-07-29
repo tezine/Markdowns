@@ -2,4 +2,17 @@
     <span class="example-spacer"></span>
     <span>Translations</span>
 </mat-toolbar>
-<p>translations works!</p>
+<mat-tab-group animationDuration="0ms">
+    <mat-tab label="NGX-Translate" >
+        <div class="container p-3">
+            <p translate>BatmanText</p>
+
+            <p>{{ 'Translating to portuguese and uppercase.' | translate | uppercase }}</p>
+            <!--order matters above  translate + uppercase . First the is translated to portuguese, than it's modified to uppercase-->
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Angular i18n" >
+        TODO :-)
+    </mat-tab>
+</mat-tab-group>

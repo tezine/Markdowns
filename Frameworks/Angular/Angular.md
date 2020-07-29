@@ -163,7 +163,7 @@ component.ts:
 
 ## Hooks
 
-* h
+* More about lifecycle hooks [here](https://angular.io/guide/lifecycle-hooks)
 
 ## Animations
 
@@ -267,7 +267,8 @@ await this.router.navigate(['home/cadastros/clientes']);
 
 # Internationalization
 
-* 
+* More info about translations [here](https://angular.io/guide/i18n)
+* There's also a great tool for translations called NGX-Translate. More info [here](http://www.ngx-translate.com/).
 
 # Server Side Rendering
 

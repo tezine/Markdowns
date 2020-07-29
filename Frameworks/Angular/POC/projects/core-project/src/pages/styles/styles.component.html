@@ -2,4 +2,19 @@
     <span class="example-spacer"></span>
     <span>Styles</span>
 </mat-toolbar>
-<p>styles works!</p>
+<mat-tab-group  animationDuration="0ms">
+    <mat-tab label="Style binding">
+        <div
+                [style.width]="divWidth"
+                [style.height]="divHeight"
+                [style.backgroundColor]="divBackgroundColor"
+                [style.borderRadius]="divBorderRadius"
+                [style.marginLeft]="divMarginLeft">
+        </div>
+    </mat-tab>
+    <mat-tab label="Class binding" >
+        <div id="myDiv" [class]="currentThemeClassName">
+            <button mat-raised-button color="secondary" (click)="onBtnToggleThemeClicked()">Toggle Theme</button>
+        </div>
+    </mat-tab>
+</mat-tab-group>

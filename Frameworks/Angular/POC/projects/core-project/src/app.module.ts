@@ -15,7 +15,6 @@ import { MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
-import {AboutComponent} from './pages/about/about.component';
 import {FormsComponent} from './pages/forms/forms.component';
 import {AnimationsComponent} from './pages/animations/animations.component';
 import { InputOutputComponent } from './pages/input-output/input-output.component';
@@ -38,10 +37,18 @@ import {MatTableModule} from '@angular/material/table';
 import { UnderlineDirective } from './directives/underline.directive';
 import { DisplayUnlessDirective } from './directives/display-unless.directive';
 import { FileSizePipe } from './pipes/file-size.pipe';
+import { VHooksComponent } from './components/vhooks/vhooks.component';
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 
 export function getBasePath(): string {
     //if(!GlobalsService.isDevMode())return Constants.boschServerURL
     return 'http://localhost:5000';
+}
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -49,7 +56,6 @@ export function getBasePath(): string {
         AppComponent,
         LoginComponent,
         HomeComponent,
-        AboutComponent,
         FormsComponent,
         InputOutputComponent,
         AnimationsComponent,
@@ -68,7 +74,8 @@ export function getBasePath(): string {
         PipesComponent,
         UnderlineDirective,
         DisplayUnlessDirective,
-        FileSizePipe
+        FileSizePipe,
+        VHooksComponent
     ],
     imports: [
         BrowserModule,
@@ -84,7 +91,15 @@ export function getBasePath(): string {
         BrowserAnimationsModule,
         MatListModule,
         MatTabsModule,
-        MatToolbarModule
+        MatToolbarModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            },
+            defaultLanguage: 'pt-br'
+        }),
     ],
     providers: [
         {provide: LocationStrategy, useClass: HashLocationStrategy},

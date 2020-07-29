@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
+    <button mat-button (click)="vHooks.name='Bozo'" color="secondary">Change @Input value</button>
     <span class="example-spacer"></span>
     <span>Hooks</span>
 </mat-toolbar>
-<p>hooks works!</p>
+
+<VHooks name="Bruno" #vHooks></VHooks>
+
+

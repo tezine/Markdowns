@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit {
     this.menuItems.push(<EMenuItem>{title:'Styles',route:'styles',iconName:'border_style'});
     this.menuItems.push(<EMenuItem>{title:'Translations',route:'translations',iconName:'language'});
     this.menuItems.push(<EMenuItem>{title:'ViewChild/ContentChild',route:'viewchild-contentchild',iconName:'picture_in_picture'});
-    this.menuItems.push(<EMenuItem>{title:'About',route:'about',iconName:'info'});
     this.menuItems.push(<EMenuItem>{title:'Logout',route:'/login',iconName:'logout'});
   }
 

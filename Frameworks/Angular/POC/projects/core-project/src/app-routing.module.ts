@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {Defines} from './codes/defines';
 import {LoginComponent} from './pages/login/login.component';
 import {HomeComponent} from './pages/home/home.component';
-import {AboutComponent} from './pages/about/about.component';
 import {FormsComponent} from './pages/forms/forms.component';
 import {AnimationsComponent} from './pages/animations/animations.component';
 import {InputOutputComponent} from './pages/input-output/input-output.component';
@@ -31,7 +30,6 @@ const routes: Routes = [
           {path: 'lazy-component', component: LazyComponentComponent},
           {path: 'translations', component: TranslationsComponent},
           {path: 'services', component: ServicesComponent},
-          {path: 'about', component: AboutComponent},
           {path: 'pipes', component: PipesComponent},
           {path: 'directives', component: DirectivesComponent},
           {path: 'styles', component: StylesComponent},

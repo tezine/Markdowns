@@ -2,4 +2,18 @@
     <span class="example-spacer"></span>
     <span>Services</span>
 </mat-toolbar>
-<p>services works!</p>
+
+<div class="container p-3">
+    <div id="myDiv" [style.backgroundColor]="globals.backgroundColor">
+        <p [style.color]="globals.fontColor" [style.fontSize]="globals.fontSize">
+            GlobalsService provides theme options to any component that uses it.<br>
+            It works like a singleton that can be accessed from any Angular Component.
+        </p>
+        <ul>
+            <li *ngFor="let eEmployee of employees" class="listColor">
+                Name: {{eEmployee.employee_name}}
+            </li>
+        </ul>
+    </div>
+</div>
+
