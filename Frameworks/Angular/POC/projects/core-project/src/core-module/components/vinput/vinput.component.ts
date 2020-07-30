@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'VInput',
@@ -19,6 +19,10 @@ export class VInputComponent implements OnInit {
 
   onModelChanged(txt:string){
     this.textChanged.emit(txt);
+  }
+
+  @HostListener('mouseenter') onMouseEnter() {
+    console.log('mouse enter');
   }
 
 }

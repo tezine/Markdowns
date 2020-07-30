@@ -179,59 +179,117 @@ It's also possible to have html/typescript/css into the same file, but it's not 
 
 ## Lifecycle
 
-* ngOnChanges()
-* ngOnInit()
-* ngDoCheck()
-* ngAfterContentInit()
-* ngAfterContentChecked()
-* ngAfterViewInit()
-* ngAfterViewChecked()
-* ngOnDestroy()
+* ngOnChanges(): fired whenever Angular sets or resets data-bound input properties
+* ngOnInit(): fired once, after Angular display data-bound properties.
+* ngDoCheck(): fired upon changes that cannot be detected by Angular on its own. 
+* ngAfterContentInit(): fired once after what is passed to ng-content is rendered. 
+* ngAfterContentChecked(): fired after what is passed to ng-content pass through the ngDoCheck 
+* ngAfterViewInit(): fired once after the view and it's child views are rendered. 
+* ngAfterViewChecked(): fired whenever Angular checks for the rendered view or its children. 
+* ngOnDestroy(): fired just before Angular destroy the component. 
+
+More about lifecycle hooks [here](https://angular.io/guide/lifecycle-hooks).
 
 ## Input properties/parameters
 
-* Podemos passar parâmetros para o componente através do @Input(). Ex:
+Angular provides the [@Input()](https://angular.io/api/core/Input) decorator to allow the component to receive input properties. Ex: 
 
-```typescript 
-@Input() count: number = 0;
+```html
+<!--App.component.html-->
+<MyComponent title="Batman"></MyComponent>
+```
+
+```typescript
+//MyComponent.component.ts
+export class MyComponent {
+  @Input() title:string='';
+}
+```
+
+```html
+<!--MyComponent.component.html-->
+<div>
+  Hello {{title}}    
+</div>
+<!--Displays Hello Batman --> 
 ```
 
 ## Output events
 
-* Podemos ouvir os html events que acontecem dentro de um componente da seguinte maneira:
+Similar to @Input, Angular provides the [@Output](https://angular.io/guide/inputs-outputs) decorator to fire events from the component. These events can be captured on the caller component. Ex:
 
-```typescript 
-@HostListener('mouseenter') onMouseEnter() {
-  this.highlight('yellow');
+```html
+<!--App.component.html-->
+<VInput (textChanged)="onTxtNameChanged($event)"></VInput>
+```
+
+```typescript
+//App.component.ts
+export class InputOutputComponent {
+  onTxtNameChanged(txt:string){
+    console.log('text entered in VInput:',txt)
+  }
 }
 ```
 
-* Mais info [aqui](https://angular.io/guide/attribute-directives)
+```typescript
+//VInput.component.ts
+export class VInputComponent {
+  @Output() textChanged: EventEmitter<string> = new EventEmitter();
+
+  onModelChanged(txt:string){
+    this.textChanged.emit(txt);
+  }
+}
+```
+
+
+```html
+<!--VInput.component.html-->
+<input (ngModelChange)="onModelChanged($event)">
+```
+
+## DOM events
+
+It's also possible to capture every DOM event inside a Angular Component. Ex:
+
+```typescript 
+export class VInputComponent {
+  @HostListener('mouseenter') onMouseEnter() {
+    console.log('mouse enter');
+  }
+}
+//whenever the mouse enters into the component, the function "onMouseEnter" is fired.
+```
 
 
 ## ViewChild
 
-* Podemos acessar um elemento do DOM no typescript através do @ViewChild. 
-  Seguem um exemplo abaixo:
-  html:
+Whatever DOM element you insert into your Angular Component, is considered a [ViewChild](https://angular.io/api/core/ViewChild) and it's accessible from typescript after rendered. Ex:
 
 ```html
-<input class="col-xs-12 col-md-6" [label]="'Celular'" id="txtCel"></input>
+<!--App.component.html-->
+<div #viewChildDiv>hello</div>
 ```
 
-component.ts:
-
-```typescript 
-@ViewChild('txtCel',{static: false}) txtCel:any;
+```typescript
+export class AppComponent{
+	@ViewChild('viewChildDiv') viewChildDiv?: ElementRef;
+	
+	ngAfterViewInit(): void {
+    	if(this.viewChildDiv)this.viewChildDiv.nativeElement.style["backgroundColor"] = "orange";
+    }
+}
+//Div color is changed to orange after rendered inside AppComponent
 ```
 
 ## ContentChild
 
-* dkdhd
+Whatever you pass inside the DOM element is considered a ContentChild. Ex:
 
-## Hooks
+```
 
-* More about lifecycle hooks [here](https://angular.io/guide/lifecycle-hooks)
+```
 
 ## Animations
 
@@ -273,6 +331,7 @@ export class MyService {
 ## Attribute Directives
 
 * sddd
+* Mais info [aqui](https://angular.io/guide/attribute-directives)
 
 ## Structural Directives
 
@@ -476,19 +535,19 @@ await this.router.navigate(['home/cadastros/clientes']);
 
 # CORS
 
-* Para habilitar CORS no Angular e, com isso permitir com que o Angular faça requests para outros domínios e/ou portas, crie o arquivo proxy.conf.json abaixo:
+In order to enable CORS in your Angular application to allow http requests to other domains/ports, add a file named `proxy.conf.json` as below in your root folder:
 
 ```json 
 {
     "/api/*": {
-        "target": "http://localhost:9090",
+        "target": "http://mydomain.com:9090",
         "secure": false,
         "logLevel": "debug"
     }
 }
 ```
 
-* Agora adicione a linha proxyConfig no angular.json dentro de `serve` do projeto, conforme abaixo:
+Now, just add the line `proxyConfig` in your `angular.json` inside `serve` as showed below:
 
 ```json
 "serve": {
@@ -498,6 +557,8 @@ await this.router.navigate(['home/cadastros/clientes']);
             "proxyConfig": "src/proxy.conf.json"
           },
 ```
+
+That's it! Now your Angular application is ready to forward API requests to a microservice hosted at http://mydomain.com:9090
 
 # Security
 

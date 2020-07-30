@@ -26,7 +26,7 @@ export class VHooksComponent implements OnChanges, OnInit, DoCheck,AfterContentI
   }
 
   ngAfterContentInit(){
-    this.outputList.push('ngDoCheck');
+    this.outputList.push('ngAfterContentInit');
   }
 
   ngAfterContentChecked(){
