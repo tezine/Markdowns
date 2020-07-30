@@ -285,23 +285,119 @@ export class AppComponent{
 
 ## ContentChild
 
-Whatever you pass inside the DOM element is considered a ContentChild. Ex:
+Whatever you pass inside the DOM element is considered a ContentChild. The content passed can be rendered inside a `<ng-content>` tag. Ex:
 
+```html
+<!--app.component.html-->
+<VHello>World!</VHello>
 ```
 
+```html
+<!--vhello.component.html-->
+<p>Hello <ng-content></ng-content></p>
+
+<!-- prints Hello World! -->
 ```
+
+It's possible to have multiple `<ng-content>` and project content according to the type of content provided. This approach is also called "Multi-Slot Content Projection". You may find out more on how to achieve it [here](https://blog.angular-university.io/angular-ng-content/).
 
 ## Animations
 
-* 
+Although it seems too complicated to create animations in html, Angular makes things easier. The framework provides it's own animation framework and it's quite powerful and well documented. You find the complete documentation [here](https://angular.io/guide/animations). 
+
+The accompanying POC demonstrates a simple animation where we have a page requesting the user's email and password and a button. The components are displayed inside a div container with material elevation. Everything starts with `state='open'` . When user clicks the button, the state is changed to `closed` and the animation is triggered automatically. Follow the code below: 
+
+```html
+<!--animations.component.html-->
+<div class="container p-3" [class.mat-elevation-z8]="true" [@openClose]="isOpen ? 'open' : 'closed'" >
+    <div class="row">
+        <VInput label="Email" class="col-md-12"></VInput>
+    </div>
+    <div class="row">
+        <VInput label="Password" class="col-md-12"></VInput>
+    </div>
+    <button mat-raised-button color="primary" (click)="onBtnToggleClicked()" class="float-right">Animate</button>
+</div>
+```
+
+```typescript
+//animations.component.ts
+@Component({
+  selector: 'app-animations',
+  templateUrl: './animations.component.html',
+  styleUrls: ['./animations.component.scss'],
+  animations: [
+    trigger('openClose', [
+      state('open', style({
+        height: '200px',
+        width: '400px',
+        opacity: 1,
+        backgroundColor: 'yellow'
+      })),
+      state('closed', style({
+        height: '250px',
+        width: '450px',
+        opacity: 0.9,
+        backgroundColor: '#00e676'
+      })),
+      transition('open => closed', [
+        animate('1s')
+      ]),
+      transition('closed => open', [
+        animate('0.5s')
+      ]),
+    ]),],
+})
+export class AnimationsComponent {
+  isOpen = true;
+
+  onBtnToggleClicked(){
+    this.isOpen = !this.isOpen;
+  }
+}
+```
+
+What happens above is that when user clicks the `Animate` button, `onBtnToggleClicked` is called and the state changes to `closed`. The DOM element that will be animated is defined by the `[@openClose]` tag in the html and the corresponding trigger named `openClose` in the typescript. The animation above changes the `div` background color and increases the height/width a little. As you can see, it's not so complex! :-) 
 
 # Forms
 
-* dkdhd
+* Angular allow the creation of [web forms](https://angular.io/guide/forms-overview) in 2 different ways. It's up to you to which one you like best! 
 
 ## Template-driven forms
 
-* dhdh
+* [Template-drive forms](https://angular.io/guide/forms) binds its data directly to variables and you you can think as "do yourself" approach, since you have to validate, display errors, and others manually. Despite of that, template-drive is straight forward. It's easy to understand and code. You can find a sample code in the POC, which is similar to the code below: 
+
+```html
+ <form  (ngSubmit)="onTemplateDrivenFormSubmit()" >
+     <div class="row">
+         <mat-form-field class="col-md-6">
+             <mat-label>First name</mat-label>
+             <input matInput [(ngModel)]="firstName" id="txtFirstName" name="txtFirstName" required minlength="4">
+         </mat-form-field>
+         <mat-form-field class="col-md-6">
+             <mat-label>E-mail</mat-label>
+             <input matInput [(ngModel)]="email" id="txtEmail" name="txtEmail" required email>
+             <mat-hint>Errors appear instantly!</mat-hint>
+         </mat-form-field>
+     </div>
+     <div class="row p-3">
+         <button mat-raised-button color="primary" class="float-right" type="submit">Submit form</button>
+     </div>
+</form>
+```
+
+```typescript
+export class FormsComponent {
+  firstName='';
+  email='';
+
+  onTemplateDrivenFormSubmit(){
+    console.log('Template driven form values:', this.firstName, this.email);
+  }
+}
+```
+
+Basically, in the code above we have a form with 2 text-fields and a button. Whenever something changes in text-fields, Angular automatically updates the corresponding variable (`firstName or email`). This is done through [ngModel](https://angular.io/api/forms/NgModel), which binds the controls to the variable. The form itself fires the `onTemplateDrivenFormSubmit` when the button (marked as type=submit) is clicked. Plain simple! 
 
 ## Reactive forms
 
@@ -309,16 +405,39 @@ Whatever you pass inside the DOM element is considered a ContentChild. Ex:
 
 # Services
 
-* A partir da versão 6 não se coloca mais os services como providers. Agora é assim:
+[Services](https://angular.io/guide/architecture-services) are used as `Singletons` that are injected into a Angular Component or other Service when needed. Prior to Angular 6, services had to be declared as a provider explicitly in the module, but now we only need to specify in which Angular module the Service will be injected. Follow sample usage to retrieve a list of employees from a Restful Server:
 
 ```typescript 
+//employees.service.ts
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root' //this indicates that this service is injected into the Angular root module of your project
 })
-export class MyService {
-  constructor() { }
+export class EmployeesService {
+
+  constructor(private httpClient:HttpClient) { }//httpClient is also a service injected here. :-) 
+
+  public async getEmployees(): Promise<Employee[]>{
+  let result=await this.httpClient.get<Employee[]>('http://dummy.restapiexample.com/api/v1/employees').toPromise();
+  return result.data;
+  }
 }
 ```
+
+```typescript
+//app.component.ts
+export class AppComponent implements OnInit {
+  employees?:Employee[];
+    
+  constructor(private employeesService:EmployeesService) {//service singleton injected here      
+  }
+
+  async ngOnInit() {
+    this.employees= await this.employeesService.getEmployees();
+   }
+}
+```
+
+
 
 # Pipes
 
