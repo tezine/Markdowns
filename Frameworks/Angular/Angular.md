@@ -47,22 +47,28 @@
 
 # POC
 
-* There's a Proof of Concept project following this material. You can find the code [here](./POC). The purpose of the POC is to exemplify all subjects mentioned in this document. It's composed by an Angular workspace with 1 application (core-project), 1 Angular library (users-lib)... 
-* It uses Material Design components, bootstrap css, internationalization, animations, services, template and reactive forms and many other features. 
+* There's a Proof of Concept project following this material. You can find the code [here](./POC). The purpose of the POC is to exemplify all subjects mentioned in this document. It's composed by an Angular workspace with 1 application (core-project), 1 Angular library (users-lib), 1 Angular module (extra) ...
+* It uses Material Design components, bootstrap css, internationalization, animations, services, lazy loading, template and reactive forms and many other features. 
 
 ![alt text](POC.jpg "Screenshot")
 
 
-# Project Structure
+# Workspace File Structure
 
-* There's a best practice article describing a great approach [here]([https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#:~:text=References-,Folder%20for%20each%20Angular%20Module,named%20after%20the%20Module%20Name.](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/#:~:text=References-,Folder for each Angular Module,named after the Module Name.))
+* It is recommended to create a workspace whenever you want to start a new application from scratch. There's a detailed description on Angular website [here](https://angular.io/guide/file-structure) and a great tutorial provided by the community [here](https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/).
+* Explaining the basics, we usually have a single application inside the workspace and several libraries and modules. Components, Pipes, Directives, Services can be added into any of these 3. All files can ben created by using `ng` command line interface. Usually, each Angular component creates 3 files (html, ts, and spec.ts). The `spec.ts` is a [Jasmine](https://jasmine.github.io/) BDD file for testing purposes. If your editor  supports file nesting, there's no need to add each component into a new folder. There are many flags available that you can set while adding a new file using `ng`, and you may choose the best match for your goals. 
+* It's highly recommended that you split your application into several modules. This way, you won't have a frontend monolith loaded from a single chunk file. The accompanying POC exemplify on how to create the file structures when using modules and libraries. 
+* Here are some important files in the workspace: 
+  * angular.json: It's the workspace configuration file. Here you'll find all projects that belong to the workspace and specific configurations for each one. 
+  * package.json : Different of a standard package.json, this file configures the npm dependencies used by all projects inside the workspace. 
+  * tsconfig.json: Similar to the package.json, this file is workspace wide. Whatever you define for your typescript configuration, it applies to all projects.  
 
 # Modules and Libraries
 
 In Angular, sometimes we get confused on when to create a library and when to create a Angular Module. Here are the basic differences between them: 
 
-* [Module](https://angular.io/guide/architecture-modules): A Module resides inside the project and it's only used within it. We can add components and others into the module and load the module at runtime when needed. A common scenario is to do Lazy Loading triggered by a specific route in your website. Ex: /users load the Users module, containing all users components, services... . Unfortunately, this approach requires you to download the module source code in order to accomplish the lazy load, and that's why it's called as "mono repository" approach. 
-* [Library](https://angular.io/guide/libraries): A library is more appropriate when you wish to share it with several projects. This way, the application that uses the library doesn't have to access the library code, only the compiled bundle. It's even possible to do lazy loading of a library without having its source code, but it requires you to define a module wrapper into the consumer application. 
+* [Module](https://angular.io/guide/architecture-modules): A Module resides inside the project and it's only used within it. We can add components and others into the module and load the module at runtime when needed. A common scenario is to do Lazy Loading triggered by a specific route in your website. Ex: /users load the Users module, containing all users components, services... . Unfortunately, this approach requires you to download the module source code in order to accomplish the lazy load, and that's why it's called as "mono repository/monorepo" approach. 
+* [Library](https://angular.io/guide/libraries): A library is more appropriate when you wish to share it with several projects. This way, the application that uses the library doesn't have to access the library code, only the compiled bundle. It's even possible to do lazy loading of a library without having its source code, but it requires you to define a module wrapper into the consumer application. When working with complex projects, splitting codes into libraries is a good approach. This way, you are free from monorepo, so you don't need to download the entire workspace in order to modify something inside a specific library. 
 
 ## Libraries
 
@@ -74,15 +80,17 @@ cd my-workspace
 ng generate library my-lib # creates the library project. 
 ```
 
-Remember to define which components are exported by your library in your "my-lib.module.ts". Components not explicitly exported cannot be imported and used in an Angular app. 
+Remember to define which components are exported by your library in your `my-lib.module.ts` and also in your `public_api.ts`. Components not explicitly exported cannot be imported and used in an Angular app. 
 
 After finalizing the library code, you can build it like this:
 
 ```bash
 ng build my-lib --prod
 cd dist/my-lib
-npm publish # This published into NPM repository. Please notice that Angular do not recommend to publish Ivy libraries to npm. 
+npm publish # This publishes into NPM repository. Please notice that Angular do not recommend to publish Ivy libraries to npm. 
 ```
+
+If the library resides in a workspace, you can build it from the top level folder: `ng build --project my-lib`. The chunk file will be generated into the folder defined in your `ng-package.json` of your library. Notice that Angular Libraries have their own `package.json` and a file named `tsconfig.lib.json`, which does the same as `tsconfig.json`. You can than use `npm link` to debug your lib together with the main app. 
 
 You can consume your library, by executing the following command in your app:
 
@@ -93,9 +101,66 @@ npm install my-lib --save
 
 ### Lazy Loading Libraries
 
-It's possible to do lazy loading of Angular libraries. To do so, follow the steps below
+It's possible to do lazy loading of Angular libraries. To do so, follow the steps below:
 
-There's a detailed description about lazy loading libraries [here](https://medium.com/@tomastrajan/why-and-how-to-lazy-load-angular-libraries-a3bf1489fe24). 
+1. Add your library as a dependency the `package.json` of your workspace or app. Ex:
+
+```json
+"dependencies": {
+    "users-lib": "file:projects/users-lib",
+},
+```
+
+2. Add the path into `tsconfig.json` of your workspace to make it easier to find your library path. Ex:
+
+```json
+"lib": [
+    "es2018",
+    "dom"
+],
+"paths": {
+    "@myLib": [
+        "dist/users-lib"
+    ],
+    "@myLib/*": [
+        "dist/users-lib/*"
+    ]
+}
+```
+
+3. In case you wish to lazy load the library chunk according to a specific Angular Route, you can just add the following line into your `app-routing.module.ts`: 
+
+```typescript
+{path: 'users', loadChildren: () => import('@myLib').then(m => m.UsersModule)},
+```
+
+For more information, there's a community tutorial about lazy loading libraries [here](https://medium.com/@tomastrajan/why-and-how-to-lazy-load-angular-libraries-a3bf1489fe24) and a working sample inside the POC. 
+
+## Modules
+
+Angular Modules is the easiest way to do code splitting in your Angular application. Angular modules are not standard javascript modules. They provide some extra informations and they usually belong to a single Angular project. Normally, not used outside as a library. 
+
+Angular Modules group components, services, directives, pipes and so on. Even when you create an application, Angular creates a "main" module for you, where by default all components/sevices... will be part of. As your app grows, it's a recommended that you split the app into several modules. This way, you can lazy load the chunk files by demand during runtime. It's really easy to accomplish this task in Angular. 
+
+### Lazy Loading Modules
+
+Follow the steps below to do lazy loading of modules in your Angular application. There's also a sample code inside the POC exemplifying this particular scenario. 
+
+1. Create a module inside your Angular application
+
+```bash
+ng generate module CustomerDashboard
+```
+
+2. Restructure your project folder in a way that you have all components/services... inside the module folder. (There's an example in the POC).
+3. Add some routing into the module, if you wish.
+4. Now, just add the following line into your `app-routing.module.ts` : 
+
+```typescript
+{path: 'lazy-module', loadChildren:  async () => (await import('../src/extra-module/extra.module')).ExtraModule},
+```
+
+This will do the lazy loading of your module whenever the path 'lazy-module' is passed to the Angular Router. Different from loading a library, you MUST supply the source code of the module, or Angular display an error while compiling your app. That's why this is considered a "monorepo" approach. 
 
 # Components
 
@@ -452,7 +517,3 @@ Every Angular workspace has a `tsconfig.json` file. All typescript configuration
 * There are several tutorials explaining on how to make it work in several ways. Check it out [here](https://indepth.dev/lazy-loading-angular-modules-with-ivy/) and [here](https://netbasal.com/welcome-to-the-ivy-league-lazy-loading-components-in-angular-v9-e76f0ee2854a). 
 
   
-
-## Webassembly
-
-* 
